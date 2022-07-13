@@ -1,0 +1,5 @@
+layout: post
+title: "Post Title"
+categories: CATEGORY-1
+Hello, this is my first post.
+Good for me!
