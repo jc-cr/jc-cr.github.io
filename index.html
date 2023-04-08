@@ -4,7 +4,7 @@
     <title>Welcome to my page!</title>
     <style>
       html {
-        background: url(wakaba-girl.gif) no-repeat center center fixed;
+        background: url(media/wakaba-girl.gif) no-repeat center center fixed;
         -webkit-background-size: cover;
         -moz-background-size: cover;
         -o-background-size: cover;
@@ -28,12 +28,39 @@
         font-size: 24px;
         margin-top: 12px;
       }
+      /* Added styles for sidebar */
+      .sidebar {
+        position: fixed;
+        left: 0;
+        top: 0;
+        bottom: 0;
+        width: 200px;
+        background-color: lightgray;
+        padding: 20px;
+      }
+      .sidebar a {
+        display: block;
+        font-size: 20px;
+        margin-bottom: 10px;
+        color: black;
+        text-decoration: none;
+      }
+      .sidebar a:hover {
+        color: white;
+        background-color: black;
+      }
     </style>
   </head>
   <body>
-    <embed src="soft.mp3" loop="true" autostart="true" width="2" height="0">
+    <div class="sidebar">
+      <h2>About Me</h2>
+      <a href="#bio">Bio</a>
+      <a href="#projects">Projects</a>
+      <a href="#contact">Contact Me</a>
+    </div>
+    <embed src="media/soft.mp3" loop="true" autostart="true" width="2" height="0">
     <center>
-      <a href="https://github.com/jc-cr"><img src="yuuko-laugh.gif" width="468" height="200" border="0"></a>
+      <a href="https://github.com/jc-cr"><img src="media/yuuko-laugh.gif" width="468" height="200" border="0"></a>
     </center>
     <br><br>
     <div style="text-align: center;">
@@ -41,17 +68,26 @@
         <b>Welcome to my page!!!!! </b>
       </font>
     </div>
-    <div class="entry">
-      <img src="jpdance-nichijou.gif">
-      <div class="date">April 3, 2023</div>
-      <p>Today I made some upgrades to my robot. It can now do backflips!</p>
+    <div class="entry" id="bio">
+      <img src="media/avatar.jpg">
+      <div class="date">April 8, 2023</div>
+      <p>Hi, I'm [Your Name]. I'm a [Your Profession] based in [Your Location]. I love [Your Hobbies].</p>
     </div>
-    <div class="entry">
-      <img src="mio-mio-chan.gif">
-      <div class="date">April 1, 2023</div>
-      <p>This is my first entry. It's about my new robot project.</p>
-    </div> 
+    <div class="entry" id="projects">
+      <img src="media/projects.jpg">
+      <div class="date">April 8, 2023</div>
+      <p>Here are some of the projects I've worked on:</p>
+      <ul>
+        <li>Project 1</li>
+        <li>Project 2</li>
+        <li>Project 3</li>
+      </ul>
+    </div>
+    <div class="entry" id="contact">
+      <img src="media/contact.jpg">
+      <div class="date">April 8, 2023</div>
+      <p>You can contact me at [Your Email] or on [Your Social Media Handles].</p>
+    </div>
   </body>
 </html>
-
 
