@@ -1,1 +1,425 @@
-Hi
+<html><head><meta http-equiv="x-ua-compatible" content="IE=10">
+<title>ACCEPT JESUS, FOREVER FORGIVEN!</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+<!--
+
+html, body {
+	    max-width: 100%;
+	    overflow-x: hidden;
+	}
+	#archL1 {
+		position: absolute;
+		bottom: -5px;
+		left: 0px;
+	}
+	#archR1 {
+		position: absolute;
+		bottom: -5px;
+		right: 0px;
+	}
+	#archL2 {
+		position: absolute;
+		bottom: -5px;
+		left: 35px;
+	}
+	#archR2 {
+		position: absolute;
+		bottom: -5px;
+		right: 35px;
+	}
+	#archR3 {
+		position: absolute;
+		bottom: 144px;
+		right: 0px;
+	}
+	#archL3 {
+		position: absolute;
+		bottom: 144px;
+		left: 0px;
+	}
+	#paint {
+		position: absolute;
+		bottom: 94px;
+		left: 198px;
+	}
+	#ladderL {
+		position: absolute;
+		bottom: -5px;
+		left: 160px;
+	}
+	#ladderR {
+		position: absolute;
+		bottom: -5px;
+		left: 200px;
+	}
+	#constr {
+		position: absolute;
+		bottom: -8px;
+		right: 200px;
+	}
+	#peter {
+		position: absolute;
+		bottom: -8px;
+		left: 225px;
+	}
+	#buttons {
+		position: absolute;
+		top: 370px;
+		right: 10px;
+	}
+	#doors {
+		position: absolute;
+		bottom: 0px;
+		margin-left: -50px;
+		margin-right: -50px;
+    	}
+
+	#outer {
+	  width: 100%;
+	  text-align: center;
+	}
+
+	#inner {
+	  display: inline-block;
+	}
+
+	#sign2 {
+		position: absolute;
+		bottom: 30px;
+	        margin-left: 90px;
+
+	}
+	#sign1 {
+		position: absolute;
+		bottom: 30px;
+	        margin-left: -285px;
+
+	}
+	#catrun {
+		position: absolute;
+		bottom: -6px;
+		left: 0px;
+	}
+	#plane {
+		position: absolute;
+		top: 115px;
+		right: 3%;
+	}
+
+	div#container {height:100px;width:100px;}
+
+	div.a {
+		width: 50px;
+		height:50px;
+		background-color:red;
+		position:fixed;
+	}
+
+	a {
+ 	   color: #000077;
+	}
+
+	a, u {
+	    //text-decoration: none;
+	}
+
+.shakeimage {
+  position:relative
+}
+
+.blinkout {
+
+    animation:1s blinker linear infinite;
+    -webkit-animation:1s blinker linear infinite;
+    -moz-animation:1s blinker linear infinite;
+
+     color: black;
+    }
+
+    @-moz-keyframes blinker {  
+     0% { opacity: 1.0; }
+     50% { opacity: 0.0; }
+     100% { opacity: 1.0; }
+     }
+
+    @-webkit-keyframes blinker {  
+     0% { opacity: 1.0; }
+     50% { opacity: 0.0; }
+     100% { opacity: 1.0; }
+     }
+
+    @keyframes blinker {  
+     0% { opacity: 1.0; }
+     50% { opacity: 0.0; }
+     100% { opacity: 1.0; }
+     }
+}
+
+// -->
+</style>
+
+<script type="text/javascript" src="moveobj.js"></script>
+<script type="text/javascript">
+
+function theSwap() {
+  document.body.style.backgroundImage = "url('idx1.gif')";
+}
+
+function theSwapBack() {
+  document.body.style.backgroundImage = "url('idx2.gif')";
+}
+
+function theSwapOther() {
+  document.body.style.backgroundImage = "url('idx3.gif')";
+}
+
+var flyimage1, flyimage2, flyimage3
+
+function pagestart(){
+ flyimage1=new Chip("flyimage1",47,68);
+ flyimage2=new Chip("flyimage2",47,68);
+ flyimage3=new Chip("flyimage3",47,68);
+movechip("flyimage1");
+movechip("flyimage2");
+movechip("flyimage3");
+}
+
+if (window.addEventListener)
+window.addEventListener("load", pagestart, false)
+else if (window.attachEvent)
+window.attachEvent("onload", pagestart)
+else if (document.getElementById)
+window.onload=pagestart
+
+// start shake - configure shake degree (where larger # equals greater shake)
+var rector=3
+
+var stopit=1 
+var a=1
+
+function init(which){
+stopit=0
+shake=which
+shake.style.left=0
+shake.style.top=0
+}
+
+function rattleimage(){
+if ((!document.all&&!document.getElementById)||stopit==1)
+return
+if (a==1){
+shake.style.top=parseInt(shake.style.top)+rector+"px"
+}
+else if (a==2){
+shake.style.left=parseInt(shake.style.left)+rector+"px"
+}
+else if (a==3){
+shake.style.top=parseInt(shake.style.top)-rector+"px"
+}
+else{
+shake.style.left=parseInt(shake.style.left)-rector+"px"
+}
+if (a<4)
+a++
+else
+a=1
+setTimeout("rattleimage()",50)
+}
+
+function stoprattle(which){
+stopit=1
+which.style.left=0
+which.style.top=0
+}
+// end shake
+</script>
+
+<script language="JavaScript" src="../scripts/global.js"></script>
+</head>
+
+<body id="Bdy1" scroll="no" style="overflow: hidden" vlink="#551a8b" text="#000000" link="#0000ff" bgcolor="#33ddff" background="idx2.gif" alink="#ff0000"><img src="idx3.gif" style="position: absolute; top: -10px; right:-10px;" width="1" height="1" border="0"><img src="idx1.gif" style="position: absolute; top: -10px; right:-10px;" width="1" height="1" border="0">
+<audio autoplay="" id="bgsound">
+ <source src="http://dokimos.org/ajff/cat.wav" type="audio/wav">
+</audio>
+
+<audio autoplay="" id="bgsound" loop="">
+ <source src="http://dokimos.org/ajff/idxmusic.wav" type="audio/wav">
+</audio>
+
+<div style="position: absolute; top: 80px; left: 0%;"><a href="http://dokimos.org/starship"><img src="balloon.gif" width="200" height="200" border="0"></a></div>
+
+<center><br>
+<marquee style="!width:400px; border:none" behavior="alternate" scrolldelay="40"><a href="http://dokimos.org/start.html"><img src="ajffTitle.png" alt="Accept Jesus, Forever Forgiven" width="789" height="54" border="0"></a></marquee>
+
+<br><b>
+
+<font id="Hdr1" size="4" face="Bookman Old Style,Arial">
+<span class="blinkout">Behold, now is the accepted time; behold, now is the day of salvation. - 2 Cor. 6:2</span></font><br>
+
+
+<br>
+
+<font id="Hdr1" size="6" face="Bookman Old Style,Arial">
+
+For the wages of sin is death;<br>
+but the gift of God is eternal life<br>
+through Jesus Christ our Lord.<br>
+
+<!--
+Believe on the Lord Jesus Christ, and you will be saved,<Br>
+-->
+<font id="Hdr2" size="3" face="Bookman Old Style,Arial">
+-Romans 6:23<br>
+</font>
+
+</font></b><font id="Hdr1" size="6" face="Bookman Old Style,Arial">
+
+<script language="JavaScript">
+<!--
+x = 0;
+function bounce() {
+  if (x == 0)
+  {
+    document.getElementById("theImg").src = "b1ackcat.gif";
+    x = 1;
+  }
+  else
+  {
+    document.getElementById("theImg").src = "blackcat.gif";
+    x = 0;
+  }
+}
+
+browserName = navigator.appName;
+browserVersion = parseInt(navigator.appVersion);
+if (browserName == "Netscape" && browserVersion >= 3 || browserName == "Microsoft Internet Explorer" && browserVersion >= 4) imageSwap = "yes";
+else imageSwap = "no";
+if (imageSwap == "yes") {
+pic1in = new Image();
+pic1in.src = "../dooropen.gif";
+pic1out = new Image();
+pic1out.src = "../doorclose.gif";
+}
+function moveIn(whichImg) {
+  if (imageSwap == "yes") {
+  imgIn = eval(whichImg + "in.src");
+  document [whichImg].src = imgIn;
+  }
+}
+function moveOut(whichImg) {
+  if (imageSwap == "yes") {
+  imgOut = eval(whichImg + "out.src");
+  document [whichImg].src = imgOut;
+  }
+}
+// -->
+</script>
+
+
+
+</font>
+
+<span id="outer"><span id="inner"><span id="doors">
+<table style="margin:0 auto;" cellspacing="0" cellpadding="0" align="CENTER"><tbody><tr>
+<td align="CENTER">
+<!-- <FONT SIZE=7>&nbsp;</FONT> -->
+</td></tr>
+<tr><td align="CENTER">
+<a href="http://maverickchristians.com?random" onmouseover="moveIn('pic1'); return true" onmouseout="moveOut('pic1');"><img name="pic1" src="../door.gif" alt="Enter dokimos" width="80" height="144" border="0"></a></td></tr></tbody></table>
+</span></span></span>
+
+<!--
+<SPAN ID='sign1'>
+<FONT FACE="Arial Narrow" SIZE=2></FONT><BR><BR>
+<A HREF="" target="_top"><IMG SRC="" WIDTH=90 HEIGHT=50 BORDER=0></A><BR><BR>
+</SPAN>
+-->
+
+<!--
+<SPAN ID='sign2'>
+<FONT FACE="Arial Narrow" SIZE=1><b>BEST VIEWED WITH</B></FONT><BR>
+<A HREF="http://microsoft.com" target="_blank"><IMG SRC="ie50.gif" WIDTH=88 HEIGHT=31 BORDER=0></A><BR>
+<FONT FACE="Arial Narrow" SIZE=2>Forget all the other browsers and<BR>down with the Web 2.0 net police.<BR><BR></FONT>
+</SPAN>
+-->
+
+</center>
+
+<span id="archR3">
+<a href="http://maverickchristians.com/position-available"><img src="Position-Available.png" width="151" border="0"></a>
+</span>
+
+<span id="archL3">
+<a href="http://dokimos.org/ajff/AcceptJesusNow.html"><img src="ptgrn.gif" width="151" border="0"></a>
+</span>
+
+<span id="archL2">
+<a href="http://dokimos.org/new"><img src="archL2.gif" border="0"></a>
+</span>
+
+<span id="archR2">
+<a href="http://dokimos.org/new/blaze.html"><img src="archR2.gif" border="0"></a>
+</span>
+
+<span id="ladderR">
+<a href="http://dokimos.org/intro"><img src="ladderR.gif" onmouseover="theSwapOther();" onmouseout="theSwapBack();" border="0"></a>
+</span>
+
+<span id="peter">
+<a href="http://maverickchristians.com/peter"><img src="Peter.png" width="27" height="81" border="0"></a>
+</span>
+
+<span id="constr">
+<a href="http://dokimos.org/catsoid"><img src="constr3.gif" border="0"></a>
+</span>
+
+<span id="catrun">
+<marquee style="margin-left:-200px;" behavior="scroll" direction="right" onbounce="bounce();" onmouseover="this.stop()" onmouseout="this.start()" width="2200"><a href="http://dokimos.org/decision"><img src="blackcat.gif" id="theImg" !style="filter:progid:DXImageTransform.Microsoft.BasicImage(mirror=1)" border="0"></a></marquee>
+</span>
+
+<span id="plane">
+<a href="http://maverickchristians.com/unconditional-love"><img style="-webkit-transform: scaleX(-1); transform: scaleX(-1);" src="plane.gif" id="thePlane" class="shakeimage" onmouseover="init(this);rattleimage()" onmouseout="stoprattle(this);top.focus()" onclick="top.focus()" width="175" height="146" border="0"></a>
+</span>
+
+<span id="ladderL">
+<a href="http://dokimos.org/intro"><img src="ladderL.gif" onmouseover="theSwapOther();" onmouseout="theSwapBack();" border="0"></a><img src="dooropen.gif" width="1" height="1"><img src="doorclose.gif" width="1" height="1">
+</span>
+
+<span id="paint">
+<a href="http://dokimos.org/ajff/introduction.html"><img src="paintcan.gif" !style="border:0;display:inline-block,transform:scale(-1,1);-webkit-transform:scale(-1,1);-moz-transform:scale(-1,1);-o-transform:scale(-1,1)" border="0"></a>
+</span>
+
+<span id="archL1">
+<a href="http://dokimos.org/new"><img src="archL1.gif" border="0"></a>
+</span>
+
+<span id="archR1">
+<a href="http://dokimos.org/new/blaze.html"><img src="archR1.gif" border="0"></a>
+</span>
+
+<span id="constr">
+<a href="http://dokimos.org/catsoid"><img src="constr3.gif" border="0"></a>
+</span>
+
+<p align="center"><br>
+<table !border="10" cellspacing="5" cellpadding="5" bordercolor="" bgcolor=""><tbody><tr><td align="center">
+<!-- <font face="Arial" size=5><b><i>See lists of our other thrilling pages...</i></b></font><br> -->
+
+<div align="center"><h3><b>
+<img src="arrowheads.gif" width="470" height="17" border="0"><br>
+
+<!-- <font size=3>(or you could just go back to <script> document.write(document.referrer.split('/')[2]); </script> if you like that better.)</font><br> -->
+
+</b><br>
+<br>
+</h3></div></td></tr></tbody></table>
+
+</p>
+
+<div id="flyimage1" style="position: absolute; left: 1082.43px; width: 47px; height: 68px; top: -63px;">
+
+</div>
+
+
+</body></html>
