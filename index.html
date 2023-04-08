@@ -15,18 +15,18 @@
         display: flex;
         justify-content: space-between;
       }
-      .entry {
+      .post {
         display: flex;
         flex-direction: column;
         align-items: center;
         margin-bottom: 50px;
         width: 60%;
       }
-      .entry img {
+      .post img {
         width: 100%;
         height: auto;
       }
-      .entry .date {
+      .post .date {
         font-family: Arial, sans-serif;
         font-size: 24px;
         margin-top: 12px;
@@ -64,17 +64,21 @@
       #sidebar a:hover {
         background-color: rgba(255, 255, 255, 0.5);
         color: black;
-      }      .previous-posts .entry {
+      }      .previous-posts .post {
         margin-bottom: 20px;
       }
-      .previous-posts .entry img {
-        width: 100%;
-        height: auto;
+      .previous-posts {
+        display: none;
       }
-      .previous-posts .date {
-        margin-top: 0;
+      #show-previous-posts:hover + .previous-posts {
+        display: block;
       }
-    </style>
+      #show-previous-posts {
+        margin: 5px 0;
+        text-align: center;
+        font-weight: bold;
+        cursor: pointer;
+      }    </style>
   </head>
   <body>
     <audio src="media/soft.mp3" loop autoplay></audio>
@@ -84,13 +88,14 @@
         <li><a href="#">Projects</a></li>
         <li><a href="#">Contact</a></li>
       </ul>
-    </div>    <div class="entry">
-      <img src="media/robot-backflip.gif">
+    </div>    
+    <div class="post">
+      <img src="media/mio-mio-chan.gif">
       <div class="date">April 8, 2023</div>
       <p>Overhauling website with ChatGPT</p>
     </div>
     <div class="previous-posts">
-      <div class="entry">
+      <div class="post">
         <img src="media/jpdance-nichijou.gif">
         <div class="date">April 7, 2023</div>
         <p>Created the site! Will be posting cool stuff soon.</p>
