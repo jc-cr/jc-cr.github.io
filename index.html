@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Robotics, one piece at a time...</title>
+    <title>Welcome to my page!</title>
     <style>
       html {
         background: url(wakaba-girl.gif) no-repeat center center fixed;
@@ -12,6 +12,21 @@
       }
       body {
         overflow-y: scroll; /* adds vertical scrolling */
+      }
+      .entry {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        margin-bottom: 50px;
+      }
+      .entry img {
+        width: 400px;
+        height: 250px;
+      }
+      .entry .date {
+        font-family: Arial, sans-serif;
+        font-size: 24px;
+        margin-top: 10px;
       }
     </style>
   </head>
@@ -26,26 +41,17 @@
         <b>Welcome to my page!!!!! </b>
       </font>
     </div>
-    <div style="position: absolute; top: 50%; left: 50%; margin-left:-200px; margin-top:-120px;">
-      <center>
-        <font size="7" face="Arial Bold">
-          <b>
-            <a href="https://github.com/jc-cr">
-              <img src="mio-mio-chan.gif" width="400" height="250" border="0">
-            </a>
-          </b>
-        </font>
-      </center>
+    <div class="entry">
+      <img src="mio-mio-chan.gif">
+      <div class="date">April 1, 2023</div>
+      <p>This is my first entry. It's about my new robot project.</p>
     </div>
-    <div style="text-align: center; font-family: Arial, sans-serif; font-size: 24px;">
-      <b>Scroll down to see some cool content!</b>
+    <div class="entry">
+      <img src="jpdance-nichijou.gif">
+      <div class="date">April 3, 2023</div>
+      <p>Today I made some upgrades to my robot. It can now do backflips!</p>
     </div>
-    <ul>
-      <li>
-        <h3>April 7, 2023</h3>
-        <p>Created webpage. Looking forward to posting cool robotic projects here!</p>
-      </li>
-     </ul>
   </body>
 </html>
+
 
