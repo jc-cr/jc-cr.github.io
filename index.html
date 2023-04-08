@@ -15,16 +15,20 @@
         display: flex;
         justify-content: space-between;
       }
-      .post {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        margin-bottom: 50px;
-        width: 60%;
+     .post {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	margin-bottom: 50px;
+	width: 60%;
+	position: relative; /* added */
+	padding: 20px; /* added */
+	background-color: rgba(255, 255, 255, 0.7); /* added */
       }
       .post img {
         width: 100%;
-        height: auto;
+	max-height: 400px;
+	max-width: 400px;
       }
       .post .date {
         font-family: Arial, sans-serif;
@@ -87,6 +91,7 @@
         <li><a href="#">About me</a></li>
         <li><a href="#">Projects</a></li>
         <li><a href="#">Contact</a></li>
+	<li><a href="#">Previous Posts</a></li>
       </ul>
     </div>    
     <div class="post">
