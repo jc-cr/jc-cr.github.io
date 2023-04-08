@@ -12,113 +12,85 @@
       }
       body {
         overflow-y: scroll; /* adds vertical scrolling */
+        display: flex;
+        justify-content: space-between;
       }
       .entry {
         display: flex;
         flex-direction: column;
         align-items: center;
         margin-bottom: 50px;
+        width: 60%;
       }
       .entry img {
-        width: 400px;
-        height: 250px;
+        width: 100%;
+        height: auto;
       }
       .entry .date {
         font-family: Arial, sans-serif;
         font-size: 24px;
         margin-top: 12px;
       }
-      .previous-posts {
-        margin-top: 100px;
-      }
-      .previous-posts h2 {
-        text-align: center;
-        font-size: 36px;
-        margin-bottom: 50px;
-      }
-      .previous-post {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        margin-bottom: 50px;
-      }
-      .previous-post img {
-        width: 300px;
-        height: 200px;
-      }
-      .previous-post .date {
-        font-family: Arial, sans-serif;
-        font-size: 18px;
-        margin-top: 12px;
-      }
-      .previous-post p {
-        margin-top: 10px;
-      }
-    #sidebar {
+      .sidebar {
         position: fixed;
         top: 0;
-        right: 0;
+        right: -200px;
         width: 200px;
         height: 100%;
-        background-color: rgba(173,216,230,0.7);
-        z-index: 1;
-        display: none;
+        padding-top: 50px;
+        background-color: rgba(173, 216, 230, 0.7);
+        transition: all 0.5s ease-in-out;
       }
-      #sidebar:hover {
-        display: block;
+      .sidebar:hover {
+        right: 0;
       }
-      #sidebar a {
-        display: block;
+      .sidebar ul {
+        list-style: none;
+        padding-left: 0;
+        text-align: right;
+      }
+      .sidebar li {
         padding: 10px;
-        color: white;
-        text-align: center;
-        font-size: 20px;
-        text-decoration: none;
       }
-      #sidebar a:hover {
-        background-color: white;
-        color: black;
+      .sidebar li:hover {
+        background-color: #FFFFFF;
+      }
+      .previous-posts {
+        width: 35%;
+        margin-right: 5%;
+      }
+      .previous-posts .entry {
+        margin-bottom: 20px;
+      }
+      .previous-posts .entry img {
+        width: 100%;
+        height: auto;
+      }
+      .previous-posts .date {
+        margin-top: 0;
       }
     </style>
   </head>
   <body>
-   <audio src="media/soft.mp3" loop="true"></audio>
-    <center>
-      <a href="https://github.com/jc-cr"><img src="media/yuuko-laugh.gif" width="468" height="200" border="0"></a>
-    </center>
-    <br><br>
+    <audio src="media/soft.mp3" loop autoplay></audio>
     <div class="sidebar">
-      <h2>About Me</h2>
       <ul>
-        <li><a href="#">Link 1</a></li>
-        <li><a href="#">Link 2</a></li>
-        <li><a href="#">Link 3</a></li>
+        <li><a href="#">Home</a></li>
+        <li><a href="#">About Me</a></li>
+        <li><a href="#">Contact</a></li>
       </ul>
     </div>
-    <script>
-      document.querySelector('audio').play();
-    </script>
-    <div class="content">
+    <div class="entry">
+      <img src="media/robot-backflip.gif">
+      <div class="date">April 8, 2023</div>
+      <p>Overhauling website with ChatGPT</p>
+    </div>
+    <div class="previous-posts">
       <div class="entry">
         <img src="media/jpdance-nichijou.gif">
-        <div class="date">April 8, 2023</div>
-        <p>Overhauling website with ChatGPT</p>
-      </div>
-      <div class="previous-posts">
-        <h2>Previous Posts</h2>
-        <div class="previous-post">
-          <img src="media/mio-mio-chan.gif">
-          <div class="date">April 7, 2023</div>
-          <p>Created the site! Will be posting cool stuff soon.</p>
-        </div>
-        <div class="previous-post">
-          <img src="media/kanon-smiling.gif">
-          <div class="date">April 6, 2023</div>
-          <p>Today I saw a really cute cat. It was sleeping in a box.</p>
-        </div>
-        <!-- add more previous posts here -->
-      </div>
+        <div class="date">April 7, 2023</div>
+        <p>Created the site! Will be posting cool stuff soon.</p>
+      </div> 
     </div>
   </body>
 </html>
-
