@@ -31,31 +31,40 @@
         font-size: 24px;
         margin-top: 12px;
       }
-      .sidebar {
+      #sidebar {
         position: fixed;
-        top: 0;
-        right: -200px;
-        width: 200px;
-        height: 100%;
-        padding-top: 50px;
-        background-color: rgba(173, 216, 230, 0.7);
-        transition: all 0.5s ease-in-out;
-      }
-      .sidebar:hover {
         right: 0;
+        top: 0;
+        bottom: 0;
+        width: 100px;
+        background-color: rgba(0, 191, 255, 0.7);
+        opacity: 0.7;
+        transition: width 0.5s;
+        overflow: hidden;
       }
-      .sidebar ul {
-        list-style: none;
-        padding-left: 0;
-        text-align: right;
+      #sidebar:hover {
+        width: 200px;
       }
-      .sidebar li {
+      #sidebar ul {
+        list-style-type: none;
+        margin: 0;
+        padding: 0;
+      }
+      #sidebar li {
+        margin: 5px 0;
+        text-align: center;
+      }
+      #sidebar a {
+        display: block;
+        color: white;
+        text-decoration: none;
+        font-weight: bold;
         padding: 10px;
       }
-      .sidebar li:hover {
-        background-color: #FFFFFF;
-      }
-      .previous-posts {
+      #sidebar a:hover {
+        background-color: rgba(255, 255, 255, 0.5);
+        color: black;
+      }      .previous-posts {
         width: 35%;
         margin-right: 5%;
       }
