@@ -12,48 +12,12 @@
       }
       body {
         overflow-y: scroll; /* adds vertical scrolling */
-        display: flex;
-      }
-      #sidebar {
-        position: fixed;
-        right: 0;
-        top: 0;
-        bottom: 0;
-        width: 100px;
-        background-color: rgba(0, 191, 255, 0.7);
-        opacity: 0.7;
-        transition: width 0.5s;
-        overflow: hidden;
-      }
-      #sidebar:hover {
-        width: 200px;
-      }
-      #sidebar ul {
-        list-style-type: none;
-        margin: 0;
-        padding: 0;
-      }
-      #sidebar li {
-        margin: 5px 0;
-        text-align: center;
-      }
-      #sidebar a {
-        display: block;
-        color: white;
-        text-decoration: none;
-        font-weight: bold;
-        padding: 10px;
-      }
-      #sidebar a:hover {
-        background-color: rgba(255, 255, 255, 0.5);
-        color: black;
       }
       .entry {
         display: flex;
         flex-direction: column;
         align-items: center;
         margin-bottom: 50px;
-        margin-left: 100px;
       }
       .entry img {
         width: 400px;
@@ -64,35 +28,97 @@
         font-size: 24px;
         margin-top: 12px;
       }
+      .previous-posts {
+        margin-top: 100px;
+      }
+      .previous-posts h2 {
+        text-align: center;
+        font-size: 36px;
+        margin-bottom: 50px;
+      }
+      .previous-post {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        margin-bottom: 50px;
+      }
+      .previous-post img {
+        width: 300px;
+        height: 200px;
+      }
+      .previous-post .date {
+        font-family: Arial, sans-serif;
+        font-size: 18px;
+        margin-top: 12px;
+      }
+      .previous-post p {
+        margin-top: 10px;
+      }
+    #sidebar {
+        position: fixed;
+        top: 0;
+        right: 0;
+        width: 200px;
+        height: 100%;
+        background-color: rgba(173,216,230,0.7);
+        z-index: 1;
+        display: none;
+      }
+      #sidebar:hover {
+        display: block;
+      }
+      #sidebar a {
+        display: block;
+        padding: 10px;
+        color: white;
+        text-align: center;
+        font-size: 20px;
+        text-decoration: none;
+      }
+      #sidebar a:hover {
+        background-color: white;
+        color: black;
+      }
     </style>
   </head>
   <body>
-    <div id="sidebar">
-      <ul>
-        <li><a href="#">About me</a></li>
-        <li><a href="#">Projects</a></li>
-        <li><a href="#">Contact</a></li>
-      </ul>
-    </div>
-    <embed src="media/soft.mp3" loop="true" autostart="true" width="2" height="0">
+   <audio src="media/soft.mp3" loop="true"></audio>
     <center>
       <a href="https://github.com/jc-cr"><img src="media/yuuko-laugh.gif" width="468" height="200" border="0"></a>
     </center>
     <br><br>
-    <div style="text-align: center;">
-      <font size="8" face="Lucida, Lucida Calligraphy" color="#000000">
-        <b>Welcome to my page!!!!! </b>
-      </font>
+    <div class="sidebar">
+      <h2>About Me</h2>
+      <ul>
+        <li><a href="#">Link 1</a></li>
+        <li><a href="#">Link 2</a></li>
+        <li><a href="#">Link 3</a></li>
+      </ul>
     </div>
-    <div class="entry">
-      <img src="media/jpdance-nichijou.gif">
-      <div class="date">April 8, 2023</div>
-      <p>Overhauling website with ChatGPT</p>
+    <script>
+      document.querySelector('audio').play();
+    </script>
+    <div class="content">
+      <div class="entry">
+        <img src="media/jpdance-nichijou.gif">
+        <div class="date">April 8, 2023</div>
+        <p>Overhauling website with ChatGPT</p>
+      </div>
+      <div class="previous-posts">
+        <h2>Previous Posts</h2>
+        <div class="previous-post">
+          <img src="media/mio-mio-chan.gif">
+          <div class="date">April 7, 2023</div>
+          <p>Created the site! Will be posting cool stuff soon.</p>
+        </div>
+        <div class="previous-post">
+          <img src="media/kanon-smiling.gif">
+          <div class="date">April 6, 2023</div>
+          <p>Today I saw a really cute cat. It was sleeping in a box.</p>
+        </div>
+        <!-- add more previous posts here -->
+      </div>
     </div>
-    <div class="entry">
-      <img src="media/mio-mio-chan.gif">
-      <div class="date">April 7, 2023</div>
-      <p>Created the site! Will be posting cool stuff soon.</p>
-    </div> 
   </body>
 </html>
+
