@@ -74,6 +74,8 @@ body {
   font-size: 24px;
 }
 
+
+
 #sidebar {
   position: fixed;
   right: 0;
@@ -116,4 +118,26 @@ body {
 
 #sidebar:hover + .post {
   margin-left: 50px;
+}
+
+/* Mobile view adjustments */
+@media screen and (max-width: 768px) {
+  .post {
+    width: 100%;
+    margin-left: 0;
+    margin-right: 0;
+    padding: 10px;
+  }
+
+  #sidebar {
+    width: 50px;
+  }
+
+  #sidebar:hover {
+    width: 100%;
+  }
+
+  #sidebar:hover + .post {
+    margin-left: 0;
+  }
 }
