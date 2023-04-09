@@ -1,5 +1,5 @@
 html {
-  background: url(media/wakaba-girl.gif) no-repeat center center fixed;
+  background: url(media/finger.gif) no-repeat center center fixed;
   -webkit-background-size: cover;
   -moz-background-size: cover;
   -o-background-size: cover;
@@ -23,10 +23,10 @@ body {
   position: relative;
   padding: 20px;
   background-color: rgba(255, 255, 255, 0.7);  
-  border-radius: 10px; /* Add rounded corners to the post box */
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2); /* Add a shadow effect to the post box */
-  min-height: calc(100vh - 120px); /* Extend the post box to the bottom of the page */
-  margin-left: 100px; /* Add margin to center post and create space between post and sidebar */
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+  min-height: calc(100vh - 120px);
+  margin-right: 100px; /* Add margin to center post and create space between post and sidebar */
   transition: margin-left 0.5s ease-in-out;
 }
 
@@ -35,7 +35,6 @@ body {
   max-height: 400px;
   max-width: 400px;
   border-radius: 10px; /* Add rounded corners */
-
 }
 
 .post li img {
@@ -50,31 +49,32 @@ body {
   margin-top: 12px;
 }
 
-
-/* Changes for project links */
 .post ul {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  margin: 0;
+  margin: 20px 0 0 0; /* add margin to create space between project links and previous content */
   padding: 0;
+  list-style: none; /* remove bullet points */
 }
 
-
 .post li {
-  margin: 20px 0;
-  text-align: center;
-  list-style: none; /* Remove bullet points */
+  margin: 0;
+  padding: 20px;
+  border: 1px solid rgba(0, 0, 0, 0.1); /* add a border to each project link */
+  border-radius: 10px; /* add rounded corners to the border */
+  background-color: rgba(255, 255, 255, 0.7); /* add a semi-transparent white background */
+  transition: all 0.2s ease-in-out; /* add a transition effect on hover */
+}
+
+.post li:hover {
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2); /* add a shadow effect on hover */
 }
 
 .post a {
   display: block;
-  color: purple; /* Change color to purple */
+  color: purple;
   text-decoration: none;
   font-size: 24px;
+  padding: 20px;
 }
-
-
 
 #sidebar {
   position: fixed;
@@ -119,26 +119,3 @@ body {
 #sidebar:hover + .post {
   margin-left: 50px;
 }
-
-/* Mobile view adjustments */
-@media screen and (max-width: 768px) {
-  .post, body.projects-page .post {
-    width: 100%;
-    margin-left: 0;
-    margin-right: 0;
-    padding: 10px;
-  }
-
-  #sidebar {
-    width: 50px;
-  }
-
-  #sidebar:hover {
-    width: 100%;
-  }
-
-  body.projects-page #sidebar:hover + .post {
-    margin-left: 0;
-  }
-}
-
