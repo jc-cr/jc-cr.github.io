@@ -1,0 +1,122 @@
+html {
+  background: url(media/simple.gif) no-repeat center center fixed;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+}
+
+body {
+  overflow-y: scroll;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  min-height: 100vh; /* Ensure body takes up at least the full height of the viewport */
+}
+
+.post {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 50px;
+  width: 60%;
+  position: fixed;
+  padding: 20px;
+  background-color: rgba(255, 255, 255, 0.7);  
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+  min-height: calc(100vh - 120px);
+  margin-right: 100px; /* Add margin to center post and create space between post and sidebar */
+  transition: margin-left 0.5s ease-in-out;
+}
+
+.post img {
+  width: 100%;
+  max-height: 400px;
+  max-width: 400px;
+  border-radius: 10px; /* Add rounded corners */
+}
+
+.post li img {
+  max-width: 100%;
+  max-height: 150px; /* Adjust height as needed */
+  border-radius: 10px; /* Add rounded corners */
+}
+
+.post .date {
+  font-family: Arial, sans-serif;
+  font-size: 24px;
+  margin-top: 12px;
+}
+
+.post ul {
+  margin: 20px 0 0 0; /* add margin to create space between project links and previous content */
+  padding: 0;
+  list-style: none; /* remove bullet points */
+}
+
+.post li {
+  margin: 0;
+  padding: 20px;
+  border: 1px solid rgba(0, 0, 0, 0.1); /* add a border to each project link */
+  border-radius: 10px; /* add rounded corners to the border */
+  background-color: rgba(255, 255, 255, 0.7); /* add a semi-transparent white background */
+  transition: all 0.2s ease-in-out; /* add a transition effect on hover */
+  width: 90%; /* Adjust the width as desired */
+}
+
+.post li:hover {
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2); /* add a shadow effect on hover */
+}
+
+.post a {
+  display: block;
+  color: purple;
+  text-decoration: none;
+  font-size: 24px;
+  padding: 20px;
+}
+
+#sidebar {
+  position: fixed;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  width: 100px;
+  background-color: rgba(0, 191, 255, 0.7);
+  opacity: 0.7;
+  transition: width 0.5s;
+  overflow: hidden;
+}
+
+#sidebar:hover {
+  width: 200px;
+}
+
+#sidebar ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+
+#sidebar li {
+  margin: 5px 0;
+  text-align: center;
+}
+
+#sidebar a {
+  display: block;
+  color: white;
+  text-decoration: none;
+  font-weight: bold;
+  padding: 10px;
+}
+
+#sidebar a:hover {
+  background-color: rgba(255, 255, 255, 0.5);
+  color: black;
+}
+
+#sidebar:hover + .post {
+  margin-left: 50px;
+}
