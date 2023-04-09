@@ -26,6 +26,8 @@ body {
   border-radius: 10px; /* Add rounded corners to the post box */
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.2); /* Add a shadow effect to the post box */
   min-height: calc(100vh - 120px); /* Extend the post box to the bottom of the page */
+  margin-left: 100px; /* Add margin to center post and create space between post and sidebar */
+  transition: margin-left 0.5s ease-in-out;
 }
 
 .post img {
@@ -38,6 +40,30 @@ body {
   font-family: Arial, sans-serif;
   font-size: 24px;
   margin-top: 12px;
+}
+
+
+/* Changes for project links */
+.post ul {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 0;
+  padding: 0;
+}
+
+
+.post li {
+  margin: 20px 0;
+  text-align: center;
+  list-style: none; /* Remove bullet points */
+}
+
+.post a {
+  display: block;
+  color: purple; /* Change color to purple */
+  text-decoration: none;
+  font-size: 24px;
 }
 
 #sidebar {
@@ -80,21 +106,6 @@ body {
   color: black;
 }
 
-.previous-posts .post {
-  margin-bottom: 20px;
-}
-
-.previous-posts {
-  display: none;
-}
-
-#show-previous-posts:hover + .previous-posts {
-  display: block;
-}
-
-#show-previous-posts {
-  margin: 5px 0;
-  text-align: center;
-  font-weight: bold;
-  cursor: pointer;
+#sidebar:hover + .post {
+  margin-left: 50px;
 }
