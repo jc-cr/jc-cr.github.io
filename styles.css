@@ -11,6 +11,7 @@ body {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  min-height: 100vh; /* Ensure body takes up at least the full height of the viewport */
 }
 
 .post {
@@ -21,7 +22,10 @@ body {
   width: 60%;
   position: relative;
   padding: 20px;
-  background-color: rgba(255, 255, 255, 0.7);
+  background-color: rgba(255, 255, 255, 0.7);  
+  border-radius: 10px; /* Add rounded corners to the post box */
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2); /* Add a shadow effect to the post box */
+  min-height: calc(100vh - 120px); /* Extend the post box to the bottom of the page */
 }
 
 .post img {
