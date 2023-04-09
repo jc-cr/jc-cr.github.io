@@ -1,8 +1,5 @@
 html {
   background: url(media/simple.gif) no-repeat center center fixed;
-  -webkit-background-size: cover;
-  -moz-background-size: cover;
-  -o-background-size: cover;
   background-size: cover;
 }
 
@@ -11,7 +8,8 @@ body {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  min-height: 100vh; /* Ensure body takes up at least the full height of the viewport */
+  min-height: 100vh;
+  font-family: 'Open Sans', sans-serif;
 }
 
 .post {
@@ -22,11 +20,11 @@ body {
   width: 60%;
   position: relative;
   padding: 20px;
-  background-color: rgba(255, 255, 255, 0.7);  
+  background-color: rgba(255, 255, 255, 0.7);
   border-radius: 10px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
   min-height: calc(100vh - 120px);
-  margin-right: 100px; /* Add margin to center post and create space between post and sidebar */
+  margin-right: 100px;
   transition: margin-left 0.5s ease-in-out;
 }
 
@@ -34,45 +32,60 @@ body {
   width: 100%;
   max-height: 400px;
   max-width: 400px;
-  border-radius: 10px; /* Add rounded corners */
+  border-radius: 10px;
 }
 
 .post li img {
   max-width: 100%;
-  max-height: 150px; /* Adjust height as needed */
-  border-radius: 10px; /* Add rounded corners */
+  max-height: 150px;
+  border-radius: 10px;
+}
+
+.post h2 { /* Style the post title */
+  font-size: 28px;
+  font-weight: bold;
+  margin-bottom: 10px;
+  text-align: center;
 }
 
 .post .date {
-  font-family: Arial, sans-serif;
-  font-size: 24px;
-  margin-top: 12px;
+  font-size: 14px;
+  font-style: italic;
+  margin-bottom: 5px;
+  text-align: right;
+  width: 100%;
 }
+
+.post p {
+  font-size: 16px;
+  line-height: 1.6;
+  text-align: justify;
+}
+
 
 .post ul {
-  margin: 20px 0 0 0; /* add margin to create space between project links and previous content */
+  margin: 20px 0 0;
   padding: 0;
-  list-style: none; /* remove bullet points */
+  list-style: none;
   justify-content: center;
   align-items: center;
-
 }
 
+
 .post li {
-  margin: 0 20px; /* add margin to create space between project links and previous content */
+  margin: 0 20px;
   padding: 20px;
-  border: 1px solid rgba(0, 0, 0, 0.1); /* add a border to each project link */
-  border-radius: 10px; /* add rounded corners to the border */
-  background-color: rgba(255, 255, 255, 0.7); /* add a semi-transparent white background */
-  transition: all 0.2s ease-in-out; /* add a transition effect on hover */
-  width: 90%; /* set the width of each project element */
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  border-radius: 10px;
+  background-color: rgba(255, 255, 255); /* Change the background-color to white with less opacity */
+  transition: all 0.2s ease-in-out;
+  width: 90%;
   margin-left: auto;
   margin-right: auto;
 }
 
-
 .post li:hover {
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2); /* add a shadow effect on hover */
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
 }
 
 .post a {
@@ -124,5 +137,12 @@ body {
 }
 
 #sidebar:hover + .post {
-  margin-left: 50px;
+  margin-left: 50px
 }
+
+/* Style header */
+header {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
