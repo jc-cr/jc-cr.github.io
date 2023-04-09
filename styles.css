@@ -122,7 +122,7 @@ body {
 
 /* Mobile view adjustments */
 @media screen and (max-width: 768px) {
-  .post {
+  .post, body.projects-page .post {
     width: 100%;
     margin-left: 0;
     margin-right: 0;
@@ -137,7 +137,8 @@ body {
     width: 100%;
   }
 
-  #sidebar:hover + .post {
+  body.projects-page #sidebar:hover + .post {
     margin-left: 0;
   }
 }
+
