@@ -1,6 +1,7 @@
 html {
   background: url(media/simple.gif) no-repeat center center fixed;
   background-size: cover;
+  min-height: 100%;
 }
 
 body {
