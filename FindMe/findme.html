@@ -37,6 +37,22 @@
 	
 	<h2>Project Notes</h2>
 	
+	
+	<h3>Combining Azimuth Estimations and Keyword Spotting</h3>
+	<div class="date">Apr 10, 2023</div>
+	<div class="project-note-content">
+
+	  <p>So at a high level for processign the audio, I plan on doing as follows: </p>
+
+	  <div class="bullet-point">&#8226; <strong>Keyword spotting</strong>: Use one of the pretrained models from the ML-KWS-for-MCU repository to detect the "Hey robot" command in the audio stream. The keyword spotting model will output a confidence score indicating how likely it is that the command was spoken. You can set a threshold on this score to decide when the command is detected.</div>
+
+	  <div class="bullet-point">&#8226; <strong>Audio buffering</strong>: While performing keyword spotting, store the incoming audio data in a circular buffer. The buffer should be large enough to hold the audio data corresponding to a small time window around the detected keyword.</div>
+
+	  <div class="bullet-point">&#8226; <strong>Azimuth estimation on detection</strong>: When the keyword spotting model detects the "Hey robot" command, use the audio data in the buffer to perform azimuth estimation. Since you're only calculating azimuth when a keyword is detected, this will reduce the computational load.</div>
+
+	  <p>By following this approach, you optimize the system by performing azimuth estimation only when necessary.</p>
+
+
 	<h3> Getting Started </h3>
 	<div class="date">Apr 10, 2023</div>
 	<div class="project-note-content">
