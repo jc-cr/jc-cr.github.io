@@ -1,0 +1,82 @@
+/* styles.css */
+* {
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Open Sans', sans-serif;
+    color: #333;
+    background-color: #f2f2f2;
+    margin: 0;
+    padding: 0;
+}
+
+nav {
+    display: flex;
+    justify-content: space-between;
+    padding: 20px;
+    background-color: #ddd;
+}
+
+#links {
+    align-self: center;
+}
+
+#links a {
+    margin-left: 15px;
+    color: #333;
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+#links a:hover {
+    color: #888;
+}
+
+main {
+    padding: 20px;
+}
+
+section {
+    margin-bottom: 20px;
+}
+
+#projects {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+
+.project {
+    flex: 0 1 calc(50% - 20px);
+    margin-bottom: 20px;
+    background-color: #fff;
+    padding: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    transition: box-shadow 0.3s ease;
+}
+
+.project:hover {
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+}
+
+.project img {
+    max-width: 100%;
+}
+
+footer {
+    padding: 20px;
+    background-color: #ddd;
+    text-align: center;
+}
+
+footer a {
+    margin: 0 10px;
+    color: #333;
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+footer a:hover {
+    color: #888;
+}

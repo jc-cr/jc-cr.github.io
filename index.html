@@ -3,25 +3,32 @@
 <head>
     <title>Your Name - Portfolio</title>
     <link rel="stylesheet" type="text/css" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;600&display=swap" rel="stylesheet">
 </head>
 <body>
-    <header>
+    <nav>
         <h1>Your Name</h1>
-        <p>Brief bio here...</p>
-    </header>
+        <div id="links">
+            <a href="#projects">Projects</a>
+            <a href="#contact">Contact</a>
+        </div>
+    </nav>
     <main>
+        <section id="intro">
+            <p>Brief bio here...</p>
+        </section>
         <section id="projects">
             <!-- Project 1 -->
             <div class="project">
                 <img src="path/to/project1-poster.jpg" alt="Project 1">
                 <h2>Project 1 Title</h2>
                 <p>Project 1 Description</p>
-                <a href="link-to-project1-on-github">Github</a>
+                <a href="link-to-project1-on-github">View on Github</a>
             </div>
             <!-- More projects here... -->
         </section>
     </main>
-    <footer>
+    <footer id="contact">
         <a href="link-to-github-profile">GitHub</a>
         <a href="link-to-gitlab-profile">GitLab</a>
         <a href="link-to-linkedin-profile">LinkedIn</a>
