@@ -1,82 +1,49 @@
-/* styles.css */
-* {
-    box-sizing: border-box;
-}
-
 body {
     font-family: 'Open Sans', sans-serif;
     color: #333;
-    background-color: #f2f2f2;
+    background-color: #fff;
     margin: 0;
     padding: 0;
 }
 
-nav {
-    display: flex;
-    justify-content: space-between;
-    padding: 20px;
-    background-color: #ddd;
+header {
+    background-color: #333;
+    color: #fff;
+    padding: 10px 0;
+    text-align: center;
+    border-bottom: 1px solid #ccc;
 }
 
-#links {
-    align-self: center;
+nav ul {
+    list-style-type: none;
+    padding: 0;
+    text-align: center;
+    background-color: #f2f2f2;
+    border-bottom: 1px solid #ccc;
 }
 
-#links a {
-    margin-left: 15px;
+nav ul li {
+    display: inline;
+    margin: 0 10px;
+}
+
+nav ul li a {
     color: #333;
     text-decoration: none;
-    transition: color 0.3s ease;
-}
-
-#links a:hover {
-    color: #888;
-}
-
-main {
-    padding: 20px;
 }
 
 section {
-    margin-bottom: 20px;
-}
-
-#projects {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-between;
-}
-
-.project {
-    flex: 0 1 calc(50% - 20px);
-    margin-bottom: 20px;
-    background-color: #fff;
-    padding: 10px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    transition: box-shadow 0.3s ease;
-}
-
-.project:hover {
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
-}
-
-.project img {
-    max-width: 100%;
+    margin: 20px;
+    border-bottom: 1px solid #ccc;
+    padding-bottom: 20px;
 }
 
 footer {
-    padding: 20px;
-    background-color: #ddd;
+    background-color: #333;
+    color: #fff;
     text-align: center;
-}
-
-footer a {
-    margin: 0 10px;
-    color: #333;
-    text-decoration: none;
-    transition: color 0.3s ease;
-}
-
-footer a:hover {
-    color: #888;
+    padding: 10px 0;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
 }
