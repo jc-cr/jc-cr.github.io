@@ -2,8 +2,7 @@
 <html>
 <head>
     <link rel="stylesheet" type="text/css" href="styles.css">
-    <link href="https://fonts.googleapis.com/css2?family=Open+Sans&display=swap" rel="stylesheet">
-		<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Mono&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Mono&display=swap" rel="stylesheet">
 </head>
 <body>
     <header>
@@ -11,25 +10,31 @@
     </header>
     <nav>
         <ul class="tree-view">
-            <li><a href="#projects">. ├── Projects</a></li>
-            <li><a href="#research">. ├── Research</a></li>
-            <li><a href="#bio">. └── Bio</a></li>
+            <li><a href="#projects" onclick="toggle('projects')">├── Projects</a>
+                <ul id="projects" class="hidden">
+                    <li><a href="#">├── Project 1</a></li>
+                    <li><a href="#">└── Project 2</a></li>
+                </ul>
+            </li>
+            <li><a href="#research" onclick="toggle('research')">├── Research</a>
+                <ul id="research" class="hidden">
+                    <li><a href="#">├── Research 1</a></li>
+                    <li><a href="#">└── Research 2</a></li>
+                </ul>
+            </li>
+            <li><a href="#bio" onclick="toggle('bio')">└── Bio</a>
+                <ul id="bio" class="hidden">
+                    <li><a href="#">└── Bio details</a></li>
+                </ul>
+            </li>
         </ul>
     </nav>
-    <section id="projects">
-        <h2>My Projects</h2>
-        <!-- Add your project details here -->
-    </section>
-    <section id="research">
-        <h2>My Research</h2>
-        <!-- Add your research details here -->
-    </section>
-    <section id="bio">
-        <h2>About Me</h2>
-        <!-- Add your bio here -->
+    <section id="content">
+        <!-- The content will be displayed here -->
     </section>
     <footer>
         <p>Copyright © 2023</p>
     </footer>
+    <script src="script.js"></script>
 </body>
 </html>
