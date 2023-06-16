@@ -20,6 +20,7 @@ nav ul.tree-view {
     text-align: left;
     background-color: #f6f8fa;
     font-family: 'Noto Sans Mono', monospace;
+    font-size: 20px; /* Increase the font size */
 }
 
 nav ul.tree-view li {
