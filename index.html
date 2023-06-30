@@ -10,132 +10,68 @@
     </header>
     <nav>
         <ul class="tree-view">
-            <li><a href="#Top10NutMilks">├── Reviews</a>
+            <li><a href="javascript:void(0);" onclick="toggle('Top10NutMilks')">├── Top 10 Nut Milks</a>
                 <ul id="Top10NutMilks" class="hidden">
-                    <li><a href="#Oatmilk">├── Top 1</a>
+                    <li><a href="javascript:void(0);" onclick="toggle('Oatmilk')">├── Top 1</a>
                         <ul id="Oatmilk" class="hidden">
                             <li>
-                                <div class="review-content">
+                                <div class="text-content">
                                     Oatmilk is top nut milk. So good and creamy flavour.
                                 </div>
                             </li>
                         </ul>
                     </li>
-                    <li><a href="#Coconut">├── Top 2</a>
+                    <li><a href="javascript:void(0);" onclick="toggle('Coconut')">├── Top 2</a>
                         <ul id="Coconut" class="hidden">
                             <li>
-                                <div class="review-content">
+                                <div class="text-content">
                                     Clean hydrating. Good but better to eat.
                                 </div>
                             </li>
                         </ul>
                     </li>
-                    <li><a href="#Almond">├── Top 3</a>
+                    <li><a href="javascript:void(0);" onclick="toggle('Almond')">└── Top 3</a>
                         <ul id="Almond" class="hidden">
                             <li>
-                                <div class="review-content">
+                                <div class="text-content">
                                     Almond milk, the classic. Tastes like almonds are whispering secrets to your taste buds.
                                 </div>
                             </li>
                         </ul>
                     </li>
-                    <li><a href="#Soy">├── Top 4</a>
-                        <ul id="Soy" class="hidden">
-                            <li>
-                                <div class="review-content">
-                                    Soy milk, the OG. It's like a bean turned into a cloud and rained deliciousness.
-                                </div>
-                            </li>
-                        </ul>
-                    </li>
-                    <li><a href="#Cashew">├── Top 5</a>
-                        <ul id="Cashew" class="hidden">
-                            <li>
-                                <div class="review-content">
-                                    Cashew milk, so nutty it should be a stand-up comedian.
-                                </div>
-                            </li>
-                        </ul>
-                    </li>
-                    <li><a href="#Rice">├── Top 6</a>
-                        <ul id="Rice" class="hidden">
-                            <li>
-                                <div class="review-content">
-                                    Rice milk, because sometimes you want your milk to taste like the essence of rice paddies.
-                                </div>
-                            </li>
-                        </ul>
-                    </li>
-                    <li><a href="#Hemp">├── Top 7</a>
-                        <ul id="Hemp" class="hidden">
-                            <li>
-                                <div class="review-content">
-                                    Hemp milk, for when you want to feel like a hipster pioneer on the nut milk frontier.
-                                </div>
-                            </li>
-                        </ul>
-                    </li>
-                    <li><a href="#Pea">├── Top 8</a>
-                        <ul id="Pea" class="hidden">
-                            <li>
-                                <div class="review-content">
-                                    Pea milk, because peas need love too. Surprisingly not green.
-                                </div>
-                            </li>
-                        </ul>
-                    </li>
-                    <li><a href="#Macadamia">├── Top 9</a>
-                        <ul id="Macadamia" class="hidden">
-                            <li>
-                                <div class="review-content">
-                                    Macadamia milk, the fancy cousin that shows up to family gatherings in a top hat.
-                                </div>
-                            </li>
-                        </ul>
-                    </li>
-                    <liIt seems like the last part of the HTML got cut off. Here's the continuation and completion of the HTML:
-
-        ```html
-                    <li><a href="#Hazelnut">└── Top 10</a>
-                        <ul id="Hazelnut" class="hidden">
-                            <li>
-                                <div class="review-content">
-                                    Hazelnut milk, it's like drinking a hug from a Nutella jar.
-                                </div>
-                            </li>
-                        </ul>
-                    </li>
                 </ul>
             </li>
 
-
-            <li><a href="#projects">├── Projects</a>
-                <ul id="projects" class="hidden">
-                    <li><a href="#">├── Project 1</a></li>
-                    <li><a href="#">└── Project 2</a></li>
-                </ul>
+            <li><a href="javascript:void(0);" onclick="toggle('Projects')" class="active">├── Projects</a>
+                <ul id="Projects">
+                    <li><a href="javascript:void(0);" onclick="toggle('Project1')">├── Project 1</a>
             </li>
 
-
-            <li><a href="#research">├── Research</a>
-                <ul id="research" class="hidden">
-                    <li><a href="#">├── Research 1</a></li>
-                    <li><a href="#">└── Research 2</a></li>
+            <li><a href="javascript:void(0);" onclick="toggle('Bio')">├── Bio</a>
+                <ul id="Bio" class="hidden">
+                    <li>
+                        <div class="text-content">
+                            I am a student at the University of AI. I am studying to become a robot.
+                        </div>
+                    </li>
                 </ul>
+
             </li>
-
-
-            <li><a href="#bio">└── Bio</a>
-                <ul id="bio" class="hidden">
-                    <li><a href="#">└── Bio details</a></li>
-                </ul>
-            </li>
-
 
         </ul>
     </nav>
     <footer>
         <p>Copyright © 1893</p>
     </footer>
+    <script>
+        function toggle(id) {
+            var element = document.getElementById(id);
+            if (element.classList.contains('hidden')) {
+                element.classList.remove('hidden');
+            } else {
+                element.classList.add('hidden');
+            }
+        }
+    </script>
 </body>
 </html>

@@ -1,5 +1,5 @@
 body {
-    font-family: 'Open Sans', sans-serif;
+    font-family: 'Noto Sans Mono', monospace;
     color: #24292e;
     background-color: #f6f8fa;
     margin: 0;
@@ -19,7 +19,6 @@ nav ul.tree-view {
     padding: 0;
     text-align: left;
     background-color: #f6f8fa;
-    font-family: 'Noto Sans Mono', monospace;
     font-size: 20px;
 }
 
@@ -34,21 +33,19 @@ nav ul.tree-view li a {
 
 nav ul.tree-view ul {
     margin-left: 20px;
-    list-style-type: none; /* Remove bullet points */
 }
 
 nav ul.tree-view ul.hidden {
     display: none;
 }
 
-nav ul.tree-view ul.hidden:target {
-    display: block; /* Show elements when they are the target */
-}
-
-section {
-    margin: 20px;
-    border-bottom: 1px solid #e1e4e8;
-    padding-bottom: 20px;
+.text-content {
+    background-color: #f6f8fa;
+    color: #24292e;
+    padding: 10px;
+    margin-left: 40px;
+    font-size: 18px;
+    border-left: 3px solid #0366d6;
 }
 
 footer {
@@ -59,14 +56,4 @@ footer {
     position: fixed;
     bottom: 0;
     width: 100%;
-}
-
-.review-content {
-    background-color: #f6f8fa;
-    color: #24292e;
-    padding: 10px;
-    margin-left: 40px;
-    font-family: 'Noto Sans Mono', monospace;
-    font-size: 18px;
-    border-left: 3px solid #0366d6;
 }
