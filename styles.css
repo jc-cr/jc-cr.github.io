@@ -60,3 +60,13 @@ footer {
     bottom: 0;
     width: 100%;
 }
+
+.review-content {
+    background-color: #f6f8fa;
+    color: #24292e;
+    padding: 10px;
+    margin-left: 40px;
+    font-family: 'Noto Sans Mono', monospace;
+    font-size: 18px;
+    border-left: 3px solid #0366d6;
+}
