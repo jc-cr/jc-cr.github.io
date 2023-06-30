@@ -20,7 +20,7 @@ nav ul.tree-view {
     text-align: left;
     background-color: #f6f8fa;
     font-family: 'Noto Sans Mono', monospace;
-    font-size: 20px; /* Increase the font size */
+    font-size: 20px;
 }
 
 nav ul.tree-view li {
@@ -34,10 +34,15 @@ nav ul.tree-view li a {
 
 nav ul.tree-view ul {
     margin-left: 20px;
+    list-style-type: none; /* Remove bullet points */
 }
 
 nav ul.tree-view ul.hidden {
     display: none;
+}
+
+nav ul.tree-view ul.hidden:target {
+    display: block; /* Show elements when they are the target */
 }
 
 section {
