@@ -20,16 +20,17 @@ def read_yaml_front_matter(md_content):
         return front_matter, content
     return {}, md_content
 
-def read_header():
-    with open('markdown/header_top.md', 'r') as f:
+def read_index():
+    with open('markdown/index.md', 'r') as f:
         return f.read().replace('$WEBSITE', WEBSITE_URL)
 
-def convert_md_to_html(md_path, html_path, is_index=False):
-    with open(md_path, 'r') as f:
-        md_content = f.read()
-    
+def read_about():
+    with open('markdown/about/about.md', 'r') as f:
+        return f.read()
+
+def convert_md_to_html(md_content, html_path, is_index=False):
     front_matter, content = read_yaml_front_matter(md_content)
-    header_content = read_header()
+    header_content = read_index()
     
     # Convert header and main content to HTML
     header_html = markdown.markdown(header_content)
@@ -56,16 +57,17 @@ def convert_md_to_html(md_path, html_path, is_index=False):
             <p>{nav}</p>
         </header>
         <main>
-            {main_html if not is_index else ''}
+            {main_html}
         </main>
     </body>
     </html>
     """
 
     # Only create directories if html_path is not in the root
-    if os.path.dirname(html_path):
-        os.makedirs(os.path.dirname(html_path), exist_ok=True)
-    
+    dir_path = os.path.dirname(html_path)
+    if dir_path:
+        os.makedirs(dir_path, exist_ok=True)
+
     with open(html_path, 'w') as f:
         f.write(html)
 
@@ -84,7 +86,9 @@ def process_directory(src_dir, dest_dir):
                         date_parts = parts[1].split('-')[:3]
                         html_path = os.path.join(dest_dir, 'blog', *date_parts, parts[1], 'index.html')
                 
-                convert_md_to_html(md_path, html_path)
+                with open(md_path, 'r') as f:
+                    md_content = f.read()
+                convert_md_to_html(md_content, html_path)
             else:
                 # Copy non-markdown files (e.g., images) to the destination
                 src_path = os.path.join(root, file)
@@ -94,9 +98,14 @@ def process_directory(src_dir, dest_dir):
                 shutil.copy2(src_path, dest_path)
 
 def create_index():
-    convert_md_to_html('markdown/header_top.md', 'index.html', is_index=True)
+    header_content = read_index()
+    about_content = read_about()
+    combined_content = f"{header_content}\n\n{about_content}"
+    convert_md_to_html(combined_content, 'index.html', is_index=True)
 
 if __name__ == "__main__":
-    process_directory('markdown', '.')
+    # Generate all pages except index in auto_gen
+    process_directory('markdown', 'auto_gen')
+    # Create index.html in the root directory
     create_index()
-    print("Site generated in the current directory.")
+    print("Site generated. Other pages in 'auto_gen' directory, index.html in root.")
