@@ -62,7 +62,10 @@ def convert_md_to_html(md_path, html_path, is_index=False):
     </html>
     """
 
-    os.makedirs(os.path.dirname(html_path), exist_ok=True)
+    # Only create directories if html_path is not in the root
+    if os.path.dirname(html_path):
+        os.makedirs(os.path.dirname(html_path), exist_ok=True)
+    
     with open(html_path, 'w') as f:
         f.write(html)
 
