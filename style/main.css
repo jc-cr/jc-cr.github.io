@@ -35,6 +35,36 @@ a:hover {
     text-decoration: underline;
 }
 
+.tile-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+
+.tile {
+    border: 1px solid #ddd;
+    padding: 15px;
+    width: calc(33.333% - 20px);
+    box-sizing: border-box;
+}
+
+.tile img {
+    max-width: 100%;
+    height: auto;
+}
+
+@media (max-width: 768px) {
+    .tile {
+        width: calc(50% - 20px);
+    }
+}
+
+@media (max-width: 480px) {
+    .tile {
+        width: 100%;
+    }
+}
+
 main {
     padding-top: 20px;
 }
