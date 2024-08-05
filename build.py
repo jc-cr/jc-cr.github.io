@@ -24,7 +24,7 @@ def read_header():
     with open('markdown/header_top.md', 'r') as f:
         return f.read().replace('$WEBSITE', WEBSITE_URL)
 
-def convert_md_to_html(md_path, html_path):
+def convert_md_to_html(md_path, html_path, is_index=False):
     with open(md_path, 'r') as f:
         md_content = f.read()
     
@@ -47,7 +47,7 @@ def convert_md_to_html(md_path, html_path):
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>{front_matter.get('title', 'Untitled')} | JC's Website</title>
+        <title>{"Home" if is_index else front_matter.get('title', 'Untitled')} | JC's Website</title>
         <link rel="stylesheet" href="/style/main.css">
     </head>
     <body>
@@ -56,7 +56,7 @@ def convert_md_to_html(md_path, html_path):
             <p>{nav}</p>
         </header>
         <main>
-            {main_html}
+            {main_html if not is_index else ''}
         </main>
     </body>
     </html>
@@ -90,6 +90,10 @@ def process_directory(src_dir, dest_dir):
                 os.makedirs(os.path.dirname(dest_path), exist_ok=True)
                 shutil.copy2(src_path, dest_path)
 
+def create_index():
+    convert_md_to_html('markdown/header_top.md', 'index.html', is_index=True)
+
 if __name__ == "__main__":
-    process_directory('markdown', 'auto_gen')
-    print("Site generated in 'auto_gen' directory.")
+    process_directory('markdown', '.')
+    create_index()
+    print("Site generated in the current directory.")
