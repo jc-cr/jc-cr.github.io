@@ -1,0 +1,24 @@
+version: '3'
+services:
+  web:
+    build: .
+    ports:
+      - "8080:80"
+    volumes:
+      - .:/usr/share/nginx/html
+
+  converter:
+    build:
+      context: ./scripts
+      dockerfile: Dockerfile.converter
+    volumes:
+      - ./blog:/app/blog
+      - ./works:/app/works
+      - ./style/main.css:/app/style/main.css
+      - /tmp:/tmp
+      - /home/jc/Documents/General:/app/markdown_files
+    ports:
+      - "5000:5000"
+    environment:
+      - FLASK_ENV=development
+    command: python -u converter.py
