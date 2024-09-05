@@ -12,7 +12,4 @@ RUN pip install --no-cache-dir -r requirements.txt
 COPY converter.py .
 COPY templates templates/
 
-# For debugging, run as root
-USER root
-
 CMD ["python", "-u", "converter.py"]

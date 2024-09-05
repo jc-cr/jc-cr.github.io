@@ -22,3 +22,14 @@ services:
     environment:
       - FLASK_ENV=development
     command: python -u converter.py
+
+  post_updater:
+    build:
+      context: .
+      dockerfile: scripts/Dockerfile.post_updater
+    volumes:
+      - .:/app/site
+    command: python -u update_posts.py
+    user: "${UID}:${GID}"
+    environment:
+      - PYTHONUNBUFFERED=1
