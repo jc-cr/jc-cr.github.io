@@ -68,31 +68,34 @@ def create_html_template(css_path):
             css_content = f.read()
 
         template = f"""
-    <!DOCTYPE html>
-    <html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>$title$</title>
-        <style>
-        {css_content}
-        </style>
-    </head>
-    <body>
-        <header>
-            <h1><a href="/">JC's Website</a></h1>
-            <nav>
-                <a href="/about.html">About</a> |
-                <a href="/works/posts.html">Works</a> |
-                <a href="/blog/posts.html">Blog</a>
-            </nav>
-        </header>
-        <main>
-        $body$
-        </main>
-    </body>
-    </html>
-    """
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>$title$ - JC's Website</title>
+    <style>
+    {css_content}
+    </style>
+    <style>
+    /* Add any additional styles specific to this post here */
+    </style>
+</head>
+<body>
+    <header>
+        <h1><a href="/">JC's Website</a></h1>
+        <p>
+            <a href="../../about.html">About</a> |
+            <a href="../../works/posts.html">Works</a> |
+            <a href="../../blog/posts.html">Blog</a>
+        </p>
+    </header>
+    <main>
+    $body$
+    </main>
+</body>
+</html>
+"""
         return template
     except Exception as e:
         logger.error(f"Error creating HTML template: {str(e)}")
