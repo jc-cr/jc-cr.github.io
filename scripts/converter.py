@@ -64,9 +64,6 @@ def copy_images(content, src_dir, dest_dir):
 
 def create_html_template(css_path):
     try:
-        with open(css_path, 'r') as f:
-            css_content = f.read()
-
         template = f"""
 <!DOCTYPE html>
 <html lang="en">
@@ -74,20 +71,15 @@ def create_html_template(css_path):
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>$title$ - JC's Website</title>
-    <style>
-    {css_content}
-    </style>
-    <style>
-    /* Add any additional styles specific to this post here */
-    </style>
+    <link href="/style/main.css" rel="stylesheet"/>
 </head>
 <body>
     <header>
         <h1><a href="/">JC's Website</a></h1>
         <p>
-            <a href="../../about.html">About</a> |
-            <a href="../../works/posts.html">Works</a> |
-            <a href="../../blog/posts.html">Blog</a>
+            <a href="/about.html">About</a> |
+            <a href="/works/posts.html">Works</a> |
+            <a href="/blog/posts.html">Blog</a>
         </p>
     </header>
     <main>
