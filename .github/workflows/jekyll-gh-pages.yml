@@ -1,19 +1,15 @@
 name: Deploy Custom Site to GitHub Pages
-
 on:
   push:
     branches: ["main"]
   workflow_dispatch:
-
 permissions:
   contents: read
   pages: write
   id-token: write
-
 concurrency:
   group: "pages"
   cancel-in-progress: false
-
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -37,11 +33,14 @@ jobs:
       - name: Setup Pages
         uses: actions/configure-pages@v5
       
+      # Add this step to create CNAME file
+      - name: Create CNAME file
+        run: echo "jc-cr.com" > CNAME
+      
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
           path: '.'
-
   deploy:
     environment:
       name: github-pages
