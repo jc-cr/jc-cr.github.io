@@ -10,39 +10,65 @@ from dotenv import load_dotenv
 from registry_updater import PostRegistry
 
 class PostGenerator:
-    def __init__(self):
+    def __init__(self, base_dir: str = None):
         # Load environment variables
         load_dotenv()
         
-        # Set up Docker container paths
-        self.obsidian_path = Path('/input/obsidian')
-        self.post_path = Path('/input/post.md')
-        self.output_dir = Path('/app/webpage')
-        self.template_dir = Path('/app/templates')
+        # Use provided base_dir or determine based on environment
+        self.base_dir = Path(base_dir) if base_dir else self._get_base_dir()
+        
+        # Set up paths
+        if self._is_docker():
+            # Docker container paths
+            self.obsidian_path = Path('/input/obsidian')
+            self.post_path = Path('/input/post.md')
+            self.output_dir = Path('/app/webpage')
+            self.template_dir = Path('/app/templates')
+            self.registry = PostRegistry('/app/data/posts.db')
+        else:
+            # Local/GitHub Actions paths
+            self.obsidian_path = Path(os.getenv('OBSIDIAN_PATH', '')) if os.getenv('OBSIDIAN_PATH') else None
+            self.post_path = Path(os.getenv('POST_PATH', '')) if os.getenv('POST_PATH') else None
+            self.output_dir = self.base_dir / 'webpage'
+            self.template_dir = self.base_dir / 'templates'
+            self.registry = PostRegistry(str(self.base_dir / 'data' / 'posts.db'))
         
         # Initialize templates
         self.post_template = self.template_dir / 'post_template.html'
         self.index_template = self.template_dir / 'index_template.html'
         self.section_template = self.template_dir / 'section_template.html'
         
-        # Initialize registry
-        self.registry = PostRegistry('/app/data/posts.db')
-        
         # Clean configuration from env
         self.post_type = os.getenv('POST_TYPE', '').strip().strip('"\'')
         self.post_title = os.getenv('POST_TITLE', '').strip().strip('"\'')
         self.post_date = os.getenv('POST_DATE', '').strip().strip('"\'') or datetime.now().strftime('%Y-%m-%d')
         
-        # Validate environment
-        self._validate_environment()
-    
+        # Create necessary directories
+        self.output_dir.mkdir(parents=True, exist_ok=True)
+        if not self._is_docker():
+            (self.base_dir / 'data').mkdir(parents=True, exist_ok=True)
+
+    def _is_docker(self) -> bool:
+        """Check if running in Docker container"""
+        return os.path.exists('/.dockerenv')
+
+    def _get_base_dir(self) -> Path:
+        """Get base directory based on environment"""
+        if self._is_docker():
+            return Path('/app')
+        return Path.cwd()
+
     def _validate_environment(self):
         """Validate all required paths and configuration"""
-        if not self.obsidian_path.exists():
-            raise FileNotFoundError(f"Obsidian vault not found at container path: {self.obsidian_path}")
+        if self._is_docker():
+            if not self.obsidian_path.exists():
+                raise FileNotFoundError(f"Obsidian vault not found at container path: {self.obsidian_path}")
             
-        if not self.post_path.exists():
-            raise FileNotFoundError(f"Markdown file not found at container path: {self.post_path}")
+            if not self.post_path.exists():
+                raise FileNotFoundError(f"Markdown file not found at container path: {self.post_path}")
+
+        if not self.template_dir.exists():
+            raise FileNotFoundError(f"Template directory not found: {self.template_dir}")
             
         if not self.post_template.exists():
             raise FileNotFoundError(f"Template not found: {self.post_template}")
@@ -50,9 +76,9 @@ class PostGenerator:
         if not self.post_type:
             raise ValueError("POST_TYPE must be set in .env")
             
-        if not self.post_title:
+        if not self.post_title and self.post_path:
             self.post_title = self.post_path.stem
-    
+
     def _find_image(self, filename: str) -> Path:
         """Find image in mounted Obsidian vault"""
         filename = filename.strip()
@@ -109,6 +135,14 @@ class PostGenerator:
         
         return re.sub(wikilink_pattern, process_wikilink, content)
     
+    def _replace_template_vars(self, template: str, variables: dict) -> str:
+        """Replace all template variables with their values"""
+        result = template
+        for key, value in variables.items():
+            placeholder = f"{{{{ {key} }}}}"
+            result = result.replace(placeholder, str(value))
+        return result
+    
     def _generate_index_html(self):
         """Generate main index.html with latest posts"""
         with open(self.index_template, 'r', encoding='utf-8') as f:
@@ -120,14 +154,18 @@ class PostGenerator:
         # Generate latest posts HTML
         posts_html = ''
         for post in latest_posts:
-            post_url = f"webpage/{post['type']}/{post['path']}/post.html"
+            post_url = f"/webpage/{post['type']}/{post['path']}/post.html"
             posts_html += f'<li><a href="{post_url}">{post["title"]}</a> ({post["date"]})</li>\n'
         
-        # Replace placeholder
-        index_html = template.replace('{{ latest_posts }}', posts_html)
+        # Replace template variables
+        variables = {
+            'latest_posts': posts_html
+        }
+        index_html = self._replace_template_vars(template, variables)
         
-        # Write to webpage directory
-        with open( "/app/index.html", 'w', encoding='utf-8') as f:
+        # Write to root directory
+        index_path = self.base_dir / 'index.html'
+        with open(index_path, 'w', encoding='utf-8') as f:
             f.write(index_html)
     
     def _generate_section_html(self):
@@ -145,16 +183,19 @@ class PostGenerator:
                 post_url = f"{post['path']}/post.html"
                 posts_html += f'<li><a href="{post_url}">{post["title"]}</a> ({post["date"]})</li>\n'
             
-            # Replace placeholders
-            section_html = template.replace('{{ posts }}', posts_html)
-            section_html = section_html.replace('{{ section }}', section.title())
+            # Replace template variables
+            variables = {
+                'posts': posts_html,
+                'section': section.title()
+            }
+            section_html = self._replace_template_vars(template, variables)
             
             # Write section file
             section_dir = self.output_dir / section
             section_dir.mkdir(exist_ok=True)
             with open(section_dir / 'posts.html', 'w', encoding='utf-8') as f:
                 f.write(section_html)
-    
+
     def _update_registry(self, dir_name: str):
         """Update or insert post in registry"""
         post_data = {
@@ -171,14 +212,6 @@ class PostGenerator:
         except:
             # If update fails, insert new post
             self.registry.add_post(post_data)
-    
-    def _replace_template_vars(self, template: str, variables: dict) -> str:
-        """Replace all template variables with their values"""
-        result = template
-        for key, value in variables.items():
-            placeholder = f"{{{{ {key} }}}}"
-            result = result.replace(placeholder, str(value))
-        return result
 
     def generate(self):
         """Generate all required files"""
@@ -227,58 +260,6 @@ class PostGenerator:
         except Exception as e:
             print(f"Error generating post: {e}")
             raise
-
-    def _generate_index_html(self):
-        """Generate main index.html with latest posts"""
-        with open(self.index_template, 'r', encoding='utf-8') as f:
-            template = f.read()
-        
-        # Get latest posts from registry
-        latest_posts = self.registry.get_latest_posts(5)
-        
-        # Generate latest posts HTML
-        posts_html = ''
-        for post in latest_posts:
-            post_url = f"/webpage/{post['type']}/{post['path']}/post.html"
-            posts_html += f'<li><a href="{post_url}">{post["title"]}</a> ({post["date"]})</li>\n'
-        
-        # Replace template variables
-        variables = {
-            'latest_posts': posts_html
-        }
-        index_html = self._replace_template_vars(template, variables)
-        
-        # Write to root directory
-        with open("/app/index.html", 'w', encoding='utf-8') as f:
-            f.write(index_html)
-
-    def _generate_section_html(self):
-        """Generate section pages (blog/posts.html, works/posts.html)"""
-        with open(self.section_template, 'r', encoding='utf-8') as f:
-            template = f.read()
-        
-        # Generate for each section
-        for section in ['blog', 'works']:
-            posts = self.registry.get_posts_by_type(section)
-            
-            # Generate posts HTML
-            posts_html = ''
-            for post in posts:
-                post_url = f"{post['path']}/post.html"
-                posts_html += f'<li><a href="{post_url}">{post["title"]}</a> ({post["date"]})</li>\n'
-            
-            # Replace template variables
-            variables = {
-                'posts': posts_html,
-                'section': section.title()
-            }
-            section_html = self._replace_template_vars(template, variables)
-            
-            # Write section file
-            section_dir = self.output_dir / section
-            section_dir.mkdir(exist_ok=True)
-            with open(section_dir / 'posts.html', 'w', encoding='utf-8') as f:
-                f.write(section_html)
 
 if __name__ == '__main__':
     try:
