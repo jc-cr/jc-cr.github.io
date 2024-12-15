@@ -17,9 +17,8 @@ class PostGenerator:
         # Use provided base_dir or determine based on environment
         self.base_dir = Path(base_dir) if base_dir else self._get_base_dir()
         
-        # Set up paths
+        # Set up paths - always use Docker container paths when in Docker
         if self._is_docker():
-            # Docker container paths
             self.obsidian_path = Path('/input/obsidian')
             self.post_path = Path('/input/post.md')
             self.output_dir = Path('/app/webpage')
@@ -43,10 +42,13 @@ class PostGenerator:
         self.post_title = os.getenv('POST_TITLE', '').strip().strip('"\'')
         self.post_date = os.getenv('POST_DATE', '').strip().strip('"\'') or datetime.now().strftime('%Y-%m-%d')
         
-        # Create necessary directories
+        # Create necessary directories - only in output directory
         self.output_dir.mkdir(parents=True, exist_ok=True)
         if not self._is_docker():
             (self.base_dir / 'data').mkdir(parents=True, exist_ok=True)
+            
+        # Validate environment after setup
+        self._validate_environment()
 
     def _is_docker(self) -> bool:
         """Check if running in Docker container"""
@@ -62,10 +64,22 @@ class PostGenerator:
         """Validate all required paths and configuration"""
         if self._is_docker():
             if not self.obsidian_path.exists():
-                raise FileNotFoundError(f"Obsidian vault not found at container path: {self.obsidian_path}")
+                raise FileNotFoundError(f"Obsidian vault not mounted at: {self.obsidian_path}")
+            
+            # Debug output
+            print(f"Checking post path: {self.post_path}")
+            print(f"Post path exists: {self.post_path.exists()}")
+            print(f"Post path is file: {self.post_path.is_file() if self.post_path.exists() else 'N/A'}")
             
             if not self.post_path.exists():
-                raise FileNotFoundError(f"Markdown file not found at container path: {self.post_path}")
+                raise FileNotFoundError(f"Markdown file not found at: {self.post_path}")
+            if not self.post_path.is_file():
+                raise ValueError(f"Post path exists but is not a file: {self.post_path}")
+            try:
+                with open(self.post_path, 'r') as f:
+                    f.read(1)  # Try to read one byte to verify file is readable
+            except Exception as e:
+                raise IOError(f"Cannot read post file at {self.post_path}: {e}")
 
         if not self.template_dir.exists():
             raise FileNotFoundError(f"Template directory not found: {self.template_dir}")
@@ -83,35 +97,22 @@ class PostGenerator:
         """Find image in mounted Obsidian vault"""
         filename = filename.strip()
         
+        # Try direct path first
         direct_path = self.obsidian_path / filename
-        if direct_path.exists():
+        if direct_path.exists() and direct_path.is_file():
             return direct_path
             
+        # Search for file recursively
         try:
             pattern = filename.lower()
             for file_path in self.obsidian_path.rglob('*'):
-                if file_path.name.lower() == pattern:
+                if file_path.is_file() and file_path.name.lower() == pattern:
                     return file_path
         except Exception as e:
             print(f"Warning: Error searching for image {filename}: {e}")
             
         return None
-    
-    def _create_post_directory(self) -> Path:
-        """Create directory for post based on title and date"""
-        date_str = datetime.strptime(self.post_date, '%Y-%m-%d').strftime('%Y%m%d')
-        
-        slug = self.post_title.lower()
-        slug = re.sub(r'[^\w\s-]', '', slug)
-        slug = re.sub(r'[-\s]+', '_', slug)
-        
-        dir_name = f"{date_str}_{slug}"
-        
-        post_dir = self.output_dir / self.post_type / dir_name
-        post_dir.mkdir(parents=True, exist_ok=True)
-        
-        return dir_name, post_dir
-    
+
     def _process_wikilinks(self, content: str, post_dir: Path) -> str:
         """Process Obsidian wikilinks and copy referenced files"""
         wikilink_pattern = r'!\[\[(.*?)\]\]'
@@ -120,7 +121,7 @@ class PostGenerator:
             filename = match.group(1).strip()
             image_path = self._find_image(filename)
             
-            if image_path and image_path.exists():
+            if image_path and image_path.is_file():
                 new_name = image_path.name
                 new_path = post_dir / new_name
                 shutil.copy2(image_path, new_path)
@@ -196,6 +197,23 @@ class PostGenerator:
             with open(section_dir / 'posts.html', 'w', encoding='utf-8') as f:
                 f.write(section_html)
 
+    def _create_post_directory(self) -> tuple[str, Path]:
+        """Create directory for post based on title and date"""
+        date_str = datetime.strptime(self.post_date, '%Y-%m-%d').strftime('%Y%m%d')
+        
+        # Create URL-safe slug from title
+        slug = self.post_title.lower()
+        slug = re.sub(r'[^\w\s-]', '', slug)
+        slug = re.sub(r'[-\s]+', '_', slug)
+        
+        dir_name = f"{date_str}_{slug}"
+        
+        # Only create directory in output_dir
+        post_dir = self.output_dir / self.post_type / dir_name
+        post_dir.mkdir(parents=True, exist_ok=True)
+        
+        return dir_name, post_dir
+
     def _update_registry(self, dir_name: str):
         """Update or insert post in registry"""
         post_data = {
@@ -216,11 +234,14 @@ class PostGenerator:
     def generate(self):
         """Generate all required files"""
         try:
-            # Read markdown content
-            with open(self.post_path, 'r', encoding='utf-8') as f:
-                content = f.read()
+            # Read markdown content with proper error handling
+            try:
+                with open(self.post_path, 'r', encoding='utf-8') as f:
+                    content = f.read()
+            except Exception as e:
+                raise IOError(f"Failed to read post file at {self.post_path}: {e}")
             
-            # Create post directory
+            # Create post directory only in output_dir
             dir_name, post_dir = self._create_post_directory()
             
             # Process content
@@ -243,8 +264,9 @@ class PostGenerator:
             
             post_html = self._replace_template_vars(template, post_vars)
             
-            # Write post HTML with new filename
-            with open(post_dir / 'post.html', 'w', encoding='utf-8') as f:
+            # Write post HTML only in output directory
+            output_file = post_dir / 'post.html'
+            with open(output_file, 'w', encoding='utf-8') as f:
                 f.write(post_html)
             
             # Update registry

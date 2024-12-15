@@ -7,8 +7,8 @@ services:
       dockerfile: Dockerfile.post_updater
     volumes:
       - ..:/app
-      - ${POST_PATH}:/input/post.md
-      - ${OBSIDIAN_PATH}:/input/obsidian
+      - ${OBSIDIAN_PATH}:/input/obsidian:ro
+      - ${POST_PATH}:/input/post.md:ro
     env_file:
       - .env
     command: python3 /app/scripts/update_posts.py
@@ -27,8 +27,8 @@ services:
       dockerfile: Dockerfile.post_updater
     volumes:
       - ..:/app
-      - ${POST_PATH}:/input/post.md
       - ${OBSIDIAN_PATH}:/input/obsidian
+      - ${POST_PATH}:/input/post.md:ro
     env_file:
       - .env
     command: python3 /app/scripts/sync_db.py
