@@ -180,16 +180,3 @@ def main():
 
 if __name__ == '__main__':
     main()
-
-# registry_updater.py updates:
-import sqlite3
-from pathlib import Path
-from datetime import datetime
-from contextlib import contextmanager
-from typing import List, Dict, Any
-
-class PostRegistry:
-    def __init__(self, db_path: str = "data/posts.db"):
-        self.db_path = Path(db_path)
-        self.db_path.parent.mkdir(parents=True, exist_ok=True)
-        self.init_db()
