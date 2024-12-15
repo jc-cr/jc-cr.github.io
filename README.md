@@ -1,15 +1,43 @@
 # JC's Website
 
-## How it works
+This is the source code for my personal website which uses a static site generator to convert Markdown files from Obsidian into HTML.
 
-I usally make notes in the Obsidian app which uses the markdown language. To not have to rewrite stuff and
-reorganize content, I just convert those files to posts.
+## Directory Structure
 
-For development I use 2 docker container, one runs the website so I can see the changes as I work. The other container
-hosts a service that converts markdown to html as well as copying associated images to a directory in either
-`/blogs` or `/works`.
+```
+.
+├── data/               # Contains SQLite database
+├── scripts/           # Python scripts
+├── templates/         # HTML templates
+├── webpage/          # Website content
+│   ├── about/       # About page
+│   ├── blog/        # Blog posts
+│   ├── style/       # CSS files
+│   └── works/       # Works/projects
+└── docker/          # Docker configuration
+```
 
-When I push to github the `update_posts.py` script runs and updates the `Latest:` posts and creates new posts
-blocks in the respective posts.html.
+## Creating New Posts
 
+1. Create a new Markdown file in your Obsidian vault
+2. Set up environment variables in `.env`:
+   ```
+   POST_TYPE="blog"          # or "works"
+   POST_TITLE="Your Title"
+   POST_DATE="YYYY-MM-DD"    # Optional, defaults to today
+   OBSIDIAN_PATH="/path/to/obsidian/vault"
+   POST_PATH="/path/to/markdown/file.md"
+   ```
+3. Run the post generation service:
+   ```bash
+   docker compose run new_post
+   ```
 
+### Viewing the Site Locally
+
+The site can be viewed locally by running `docker compose up view_page` and navigating to `http://localhost:8080`.
+
+## GitHub Pages Deployment
+
+The site uses a GitHub workflow to deploy the site to GitHub Pages. The workflow is triggered on push to the `main` branch and builds the site using the static site generator.
+During this process the sync_db service is run to update the SQLite database with the latest posts and remove any deleted posts.

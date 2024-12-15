@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ title }} - {{ section }} - JC's Website</title>
+    <link href="../../style/main.css" rel="stylesheet"/>
+</head>
+<body>
+    <header>
+        <h1><a href="/">JC's Website</a></h1>
+        <p>
+            <a href="../../about/about.html">About</a> |
+            <a href="../../works/posts.html">Works</a> |
+            <a href="../../blog/posts.html">Blog</a>
+        </p>
+    </header>
+    <main>
+        <article>
+            <h1>{{ title }}</h1>
+            <time datetime="{{ date }}">{{ date }}</time>
+            {{ content }}
+        </article>
+    </main>
+</body>
+</html>

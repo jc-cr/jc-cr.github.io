@@ -1,0 +1,7 @@
+pillow
+beautifulsoup4
+requests
+flask
+python-dotenv
+PyYAML
+markdown

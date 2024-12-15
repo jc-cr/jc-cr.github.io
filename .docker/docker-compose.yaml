@@ -1,0 +1,34 @@
+version: '3'
+services:
+  new_post:
+    user: "${UID:-1000}:${GID:-1000}"
+    build:
+      context: .
+      dockerfile: Dockerfile.post_updater
+    volumes:
+      - ..:/app
+      - ${POST_PATH}:/input/post.md
+      - ${OBSIDIAN_PATH}:/input/obsidian
+    env_file:
+      - .env
+    command: python3 /app/scripts/update_posts.py
+
+  view_page:
+    image: nginx:alpine
+    ports:
+      - "8080:80"
+    volumes:
+      - ../:/usr/share/nginx/html:ro
+
+  sync_db:
+    user: "${UID:-1000}:${GID:-1000}"
+    build:
+      context: .
+      dockerfile: Dockerfile.post_updater
+    volumes:
+      - ..:/app
+      - ${POST_PATH}:/input/post.md
+      - ${OBSIDIAN_PATH}:/input/obsidian
+    env_file:
+      - .env
+    command: python3 /app/scripts/sync_db.py

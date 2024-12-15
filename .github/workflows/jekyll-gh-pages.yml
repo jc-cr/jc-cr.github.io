@@ -3,13 +3,16 @@ on:
   push:
     branches: ["main"]
   workflow_dispatch:
+
 permissions:
   contents: read
   pages: write
   id-token: write
+
 concurrency:
   group: "pages"
   cancel-in-progress: false
+
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -22,25 +25,22 @@ jobs:
         with:
           python-version: '3.x'
       
-      - name: Install dependencies
+      - name: Install Dependencies
         run: |
           python -m pip install --upgrade pip
-          pip install beautifulsoup4
+          pip install beautifulsoup4 markdown pillow python-dotenv PyYAML
       
-      - name: Build site
-        run: python scripts/update_posts.py
+      - name: Sync Database
+        run: python scripts/sync_database.py
       
       - name: Setup Pages
         uses: actions/configure-pages@v5
-      
-      # Add this step to create CNAME file
-      - name: Create CNAME file
-        run: echo "jc-cr.com" > CNAME
       
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
           path: '.'
+
   deploy:
     environment:
       name: github-pages
