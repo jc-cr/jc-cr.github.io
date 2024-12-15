@@ -2,13 +2,13 @@
 import os
 import re
 import sqlite3
+import hashlib
 from pathlib import Path
 from datetime import datetime
 from bs4 import BeautifulSoup
 from typing import Dict, List, Optional
 from dataclasses import dataclass
 from registry_updater import PostRegistry
-from update_posts import PostGenerator
 
 @dataclass
 class PostInfo:
@@ -17,6 +17,7 @@ class PostInfo:
     title: str
     date: str
     path: str
+    content_hash: str
     description: Optional[str] = None
 
 class DatabaseSyncService:
@@ -27,20 +28,40 @@ class DatabaseSyncService:
         # Set up paths relative to base directory
         self.webpage_dir = self.base_dir / 'webpage'
         self.db_path = self.base_dir / 'data' / 'posts.db'
+        self.template_dir = self.base_dir / 'templates'
         
         self.registry = PostRegistry(str(self.db_path))
         self.valid_types = ['blog', 'works']
         
-        # Initialize PostGenerator
-        self.post_generator = PostGenerator()
-        self.post_generator.output_dir = self.webpage_dir
-        self.post_generator.template_dir = self.base_dir / 'templates'
+        # Ensure the content_hash column exists
+        self._ensure_content_hash_column()
+    
+    def _ensure_content_hash_column(self):
+        """Ensure the content_hash column exists in the posts table"""
+        with self.registry.get_db() as (conn, cur):
+            # Check if column exists
+            cur.execute("PRAGMA table_info(posts)")
+            columns = {col[1] for col in cur.fetchall()}
+            
+            if 'content_hash' not in columns:
+                cur.execute('''
+                    ALTER TABLE posts 
+                    ADD COLUMN content_hash TEXT
+                ''')
+                conn.commit()
+
+    def _compute_hash(self, html_path: Path) -> str:
+        """Compute hash of file content"""
+        with open(html_path, 'rb') as f:
+            content = f.read()
+            return hashlib.sha256(content).hexdigest()
 
     def extract_post_info(self, html_path: Path) -> Optional[PostInfo]:
         """Extract post information from HTML file"""
         try:
             with open(html_path, 'r', encoding='utf-8') as f:
-                soup = BeautifulSoup(f.read(), 'html.parser')
+                content = f.read()
+                soup = BeautifulSoup(content, 'html.parser')
 
             # Extract post type from path
             post_type = html_path.parent.parent.name
@@ -72,12 +93,16 @@ class DatabaseSyncService:
             # Extract path relative to post type directory
             rel_path = html_path.parent.relative_to(self.webpage_dir / post_type)
 
+            # Compute content hash
+            content_hash = hashlib.sha256(content.encode()).hexdigest()
+
             return PostInfo(
                 id=post_id,
                 type=post_type,
                 title=title,
                 date=date,
                 path=str(rel_path),
+                content_hash=content_hash
             )
         except Exception as e:
             print(f"Error processing {html_path}: {e}")
@@ -106,16 +131,53 @@ class DatabaseSyncService:
 
         return posts
 
+    def _replace_template_vars(self, template: str, variables: dict) -> str:
+        """Replace all template variables with their values"""
+        result = template
+        for key, value in variables.items():
+            placeholder = f"{{{{ {key} }}}}"
+            result = result.replace(placeholder, str(value))
+        return result
+
     def regenerate_html_files(self):
         """Regenerate index.html and section pages"""
         try:
             # Generate index.html
-            self.post_generator._generate_index_html()
+            with open(self.template_dir / 'index_template.html', 'r', encoding='utf-8') as f:
+                template = f.read()
+            
+            latest_posts = self.registry.get_latest_posts(5)
+            posts_html = ''
+            for post in latest_posts:
+                post_url = f"/webpage/{post['type']}/{post['path']}/post.html"
+                posts_html += f'<li><a href="{post_url}">{post["title"]}</a> ({post["date"]})</li>\n'
+            
+            index_html = self._replace_template_vars(template, {'latest_posts': posts_html})
+            with open(self.base_dir / 'index.html', 'w', encoding='utf-8') as f:
+                f.write(index_html)
             print("Generated index.html")
 
             # Generate section pages
-            self.post_generator._generate_section_html()
-            print("Generated section pages (blog/posts.html, works/posts.html)")
+            with open(self.template_dir / 'section_template.html', 'r', encoding='utf-8') as f:
+                template = f.read()
+            
+            for section in self.valid_types:
+                posts = self.registry.get_posts_by_type(section)
+                posts_html = ''
+                for post in posts:
+                    post_url = f"{post['path']}/post.html"
+                    posts_html += f'<li><a href="{post_url}">{post["title"]}</a> ({post["date"]})</li>\n'
+                
+                section_html = self._replace_template_vars(template, {
+                    'posts': posts_html,
+                    'section': section.title()
+                })
+                
+                section_dir = self.webpage_dir / section
+                section_dir.mkdir(exist_ok=True)
+                with open(section_dir / 'posts.html', 'w', encoding='utf-8') as f:
+                    f.write(section_html)
+            print("Generated section pages")
 
         except Exception as e:
             print(f"Error regenerating HTML files: {e}")
@@ -141,7 +203,18 @@ class DatabaseSyncService:
 
             # Find posts to add, update, and remove
             to_add = set(current_posts.keys()) - set(existing_posts.keys())
-            to_update = set(current_posts.keys()) & set(existing_posts.keys())
+            to_update = set()
+            
+            # Check which posts actually need updating
+            for post_id in set(current_posts.keys()) & set(existing_posts.keys()):
+                current_post = current_posts[post_id]
+                existing_post = existing_posts[post_id]
+                
+                # Compare content hashes
+                if (not existing_post.get('content_hash') or 
+                    current_post.content_hash != existing_post['content_hash']):
+                    to_update.add(post_id)
+            
             to_remove = set(existing_posts.keys()) - set(current_posts.keys())
 
             # Add new posts
@@ -150,7 +223,7 @@ class DatabaseSyncService:
                 self.registry.add_post(vars(post))
                 print(f"Added post: {post.title}")
 
-            # Update existing posts
+            # Update modified posts
             for post_id in to_update:
                 post = current_posts[post_id]
                 self.registry.update_post(post_id, vars(post))

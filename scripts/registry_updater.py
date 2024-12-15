@@ -23,6 +23,7 @@ class PostRegistry:
                     date TEXT NOT NULL,
                     description TEXT,
                     path TEXT NOT NULL,
+                    content_hash TEXT,
                     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
                     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
                 );
@@ -49,15 +50,16 @@ class PostRegistry:
         """Add a new post to the registry"""
         with self.get_db() as (conn, cur):
             cur.execute('''
-                INSERT INTO posts (id, type, title, date, description, path)
-                VALUES (?, ?, ?, ?, ?, ?)
+                INSERT INTO posts (id, type, title, date, description, path, content_hash)
+                VALUES (?, ?, ?, ?, ?, ?, ?)
             ''', (
                 post_data['id'],
                 post_data['type'],
                 post_data['title'],
                 post_data['date'],
                 post_data.get('description', ''),
-                post_data['path']
+                post_data['path'],
+                post_data['content_hash']  # Added this line
             ))
             conn.commit()
 
