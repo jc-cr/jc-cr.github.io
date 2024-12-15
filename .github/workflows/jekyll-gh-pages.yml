@@ -31,7 +31,7 @@ jobs:
           pip install beautifulsoup4 markdown pillow python-dotenv PyYAML
       
       - name: Sync Database
-        run: python scripts/sync_database.py
+        run: python scripts/sync_db.py
       
       - name: Setup Pages
         uses: actions/configure-pages@v5
