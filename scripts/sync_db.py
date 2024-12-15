@@ -1,4 +1,4 @@
-# sync_database.py
+# sync_db.py
 import os
 import re
 import sqlite3
@@ -20,15 +20,21 @@ class PostInfo:
     description: Optional[str] = None
 
 class DatabaseSyncService:
-    def __init__(self, webpage_dir: str = "/app/webpage", db_path: str = "/app/data/posts.db"):
-        self.webpage_dir = Path(webpage_dir)
-        self.registry = PostRegistry(db_path)
+    def __init__(self, base_dir: str = None):
+        # Use provided base_dir or default to current directory
+        self.base_dir = Path(base_dir) if base_dir else Path.cwd()
+        
+        # Set up paths relative to base directory
+        self.webpage_dir = self.base_dir / 'webpage'
+        self.db_path = self.base_dir / 'data' / 'posts.db'
+        
+        self.registry = PostRegistry(str(self.db_path))
         self.valid_types = ['blog', 'works']
         
-        # Initialize PostGenerator with correct paths
+        # Initialize PostGenerator
         self.post_generator = PostGenerator()
-        # Override PostGenerator's output directory to match our path
         self.post_generator.output_dir = self.webpage_dir
+        self.post_generator.template_dir = self.base_dir / 'templates'
 
     def extract_post_info(self, html_path: Path) -> Optional[PostInfo]:
         """Extract post information from HTML file"""
@@ -118,6 +124,9 @@ class DatabaseSyncService:
     def sync_database(self):
         """Synchronize database with filesystem"""
         try:
+            # Ensure data directory exists
+            self.db_path.parent.mkdir(parents=True, exist_ok=True)
+            
             # Get existing posts from database
             existing_posts = {
                 post['id']: post 
@@ -171,3 +180,16 @@ def main():
 
 if __name__ == '__main__':
     main()
+
+# registry_updater.py updates:
+import sqlite3
+from pathlib import Path
+from datetime import datetime
+from contextlib import contextmanager
+from typing import List, Dict, Any
+
+class PostRegistry:
+    def __init__(self, db_path: str = "data/posts.db"):
+        self.db_path = Path(db_path)
+        self.db_path.parent.mkdir(parents=True, exist_ok=True)
+        self.init_db()
