@@ -6,34 +6,37 @@
     <title>About JC</title>
     <link rel="stylesheet" href="../style/main.css">
     <style>
-        .bio-container {
+        .container {
             display: flex;
             gap: 20px;
             margin-bottom: 30px;
         }
-.profile-picture {
-    width: 200px;
-    height: 200px;
-    border-radius: 50%;
-    flex-shrink: 0;
-    overflow: hidden;
-}
+        .profile-picture {
+            width: 200px;
+            height: 200px;
+            border-radius: 50%;
+            flex-shrink: 0;
+            overflow: hidden;
+        }
 
-.profile-picture img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    transform: translate(-10%, -15%); /* Move the circle container instead */
-    transform: scale(1.2); /* Scale the image inside the circle container */
-}
+        .profile-picture img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transform: translate(-10%, -15%); /* Move the circle container instead */
+            transform: scale(1.2); /* Scale the image inside the circle container */
+        }
+
         .bio-text {
             flex-grow: 1;
         }
+
         .timeline {
             position: relative;
             padding-left: 30px;
             margin-left: 10px;
         }
+
         .timeline::before {
             content: '';
             position: absolute;
@@ -43,10 +46,12 @@
             width: 2px;
             background-color: #333;
         }
+
         .timeline-item {
             position: relative;
             margin-bottom: 20px;
         }
+
         .timeline-item::before {
             content: '';
             position: absolute;
@@ -57,15 +62,18 @@
             border-radius: 50%;
             background-color: #333;
         }
+
         .timeline-item h4 {
             margin-bottom: 5px;
         }
+
         .timeline-item p {
             margin: 0;
             color: #666;
         }
     </style>
 </head>
+
 <body>
     <header>
         <h1><a href="/">JC's Website</a></h1>
@@ -79,7 +87,7 @@
     <main>
         <h2>About</h2>
         
-        <section class="bio-container">
+        <section class="container">
             <div class="bio-text">
                 <h3>Biography</h3>
                 <p>
@@ -91,6 +99,18 @@
                 <img src="profile.png" alt="JC's profile picture">
             </div>
         </section>
+
+
+        <section class="container">
+            <div class=""bio-text">
+                <h3>Contact</h3>
+
+
+                <p>Work Email: juan.cruzrivera@utsa.edu</p>
+                <p>Personal Email: juan.cruz.business@gmail.com</p>
+            </div>
+        </section>
+
 
         <section>
             <h3>Education</h3>
@@ -133,6 +153,7 @@
                 </div>
             </div>
         </section>
+
     </main>
 </body>
 </html>
