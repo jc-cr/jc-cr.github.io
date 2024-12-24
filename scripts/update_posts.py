@@ -216,8 +216,18 @@ class PostGenerator:
 
     def _update_registry(self, dir_name: str):
         """Update or insert post in registry"""
-        # Normalize date format to YYYY-MM-DD
-        normalized_date = datetime.strptime(self.post_date, '%Y-%m-%d').strftime('%Y-%m-%d')
+        try:
+            # Handle various date formats and normalize to YYYY-MM-DD
+            date_obj = datetime.strptime(self.post_date, '%Y-%m-%d')
+        except ValueError:
+            try:
+                # Try parsing with alternate format
+                date_obj = datetime.strptime(self.post_date, '%Y-%m-%d')
+            except ValueError:
+                # Default to today if parsing fails
+                date_obj = datetime.now()
+        
+        normalized_date = date_obj.strftime('%Y-%m-%d')  # This ensures format like 2024-12-08
         
         post_data = {
             'id': dir_name,

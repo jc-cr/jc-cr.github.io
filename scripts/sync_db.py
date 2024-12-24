@@ -98,13 +98,19 @@ class DatabaseSyncService:
             # Compute content hash
             content_hash = hashlib.sha256(content.encode()).hexdigest()
 
-            date = datetime.strptime(time_elem.get('datetime'), '%Y-%m-%d').strftime('%Y-%m-%d')
+            try:
+                date_obj = datetime.strptime(time_elem.get('datetime'), '%Y-%m-%d')
+            except ValueError:
+                print(f"Warning: Invalid date format in {html_path}")
+                date_obj = datetime.now()
                 
+            normalized_date = date_obj.strftime('%Y-%m-%d')  # This ensures format like 2024-12-08
+            
             return PostInfo(
                 id=post_id,
                 type=post_type,
                 title=title,
-                date=date,
+                date=normalized_date,
                 path=str(rel_path),
                 content_hash=content_hash
             )
