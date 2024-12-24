@@ -1,0 +1,3 @@
+[submodule "apps/arxiv-recommender"]
+	path = apps/arxiv-recommender
+	url = https://github.com/jc-cr/arXiv-daily-paper-recommender.git
