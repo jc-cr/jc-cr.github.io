@@ -74,7 +74,7 @@ class PostRegistry:
         with self.get_db() as (conn, cur):
             cur.execute('''
                 SELECT * FROM posts 
-                ORDER BY date DESC, created_at DESC 
+                ORDER BY date(date) DESC, created_at DESC 
                 LIMIT ?
             ''', (limit,))
             return [dict(row) for row in cur.fetchall()]
@@ -85,7 +85,7 @@ class PostRegistry:
             cur.execute('''
                 SELECT * FROM posts 
                 WHERE type = ? 
-                ORDER BY date DESC, created_at DESC
+                ORDER BY date(date) DESC, created_at DESC
             ''', (post_type,))
             return [dict(row) for row in cur.fetchall()]
 

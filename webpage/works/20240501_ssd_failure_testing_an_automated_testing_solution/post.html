@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SSD Failure Testing - An Automated Testing Solution - Works - JC's Website</title>
+    <link href="../../style/main.css" rel="stylesheet"/>
+</head>
+<body>
+    <header>
+        <h1><a href="/">JC's Website</a></h1>
+        <p>
+            <a href="../../about/about.html">About</a> |
+            <a href="../../works/posts.html">Works</a> |
+            <a href="../../blog/posts.html">Blog</a>
+        </p>
+    </header>
+    <main>
+        <article>
+            <h1>SSD Failure Testing - An Automated Testing Solution</h1>
+            <time datetime="2024-05-01">2024-05-01</time>
+            <h2>Details</h2>
+<p>This post recaps a project I worked on while at Plus One Robotics. <br />
+We had some SSD failures and wanted to get to the root cause, so one test conducted involved testing the effects of sudden power cutoffs. </p>
+<h2>System Overview</h2>
+<p>I was really into state charts at the time since we were doing some related documentation for other projects. It's really helpful to be able to visualize dataflow and gives you a sens of direction when you get lost in the software sauce. </p>
+<p>Here's the one I designed for this system:</p>
+<figure>
+    <img src="SSD%20Testing.png" alt="SSD Testing.png" />
+</figure>
+
+<p>To test I designed a Rust based power toggling system of the Rasberry Pi 3 (image below).</p>
+<figure>
+    <img src="Pasted%20image%2020241224095627.png" alt="Pasted image 20241224095627.png" />
+</figure>
+
+<p>At the time we were doing separate documentation in Autocad Electrical which  I found to be unintuitive and painful to work with. So I made the above design in Kicad.</p>
+<p>The SSDs were placed in an IPC running Ubuntu with a service that did file system corruption testing on a mock file directory.</p>
+<h2>Links</h2>
+<p>Here are the links if you're interested:</p>
+<p><a href="https://gitlab.com/jc-cr/ssd-testing-ipc-setup">IPC Code</a><br />
+<a href="https://gitlab.com/juancruzplusone/rpi-interface">RPI Code</a></p>
+        </article>
+    </main>
+</body>
+</html>
