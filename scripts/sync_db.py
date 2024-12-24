@@ -10,6 +10,8 @@ from typing import Dict, List, Optional
 from dataclasses import dataclass
 from registry_updater import PostRegistry
 
+from argparse import ArgumentParser
+
 @dataclass
 class PostInfo:
     id: str
@@ -96,6 +98,8 @@ class DatabaseSyncService:
             # Compute content hash
             content_hash = hashlib.sha256(content.encode()).hexdigest()
 
+            date = datetime.strptime(time_elem.get('datetime'), '%Y-%m-%d').strftime('%Y-%m-%d')
+                
             return PostInfo(
                 id=post_id,
                 type=post_type,
@@ -104,6 +108,7 @@ class DatabaseSyncService:
                 path=str(rel_path),
                 content_hash=content_hash
             )
+
         except Exception as e:
             print(f"Error processing {html_path}: {e}")
             return None
@@ -183,7 +188,7 @@ class DatabaseSyncService:
             print(f"Error regenerating HTML files: {e}")
             raise
 
-    def sync_database(self):
+    def sync_database(self, force_regenerate: bool = False):
         """Synchronize database with filesystem"""
         try:
             # Ensure data directory exists
@@ -236,8 +241,11 @@ class DatabaseSyncService:
 
             print(f"\nSync complete. Added: {len(to_add)}, Updated: {len(to_update)}, Removed: {len(to_remove)}")
 
-            # Regenerate HTML files after database sync
-            if to_add or to_update or to_remove:
+            # Add force regeneration
+            if force_regenerate:
+                print("\nForce regenerating HTML files...")
+                self.regenerate_html_files()
+            elif to_add or to_update or to_remove:
                 print("\nRegenerating HTML files...")
                 self.regenerate_html_files()
             else:
@@ -247,9 +255,11 @@ class DatabaseSyncService:
             print(f"Error syncing database: {e}")
             raise
 
-def main():
-    sync_service = DatabaseSyncService()
-    sync_service.sync_database()
-
 if __name__ == '__main__':
-    main()
+    parser = ArgumentParser()
+    parser.add_argument('--force-regenerate', action='store_true', help='Force regeneration of HTML files')
+
+    args = parser.parse_args()
+
+    sync_service = DatabaseSyncService()
+    sync_service.sync_database(args.force_regenerate)

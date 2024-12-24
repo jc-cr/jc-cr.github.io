@@ -31,4 +31,4 @@ services:
       - ${POST_PATH}:/input/post.md:ro
     env_file:
       - .env
-    command: python3 /app/scripts/sync_db.py
+    command: python3 /app/scripts/sync_db.py --force-regenerate

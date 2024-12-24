@@ -216,19 +216,20 @@ class PostGenerator:
 
     def _update_registry(self, dir_name: str):
         """Update or insert post in registry"""
+        # Normalize date format to YYYY-MM-DD
+        normalized_date = datetime.strptime(self.post_date, '%Y-%m-%d').strftime('%Y-%m-%d')
+        
         post_data = {
             'id': dir_name,
             'type': self.post_type,
             'title': self.post_title,
-            'date': self.post_date,
+            'date': normalized_date,
             'path': dir_name
         }
         
         try:
-            # Try to update existing post
             self.registry.update_post(dir_name, post_data)
         except:
-            # If update fails, insert new post
             self.registry.add_post(post_data)
 
     def generate(self):
