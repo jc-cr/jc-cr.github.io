@@ -1,3 +1,6 @@
 [submodule "apps/arxiv-recommender"]
 	path = apps/arxiv-recommender
 	url = https://github.com/jc-cr/arXiv-daily-paper-recommender.git
+[submodule "apps/events-to-calendar"]
+	path = apps/events-to-calendar
+	url = https://github.com/jc-cr/events_to_calendar_tool.git
