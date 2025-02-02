@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RC Car with SAMD51 Thing Plus - Works - JC's Website</title>
+    <link href="../../style/main.css" rel="stylesheet"/>
+</head>
+<body>
+    <header>
+        <h1><a href="/">JC's Website</a></h1>
+        <p>
+            <a href="../../about/about.html">About</a> |
+            <a href="../../works/posts.html">Works</a> |
+            <a href="../../blog/posts.html">Blog</a>
+        </p>
+    </header>
+    <main>
+        <article>
+            <h1>RC Car with SAMD51 Thing Plus</h1>
+            <time datetime="2025-02-01">2025-02-01</time>
+            <h2>Description</h2>
+<p><a href="https://github.com/jc-cr/samd51_thing_plus_rc_controller">Project link</a></p>
+<p>Designed and built a RC car base while working on UTSA RAS's rover project.</p>
+<p>We used the SBUS protocol of rx/tx and decoded on the SAMD51 Thing Plus board. <br />
+Based on the inputs from the RC controllers throttle and sterring channels, we output an analog signal out of the boards DAC pins.</p>
+<p>We were only getting about 2.8V max from the pins so an op amp circuit was added to double the signal range.</p>
+<p>Demo video below. <br />
+Project code is in the top link.</p>
+<h2>System Diagram</h2>
+<figure>
+    <img src="Pasted%20image%2020250201225510.png" alt="Pasted image 20250201225510.png" />
+</figure>
+
+<h2>Driving Example</h2>
+<figure>
+    <img src="IMG_1835.mp4" alt="IMG_1835.mp4" />
+</figure>
+        </article>
+    </main>
+</body>
+</html>
