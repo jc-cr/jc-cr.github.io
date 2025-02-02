@@ -119,20 +119,32 @@ class PostGenerator:
         
         def process_wikilink(match):
             filename = match.group(1).strip()
-            image_path = self._find_image(filename)
+            file_path = self._find_image(filename)
             
-            if image_path and image_path.is_file():
-                new_name = image_path.name
+            if file_path and file_path.is_file():
+                new_name = file_path.name
                 new_path = post_dir / new_name
-                shutil.copy2(image_path, new_path)
+                shutil.copy2(file_path, new_path)
                 encoded_name = urllib.parse.quote(new_name)
                 
-                return f'''<figure>
-    <img src="{encoded_name}" alt="{new_name}" />
-</figure>'''
+                # Check file extension to determine if it's a video
+                extension = file_path.suffix.lower()
+                video_extensions = {'.mp4', '.webm', '.ogg', '.mov'}
+                
+                if extension in video_extensions:
+                    return f'''<figure>
+        <video controls>
+            <source src="{encoded_name}" type="video/{extension[1:]}" />
+            Your browser does not support the video tag.
+        </video>
+    </figure>'''
+                else:
+                    return f'''<figure>
+        <img src="{encoded_name}" alt="{new_name}" />
+    </figure>'''
             
-            print(f"Warning: Image not found: {filename}")
-            return f'[Image not found: {filename}]'
+            print(f"Warning: File not found: {filename}")
+            return f'[File not found: {filename}]'
         
         return re.sub(wikilink_pattern, process_wikilink, content)
     
