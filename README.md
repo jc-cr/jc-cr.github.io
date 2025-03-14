@@ -30,7 +30,8 @@ This is the source code for my personal website which uses a static site generat
    ```
 3. Run the post generation service:
    ```bash
-   docker compose run new_post
+cd .docker
+docker compose run --rm new_post
    ```
 
 ## Adding an App 
