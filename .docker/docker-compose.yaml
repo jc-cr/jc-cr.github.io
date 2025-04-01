@@ -1,17 +1,23 @@
-version: '3'
 services:
-  new_post:
+  post_gui:
     user: "${UID:-1000}:${GID:-1000}"
     build:
       context: .
       dockerfile: Dockerfile.post_updater
     volumes:
+      - /tmp/.X11-unix:/tmp/.X11-unix
+      - ${XAUTHORITY:-~/.Xauthority}:/root/.Xauthority
       - ..:/app
+      - ${OBSIDIAN_PATH}:/app/obsidian:ro
       - ${OBSIDIAN_PATH}:/input/obsidian:ro
-      - ${POST_PATH}:/input/post.md:ro
-    env_file:
-      - .env
-    command: python3 /app/scripts/update_posts.py
+    environment:
+      - DISPLAY=${DISPLAY}
+      - XAUTHORITY=/root/.Xauthority
+      - QT_X11_NO_MITSHM=1
+    network_mode: "host"
+    privileged: true
+    ipc: host  # Add this for X11 shared memory
+    command: python3 /app/scripts/post_gui.py
 
   view_page:
     image: nginx:alpine
@@ -19,16 +25,3 @@ services:
       - "8080:80"
     volumes:
       - ../:/usr/share/nginx/html:ro
-
-  sync_db:
-    user: "${UID:-1000}:${GID:-1000}"
-    build:
-      context: .
-      dockerfile: Dockerfile.post_updater
-    volumes:
-      - ..:/app
-      - ${OBSIDIAN_PATH}:/input/obsidian
-      - ${POST_PATH}:/input/post.md:ro
-    env_file:
-      - .env
-    command: python3 /app/scripts/sync_db.py --force-regenerate
