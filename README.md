@@ -1,6 +1,9 @@
 # JC's Website
 
-This is the source code for my personal website which uses a static site generator to convert Markdown files from Obsidian into HTML.
+Content-focused minimalism that respects the reader's attention.
+
+
+
 
 ## Directory Structure
 
