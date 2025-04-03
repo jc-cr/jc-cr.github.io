@@ -15,22 +15,22 @@ class PostGenerator:
         load_dotenv()
         
         # Use provided base_dir or determine based on environment
-        self.base_dir = Path(base_dir) if base_dir else self._get_base_dir()
+        self.base_dir = Path('/app')
         
-        # Set up paths - always use Docker container paths when in Docker
-        if self._is_docker():
-            self.obsidian_path = Path('/input/obsidian')
-            self.post_path = Path('/input/post.md')
-            self.output_dir = Path('/app/webpage')
-            self.template_dir = Path('/app/templates')
-            self.registry = PostRegistry('/app/data/posts.db')
+        # Get the actual post path from environment
+        post_path_env = os.getenv('POST_PATH', '')
+        # If it's a real path that exists, use it directly
+        if post_path_env and Path(post_path_env).exists():
+            self.post_path = Path(post_path_env)
         else:
-            # Local/GitHub Actions paths
-            self.obsidian_path = Path(os.getenv('OBSIDIAN_PATH', '')) if os.getenv('OBSIDIAN_PATH') else None
-            self.post_path = Path(os.getenv('POST_PATH', '')) if os.getenv('POST_PATH') else None
-            self.output_dir = self.base_dir / 'webpage'
-            self.template_dir = self.base_dir / 'templates'
-            self.registry = PostRegistry(str(self.base_dir / 'data' / 'posts.db'))
+            # Fall back to the default Docker path for backward compatibility
+            self.post_path = Path('/input/post.md')
+            
+        # Set up other paths
+        self.obsidian_path = Path('/input/obsidian')
+        self.output_dir = Path('/app/webpage')
+        self.template_dir = Path('/app/templates')
+        self.registry = PostRegistry('/app/data/posts.db')
         
         # Initialize templates
         self.post_template = self.template_dir / 'post_template.html'
@@ -42,44 +42,28 @@ class PostGenerator:
         self.post_title = os.getenv('POST_TITLE', '').strip().strip('"\'')
         self.post_date = os.getenv('POST_DATE', '').strip().strip('"\'') or datetime.now().strftime('%Y-%m-%d')
         
-        # Create necessary directories - only in output directory
+        # Create necessary directories
         self.output_dir.mkdir(parents=True, exist_ok=True)
-        if not self._is_docker():
-            (self.base_dir / 'data').mkdir(parents=True, exist_ok=True)
-            
+        
         # Validate environment after setup
         self._validate_environment()
 
-    def _is_docker(self) -> bool:
-        """Check if running in Docker container"""
-        return os.path.exists('/.dockerenv')
-
-    def _get_base_dir(self) -> Path:
-        """Get base directory based on environment"""
-        if self._is_docker():
-            return Path('/app')
-        return Path.cwd()
-
     def _validate_environment(self):
         """Validate all required paths and configuration"""
-        if self._is_docker():
-            if not self.obsidian_path.exists():
-                raise FileNotFoundError(f"Obsidian vault not mounted at: {self.obsidian_path}")
+        if not self.obsidian_path.exists():
+            raise FileNotFoundError(f"Obsidian vault not mounted at: {self.obsidian_path}")
             
-            # Debug output
-            print(f"Checking post path: {self.post_path}")
-            print(f"Post path exists: {self.post_path.exists()}")
-            print(f"Post path is file: {self.post_path.is_file() if self.post_path.exists() else 'N/A'}")
+        if not self.post_path.exists():
+            raise FileNotFoundError(f"Markdown file not found at: {self.post_path}")
             
-            if not self.post_path.exists():
-                raise FileNotFoundError(f"Markdown file not found at: {self.post_path}")
-            if not self.post_path.is_file():
-                raise ValueError(f"Post path exists but is not a file: {self.post_path}")
-            try:
-                with open(self.post_path, 'r') as f:
-                    f.read(1)  # Try to read one byte to verify file is readable
-            except Exception as e:
-                raise IOError(f"Cannot read post file at {self.post_path}: {e}")
+        if not self.post_path.is_file():
+            raise ValueError(f"Post path exists but is not a file: {self.post_path}")
+            
+        try:
+            with open(self.post_path, 'r') as f:
+                f.read(1)  # Try to read one byte to verify file is readable
+        except Exception as e:
+            raise IOError(f"Cannot read post file at {self.post_path}: {e}")
 
         if not self.template_dir.exists():
             raise FileNotFoundError(f"Template directory not found: {self.template_dir}")
@@ -88,7 +72,7 @@ class PostGenerator:
             raise FileNotFoundError(f"Template not found: {self.post_template}")
             
         if not self.post_type:
-            raise ValueError("POST_TYPE must be set in .env")
+            raise ValueError("POST_TYPE must be set in environment")
             
         if not self.post_title and self.post_path:
             self.post_title = self.post_path.stem
@@ -220,7 +204,7 @@ class PostGenerator:
         
         dir_name = f"{date_str}_{slug}"
         
-        # Only create directory in output_dir
+        # Create directory in output_dir
         post_dir = self.output_dir / self.post_type / dir_name
         post_dir.mkdir(parents=True, exist_ok=True)
         
@@ -232,21 +216,18 @@ class PostGenerator:
             # Handle various date formats and normalize to YYYY-MM-DD
             date_obj = datetime.strptime(self.post_date, '%Y-%m-%d')
         except ValueError:
-            try:
-                # Try parsing with alternate format
-                date_obj = datetime.strptime(self.post_date, '%Y-%m-%d')
-            except ValueError:
-                # Default to today if parsing fails
-                date_obj = datetime.now()
+            # Default to today if parsing fails
+            date_obj = datetime.now()
         
-        normalized_date = date_obj.strftime('%Y-%m-%d')  # This ensures format like 2024-12-08
+        normalized_date = date_obj.strftime('%Y-%m-%d')
         
         post_data = {
             'id': dir_name,
             'type': self.post_type,
             'title': self.post_title,
             'date': normalized_date,
-            'path': dir_name
+            'path': dir_name,
+            'content_hash': ''  # Add empty content_hash to ensure column exists
         }
         
         try:
@@ -257,14 +238,11 @@ class PostGenerator:
     def generate(self):
         """Generate all required files"""
         try:
-            # Read markdown content with proper error handling
-            try:
-                with open(self.post_path, 'r', encoding='utf-8') as f:
-                    content = f.read()
-            except Exception as e:
-                raise IOError(f"Failed to read post file at {self.post_path}: {e}")
+            # Read markdown content
+            with open(self.post_path, 'r', encoding='utf-8') as f:
+                content = f.read()
             
-            # Create post directory only in output_dir
+            # Create post directory
             dir_name, post_dir = self._create_post_directory()
             
             # Process content
@@ -287,7 +265,7 @@ class PostGenerator:
             
             post_html = self._replace_template_vars(template, post_vars)
             
-            # Write post HTML only in output directory
+            # Write post HTML
             output_file = post_dir / 'post.html'
             with open(output_file, 'w', encoding='utf-8') as f:
                 f.write(post_html)

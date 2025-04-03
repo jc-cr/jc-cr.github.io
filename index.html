@@ -5,26 +5,38 @@
     <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
     <title>JC's Website</title>
     <link href="/webpage/style/main.css" rel="stylesheet"/>
+    <script src="https://unpkg.com/htmx.org@1.9.10/dist/htmx.min.js"></script>
 </head>
 <body>
-    <header>
-        <h1><a href="/">JC's Website</a></h1>
-        <p>
-            <a href="/webpage/about/about.html">About</a> |
-            <a href="/webpage/works/posts.html">Works</a> |
-            <a href="/webpage/blog/posts.html">Blog</a>
-        </p>
-    </header>
-    <main>
-        <h2>Latest:</h2>
-        <ul>
-            <li><a href="/webpage/works/20241221_arxiv_daily_paper_recommender/post.html">arXiv Daily Paper Recommender</a> (2024-12-21)</li>
-<li><a href="/webpage/blog/20241214_obsidian_notes_to_webpage/post.html">Obsidian Notes to Webpage</a> (2024-12-14)</li>
-<li><a href="/webpage/blog/20241214_cool_art/post.html">Cool art</a> (2024-12-14)</li>
-<li><a href="/webpage/works/20241208_svm_hog_object_detection_report/post.html">SVM + HOG Object Detection Report</a> (2024-12-08)</li>
-<li><a href="/webpage/works/20240501_ssd_failure_testing_an_automated_testing_solution/post.html">SSD Failure Testing - An Automated Testing Solution</a> (2024-05-01)</li>
-
-        </ul>
-    </main>
+    <!-- Loading indicator -->
+    <div class="htmx-indicator">Loading...</div>
+    
+    <!-- Sidebar navigation -->
+    <aside class="sidebar">
+        <div class="sidebar-header">
+            <h1>JC's Website</h1>
+        </div>
+        <nav class="sidebar-nav">
+            <a class="nav-item" hx-get="/index-content.html" hx-target="#content-area" hx-push-url="#home">Home</a>
+            <a class="nav-item" hx-get="/webpage/about/about-content.html" hx-target="#content-area" hx-push-url="#about">About</a>
+            <a class="nav-item" hx-get="/webpage/works/posts-content.html" hx-target="#content-area" hx-push-url="#works">Works</a>
+            <a class="nav-item" hx-get="/webpage/blog/posts-content.html" hx-target="#content-area" hx-push-url="#blog">Blog</a>
+        </nav>
+        
+        <!-- Footer moved to sidebar -->
+        <div class="sidebar-footer">
+            <a href="https://github.com/jc-cr" target="_blank" aria-label="GitHub Profile">
+                <svg class="github-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                    <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
+                </svg>
+            </a>
+        </div>
+    </aside>
+    
+    <!-- Main content area - will be loaded dynamically -->
+    <main id="content-area"></main>
+    
+    <!-- Load event bus js-->
+    <script src="/webpage/js/event_bus.js"></script>
 </body>
 </html>
