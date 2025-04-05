@@ -347,7 +347,7 @@ main video {
     }
 }
 
-/* Centered Timeline Styles */
+/* Centered Timeline Styles - with automatic alternating */
 .timeline {
     position: relative;
     max-width: 650px;
@@ -376,21 +376,20 @@ main video {
     clear: both;
 }
 
-/* Left side items */
-.timeline-left {
+/* Automatically alternate left/right using nth-child */
+.timeline-item:nth-child(odd) {
     float: left;
     padding-right: 30px;
     text-align: right;
 }
 
-/* Right side items */
-.timeline-right {
+.timeline-item:nth-child(even) {
     float: right;
     padding-left: 30px;
     text-align: left;
 }
 
-/* Timeline dots */
+/* Position dots based on nth-child as well */
 .timeline-item::before {
     content: '';
     position: absolute;
@@ -403,11 +402,11 @@ main video {
     z-index: 1;
 }
 
-.timeline-left::before {
+.timeline-item:nth-child(odd)::before {
     right: -5px;
 }
 
-.timeline-right::before {
+.timeline-item:nth-child(even)::before {
     left: -5px;
 }
 
@@ -456,14 +455,17 @@ main video {
         text-align: left;
     }
     
-    .timeline-left, .timeline-right {
+    /* Override the alternating pattern for mobile */
+    .timeline-item:nth-child(odd),
+    .timeline-item:nth-child(even) {
         float: none;
         text-align: left;
         padding-left: 50px;
         padding-right: 0;
     }
     
-    .timeline-left::before, .timeline-right::before {
+    .timeline-item:nth-child(odd)::before,
+    .timeline-item:nth-child(even)::before {
         left: 25px;
     }
 }
