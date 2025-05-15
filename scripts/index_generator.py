@@ -15,13 +15,13 @@ class IndexGenerator:
         # Ensure indexes directory exists
         self.indexes_dir.mkdir(exist_ok=True, parents=True)
         
-        # Templates for index files
+        # Templates for index files - Updated to use HTMX for post links
         self.index_item_template = """
 <div class="index-item">
     <div class="index-date-tags">
         {date_formatted} · Tagged with {tags}
     </div>
-    <h3 class="index-title"><a href="{post_url}">{title}</a></h3>
+    <h3 class="index-title"><a hx-get="{post_url}" hx-target="#content-area" hx-push-url="#post/{post_path}">{title}</a></h3>
     <div class="index-snippet">
         {snippet}
     </div>
@@ -68,7 +68,6 @@ class IndexGenerator:
                     "title": title,
                     "date": formatted_date,
                     "tags": ["legacy"],
-                    "type": "legacy",
                     "snippet": "No preview available for this legacy post."
                 }
                 
@@ -117,9 +116,8 @@ class IndexGenerator:
                 'title': meta_data.get('title', 'Untitled'),
                 'date': meta_data.get('date', ''),
                 'tags': meta_data.get('tags', []),
-                'type': meta_data.get('type', ''),
                 'snippet': meta_data.get('snippet', ''),
-                'path': str(post_dir.relative_to(self.base_dir / 'webpage')),
+                'path': post_dir.name,  # Just the directory name for the URL hash
                 'url': f"/{post_dir.relative_to(self.base_dir)}/post.html"
             }
             
@@ -139,21 +137,22 @@ class IndexGenerator:
             # Format tags
             tags_str = ", ".join(tag.title() for tag in post['tags']) if post['tags'] else "Uncategorized"
             
-            # Format item HTML
+            # Format item HTML with HTMX attributes
             item_html = self.index_item_template.format(
                 date_formatted=date_formatted,
                 tags=tags_str,
                 post_url=post['url'],
+                post_path=post['path'],  # Used for the URL hash
                 title=post['title'],
                 snippet=post['snippet']
             )
             
             items_html += item_html
         
-        # Generate complete index HTML using the index template
+        # Generate complete index HTML
         return self.index_template.format(
             title=title,
-            posts=items_html
+            items=items_html
         )
 
     def generate_all_indexes(self):

@@ -38,7 +38,6 @@ class PostGenerator:
         self.section_template = self.template_dir / 'section_template.html'
         
         # Clean configuration from env
-        self.post_type = os.getenv('POST_TYPE', '').strip().strip('"\'')
         self.post_title = os.getenv('POST_TITLE', '').strip().strip('"\'')
         self.post_date = os.getenv('POST_DATE', '').strip().strip('"\'') or datetime.now().strftime('%Y-%m-%d')
         
@@ -80,8 +79,6 @@ class PostGenerator:
         if not self.post_template.exists():
             raise FileNotFoundError(f"Template not found: {self.post_template}")
             
-        if not self.post_type:
-            raise ValueError("POST_TYPE must be set in environment")
             
         if not self.post_title and self.post_path:
             self.post_title = self.post_path.stem
@@ -106,9 +103,12 @@ class PostGenerator:
             
         return None
 
+    # Update the _process_wikilinks method in markdown_to_html_engine.py
+
     def _process_wikilinks(self, content: str, post_dir: Path) -> str:
         """Process Obsidian wikilinks and copy referenced files"""
         wikilink_pattern = r'!\[\[(.*?)\]\]'
+        post_dir_name = post_dir.name
         
         def process_wikilink(match):
             filename = match.group(1).strip()
@@ -120,6 +120,9 @@ class PostGenerator:
                 shutil.copy2(file_path, new_path)
                 encoded_name = urllib.parse.quote(new_name)
                 
+                # Add absolute path for the file - this is the key change
+                absolute_path = f"/webpage/posts/{post_dir_name}/{encoded_name}"
+                
                 # Check file extension to determine if it's a video
                 extension = file_path.suffix.lower()
                 video_extensions = {'.mp4', '.webm', '.ogg', '.mov'}
@@ -127,46 +130,19 @@ class PostGenerator:
                 if extension in video_extensions:
                     return f'''<figure>
         <video controls>
-            <source src="{encoded_name}" type="video/{extension[1:]}" />
+            <source src="{absolute_path}" type="video/{extension[1:]}" />
             Your browser does not support the video tag.
         </video>
     </figure>'''
                 else:
                     return f'''<figure>
-        <img src="{encoded_name}" alt="{new_name}" />
+        <img src="{absolute_path}" alt="{new_name}" />
     </figure>'''
             
             print(f"Warning: File not found: {filename}")
             return f'[File not found: {filename}]'
         
         return re.sub(wikilink_pattern, process_wikilink, content)
-    
-    def _replace_template_vars(self, template: str, variables: dict) -> str:
-        """Replace all template variables with their values"""
-        result = template
-        for key, value in variables.items():
-            placeholder = f"{{{{ {key} }}}}"
-            result = result.replace(placeholder, str(value))
-        return result
-    
-    def _extract_snippet(self, content, length=150):
-        """Extract a snippet from the content with the specified length"""
-        # Remove Markdown formatting and strip whitespace
-        text_only = re.sub(r'!\[\[.*?\]\]', '', content)  # Remove wikilinks
-        text_only = re.sub(r'#+\s', '', text_only)  # Remove headings
-        text_only = re.sub(r'\*\*(.*?)\*\*', r'\1', text_only)  # Remove bold
-        text_only = re.sub(r'\*(.*?)\*', r'\1', text_only)  # Remove italic
-        text_only = re.sub(r'~~(.*?)~~', r'\1', text_only)  # Remove strikethrough
-        text_only = re.sub(r'\[(.*?)\]\(.*?\)', r'\1', text_only)  # Remove links
-        text_only = re.sub(r'`(.*?)`', r'\1', text_only)  # Remove code
-        
-        # Get first 150 characters
-        snippet = ' '.join(text_only.split())  # Normalize whitespace
-        if len(snippet) > length:
-            # Try to end at a word boundary
-            snippet = snippet[:length].rsplit(' ', 1)[0] + '...'
-        
-        return snippet
 
     def _create_post_directory(self) -> tuple[str, Path]:
         """Create directory for post based on title and date"""

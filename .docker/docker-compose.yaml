@@ -1,5 +1,5 @@
 services:
-  post_gui:
+  base:
     user: "${UID:-1000}:${GID:-1000}"
     build:
       context: .
@@ -17,6 +17,11 @@ services:
     network_mode: "host"
     privileged: true
     ipc: host  # Add this for X11 shared memory
+    
+
+  
+  post_gui:
+    extends: base
     command: python3 /app/scripts/post_gui.py
 
   view_page:
@@ -25,3 +30,11 @@ services:
       - "8080:80"
     volumes:
       - ../:/usr/share/nginx/html:ro
+
+  update_index:
+    extends: base
+    command: python3 /app/scripts/index_generator.py
+
+  convert:
+    extends: base
+    command: python3 /app/scripts/convert.py

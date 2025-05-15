@@ -36,25 +36,32 @@ function loadContentFromHash() {
     
     let contentUrl;
     
-    switch(hash) {
-        case '#about':
-            contentUrl = '/webpage/about/about-content.html';
-            break;
-        case '#projects':
-            contentUrl = '/webpage/indexes/index-projects.html';
-            break;
-        case '#papers':
-            contentUrl = '/webpage/indexes/index-papers.html';
-            break;
-        case '#blog':
-            contentUrl = '/webpage/indexes/index-blog.html';
-            break;
-        case '#haikuesque':
-            contentUrl = '/webpage/indexes/index-haikuesque.html';
-            break;
-        case '#home':
-        default: // #home or empty
-            contentUrl = '/webpage/indexes/index-all.html';
+    // Check if it's a post URL (format: #post/YYYYMMDD_title)
+    if (hash.startsWith('#post/')) {
+        const postPath = hash.substring(6); // Remove '#post/' prefix
+        contentUrl = `/webpage/posts/${postPath}/post.html`;
+    } else {
+        // It's a regular navigation URL
+        switch(hash) {
+            case '#about':
+                contentUrl = '/webpage/about/about-content.html';
+                break;
+            case '#project':
+                contentUrl = '/webpage/indexes/index-project.html';
+                break;
+            case '#paper':
+                contentUrl = '/webpage/indexes/index-paper.html';
+                break;
+            case '#blog':
+                contentUrl = '/webpage/indexes/index-blog.html';
+                break;
+            case '#haikuesque':
+                contentUrl = '/webpage/indexes/index-haikuesque.html';
+                break;
+            case '#home':
+            default: // #home or empty
+                contentUrl = '/webpage/indexes/index-all.html';
+        }
     }
     
     // Use HTMX to load the content
@@ -80,6 +87,13 @@ function updateActiveNavItem(hash) {
         link.classList.remove('active');
     });
     
+    // For posts, we should highlight the corresponding tag if possible
+    if (hash.startsWith('#post/')) {
+        // We don't have an easy way to know which tag this post belongs to,
+        // so we don't highlight any nav item
+        return;
+    }
+    
     // Add active class to the matching nav item
     document.querySelectorAll('.sidebar-nav a').forEach(link => {
         const hrefTarget = link.getAttribute('hx-push-url') || '';
@@ -87,13 +101,6 @@ function updateActiveNavItem(hash) {
             link.classList.add('active');
         }
     });
-}
-
-// Check if page is loading for the first time
-function isInitialPageLoad() {
-    return !window.performance || 
-           !window.performance.navigation || 
-           window.performance.navigation.type === 0;
 }
 
 // Initialize page on load
