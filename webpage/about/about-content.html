@@ -8,8 +8,19 @@
         </p>
     </div>
     <div class="profile-picture">
-        <img src="/webpage/about/profile.png" alt="JC's profile picture">
-    </div>
+    <picture>
+        <!-- WebP version for browsers that support it -->
+        <source srcset="/webpage/about/profile.webp" type="image/webp">
+        <!-- Fallback PNG version -->
+        <img 
+            src="/webpage/about/profile.png" 
+            alt="JC's profile picture"
+            width="300" 
+            height="300" 
+            loading="eager" 
+            fetchpriority="high">
+    </picture>
+</div>
 </section>
 
 <section class="container">
