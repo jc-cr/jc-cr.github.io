@@ -50,7 +50,7 @@ body {
 
 /* Typography */
 h1, h2 {
-    color: var(--text-medium);
+    color: var(--text-dark);
     margin-top: 0;
 }
 
@@ -471,11 +471,14 @@ main video {
 }
 
 
-/* Navigation section styles */
+/* Navigation section styles - modified for single column */
 .nav-section {
     margin-top: 20px;
     border-top: 1px solid var(--border-light);
     padding-top: 10px;
+    display: flex;
+    flex-direction: column;  /* Force single column */
+    width: 100%;  /* Full width of sidebar */
 }
 
 .nav-section-title {
@@ -487,6 +490,12 @@ main video {
     font-weight: normal;
 }
 
+/* Ensure each nav item is full width and properly aligned */
+.nav-section .nav-item {
+    width: 100%;
+    box-sizing: border-box;
+    display: block;
+}
 
 /* Post metadata styles */
 .post-metadata {
