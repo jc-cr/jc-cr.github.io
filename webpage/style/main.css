@@ -469,3 +469,80 @@ main video {
         left: 25px;
     }
 }
+
+
+/* Navigation section styles */
+.nav-section {
+    margin-top: 20px;
+    border-top: 1px solid var(--border-light);
+    padding-top: 10px;
+}
+
+.nav-section-title {
+    font-size: 0.9rem;
+    color: var(--text-lighter);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin: 0 0 8px 20px;
+    font-weight: normal;
+}
+
+
+/* Post metadata styles */
+.post-metadata {
+    margin-bottom: 2rem;
+    color: var(--text-lighter);
+    font-size: 0.9rem;
+}
+
+.post-tags {
+    margin-left: 1rem;
+}
+
+/* Index listing styles */
+.index-container {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    margin-bottom: 2rem;
+}
+
+.index-item {
+    padding: 1.5rem;
+    border-radius: 4px;
+    background-color: var(--bg-body);
+    border: 1px solid var(--border-light);
+    transition: box-shadow 0.2s ease, transform 0.2s ease;
+}
+
+.index-item:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px var(--shadow-light);
+}
+
+.index-date-tags {
+    font-size: 0.85rem;
+    color: var(--text-lighter);
+    margin-bottom: 0.5rem;
+}
+
+.index-title {
+    margin: 0.5rem 0;
+    font-size: 1.3rem;
+}
+
+.index-title a {
+    color: var(--text-dark);
+    text-decoration: none;
+    transition: color 0.2s ease;
+}
+
+.index-title a:hover {
+    color: var(--color-primary);
+}
+
+.index-snippet {
+    color: var(--text-medium);
+    line-height: 1.6;
+    margin-top: 0.5rem;
+}

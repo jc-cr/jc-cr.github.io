@@ -1,41 +1,7 @@
 # JC's Website
 
-Content-focused minimalism that respects the reader's attention.
+My website. For free thanks to the generosity of Github. In return I offer you my data.
 
-
-
-
-## Directory Structure
-
-```
-.
-├── data/               # Contains SQLite database
-├── scripts/           # Python scripts
-├── templates/         # HTML templates
-├── webpage/          # Website content
-│   ├── about/       # About page
-│   ├── blog/        # Blog posts
-│   ├── style/       # CSS files
-│   └── works/       # Works/projects
-└── docker/          # Docker configuration
-```
-
-## Creating New Posts
-
-1. Create a new Markdown file in your Obsidian vault
-2. Set up environment variables in `.env`:
-   ```
-   POST_TYPE="blog"          # or "works"
-   POST_TITLE="Your Title"
-   POST_DATE="YYYY-MM-DD"    # Optional, defaults to today
-   OBSIDIAN_PATH="/path/to/obsidian/vault"
-   POST_PATH="/path/to/markdown/file.md"
-   ```
-3. Run the post generation service:
-   ```bash
-cd .docker
-docker compose run --rm new_post
-   ```
 
 ## Adding an App 
 

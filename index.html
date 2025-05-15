@@ -17,10 +17,17 @@
             <h1>JC's Website</h1>
         </div>
         <nav class="sidebar-nav">
-            <a class="nav-item" hx-get="/index-content.html" hx-target="#content-area" hx-push-url="#home">Home</a>
+            <a class="nav-item" hx-get="/webpage/indexes/index-all.html" hx-target="#content-area" hx-push-url="#home">Home</a>
             <a class="nav-item" hx-get="/webpage/about/about-content.html" hx-target="#content-area" hx-push-url="#about">About</a>
-            <a class="nav-item" hx-get="/webpage/works/posts-content.html" hx-target="#content-area" hx-push-url="#works">Works</a>
-            <a class="nav-item" hx-get="/webpage/blog/posts-content.html" hx-target="#content-area" hx-push-url="#blog">Blog</a>
+            
+            <!-- Tag-based navigation -->
+            <div class="nav-section">
+                <h2 class="nav-section-title">Tags</h2>
+                <a class="nav-item" hx-get="/webpage/indexes/index-projects.html" hx-target="#content-area" hx-push-url="#projects">Projects</a>
+                <a class="nav-item" hx-get="/webpage/indexes/index-papers.html" hx-target="#content-area" hx-push-url="#papers">Papers</a>
+                <a class="nav-item" hx-get="/webpage/indexes/index-blog.html" hx-target="#content-area" hx-push-url="#blog">Blog</a>
+                <a class="nav-item" hx-get="/webpage/indexes/index-haikuesque.html" hx-target="#content-area" hx-push-url="#haikuesque">Haikuesque</a>
+            </div>
         </nav>
         
         <!-- Footer moved to sidebar -->
