@@ -1,6 +1,59 @@
 /**
  * event-bus.js - Handles navigation and content loading
  */
+// Improve initial page load with proper event attachment
+document.addEventListener('DOMContentLoaded', function() {
+    const contentArea = document.getElementById('content-area');
+    
+    // If directly accessing a URL with a hash, honor that
+    if (window.location.hash) {
+        loadContentFromHash();
+    } 
+    // Otherwise load the default content and update URL
+    else {
+        loadContent('/webpage/indexes/index-all.html', contentArea).then(() => {
+            // Set appropriate active class on home navigation
+            updateActiveNavItem('#home');
+            
+            // Ensure all navigation gets proper event handling
+            initializeNavigation();
+            
+            // Add the hash to the URL without triggering a new history entry
+            history.replaceState(null, null, '#home');
+        });
+    }
+});
+
+// Function to ensure all navigation items are properly initialized
+function initializeNavigation() {
+    document.querySelectorAll('.sidebar-nav a').forEach(link => {
+        // Re-apply htmx attributes if they didn't get processed
+        if (!link.getAttribute('hx-trigger')) {
+            htmx.process(link);
+        }
+        
+        // Make sure navigation items are clickable
+        link.addEventListener('click', function(e) {
+            const targetSelector = link.getAttribute('hx-target');
+            const url = link.getAttribute('hx-get');
+            const pushUrl = link.getAttribute('hx-push-url');
+            
+            if (targetSelector && url) {
+                // Backup direct handler in case htmx doesn't work
+                const target = document.querySelector(targetSelector);
+                if (target) {
+                    e.preventDefault();
+                    loadContent(url, target).then(() => {
+                        if (pushUrl) {
+                            history.pushState(null, null, pushUrl);
+                        }
+                        updateActiveNavItem(pushUrl);
+                    });
+                }
+            }
+        });
+    });
+}
 
 // Helper function to safely load content with fallback
 async function loadContent(url, targetElement) {
