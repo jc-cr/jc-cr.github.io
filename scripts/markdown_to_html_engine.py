@@ -221,6 +221,34 @@ class PostGenerator:
             print(f"Error generating post: {e}")
             raise
 
+    def _extract_snippet(self, content, length=150):
+        """Extract a snippet from the content with the specified length"""
+        # Remove Markdown formatting and strip whitespace
+        text_only = re.sub(r'!\[\[.*?\]\]', '', content)  # Remove wikilinks
+        text_only = re.sub(r'#+\s', '', text_only)  # Remove headings
+        text_only = re.sub(r'\*\*(.*?)\*\*', r'\1', text_only)  # Remove bold
+        text_only = re.sub(r'\*(.*?)\*', r'\1', text_only)  # Remove italic
+        text_only = re.sub(r'~~(.*?)~~', r'\1', text_only)  # Remove strikethrough
+        text_only = re.sub(r'\[(.*?)\]\(.*?\)', r'\1', text_only)  # Remove links
+        text_only = re.sub(r'`(.*?)`', r'\1', text_only)  # Remove code
+        
+        # Get first 150 characters
+        snippet = ' '.join(text_only.split())  # Normalize whitespace
+        if len(snippet) > length:
+            # Try to end at a word boundary
+            snippet = snippet[:length].rsplit(' ', 1)[0] + '...'
+        
+        return snippet
+    
+
+    def _replace_template_vars(self, template: str, variables: dict) -> str:
+        """Replace all template variables with their values"""
+        result = template
+        for key, value in variables.items():
+            placeholder = f"{{{{ {key} }}}}"
+            result = result.replace(placeholder, str(value))
+        return result
+
 if __name__ == '__main__':
     try:
         generator = PostGenerator()

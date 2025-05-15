@@ -34,7 +34,3 @@ services:
   update_index:
     extends: base
     command: python3 /app/scripts/index_generator.py
-
-  convert:
-    extends: base
-    command: python3 /app/scripts/convert.py
