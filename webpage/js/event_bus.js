@@ -1,59 +1,6 @@
 /**
  * event-bus.js - Handles navigation and content loading
  */
-// Improve initial page load with proper event attachment
-document.addEventListener('DOMContentLoaded', function() {
-    const contentArea = document.getElementById('content-area');
-    
-    // If directly accessing a URL with a hash, honor that
-    if (window.location.hash) {
-        loadContentFromHash();
-    } 
-    // Otherwise load the default content and update URL
-    else {
-        loadContent('/webpage/indexes/index-all.html', contentArea).then(() => {
-            // Set appropriate active class on home navigation
-            updateActiveNavItem('#home');
-            
-            // Ensure all navigation gets proper event handling
-            initializeNavigation();
-            
-            // Add the hash to the URL without triggering a new history entry
-            history.replaceState(null, null, '#home');
-        });
-    }
-});
-
-// Function to ensure all navigation items are properly initialized
-function initializeNavigation() {
-    document.querySelectorAll('.sidebar-nav a').forEach(link => {
-        // Re-apply htmx attributes if they didn't get processed
-        if (!link.getAttribute('hx-trigger')) {
-            htmx.process(link);
-        }
-        
-        // Make sure navigation items are clickable
-        link.addEventListener('click', function(e) {
-            const targetSelector = link.getAttribute('hx-target');
-            const url = link.getAttribute('hx-get');
-            const pushUrl = link.getAttribute('hx-push-url');
-            
-            if (targetSelector && url) {
-                // Backup direct handler in case htmx doesn't work
-                const target = document.querySelector(targetSelector);
-                if (target) {
-                    e.preventDefault();
-                    loadContent(url, target).then(() => {
-                        if (pushUrl) {
-                            history.pushState(null, null, pushUrl);
-                        }
-                        updateActiveNavItem(pushUrl);
-                    });
-                }
-            }
-        });
-    });
-}
 
 // Helper function to safely load content with fallback
 async function loadContent(url, targetElement) {
@@ -63,6 +10,13 @@ async function loadContent(url, targetElement) {
         if (response.ok) {
             const html = await response.text();
             targetElement.innerHTML = html;
+            
+            // Process any htmx attributes in the loaded content
+            htmx.process(targetElement);
+            
+            // Initialize any new index items in the loaded content
+            initializeIndexItems(targetElement);
+            
             return true;
         } else {
             console.warn(`Failed to load ${url}, status: ${response.status}`);
@@ -82,7 +36,7 @@ async function loadContent(url, targetElement) {
     }
 }
 
-// Load content based on hash on page load or hash change
+// Load content based on hash
 function loadContentFromHash() {
     const hash = window.location.hash || '#home';
     const contentArea = document.getElementById('content-area');
@@ -117,17 +71,20 @@ function loadContentFromHash() {
         }
     }
     
-    // Use HTMX to load the content
-    htmx.ajax('GET', contentUrl, {
-        target: '#content-area',
-        swap: 'innerHTML',
-        headers: {
-            'HX-Request': 'true'
-        }
-    }).catch(() => {
+    // First try HTMX
+    try {
+        htmx.ajax('GET', contentUrl, {
+            target: '#content-area',
+            swap: 'innerHTML',
+            headers: {
+                'HX-Request': 'true'
+            }
+        });
+    } catch (e) {
         // If HTMX fails, try our fallback method
-        loadContent('/webpage/indexes/index-all.html', contentArea);
-    });
+        console.warn("HTMX failed, using fallback", e);
+        loadContent(contentUrl, contentArea);
+    }
     
     // Update active navigation class
     updateActiveNavItem(hash);
@@ -156,34 +113,130 @@ function updateActiveNavItem(hash) {
     });
 }
 
-// Initialize page on load
+// Function to initialize clickable navigation
+function initializeNavigation() {
+    document.querySelectorAll('.sidebar-nav a').forEach(link => {
+        // Make sure htmx processes this element
+        htmx.process(link);
+        
+        // Add direct click handler as backup
+        link.addEventListener('click', function(e) {
+            const targetSelector = link.getAttribute('hx-target');
+            const url = link.getAttribute('hx-get');
+            const pushUrl = link.getAttribute('hx-push-url');
+            
+            if (targetSelector && url) {
+                const target = document.querySelector(targetSelector);
+                if (target) {
+                    // Prevent default only if we're going to handle it
+                    e.preventDefault();
+                    
+                    // Load content
+                    loadContent(url, target).then(() => {
+                        // Update URL if needed
+                        if (pushUrl) {
+                            history.pushState(null, null, pushUrl);
+                        }
+                        
+                        // Update active nav item
+                        updateActiveNavItem(pushUrl);
+                    });
+                }
+            }
+        });
+    });
+}
+
+// Function to make index items clickable
+function initializeIndexItems(container = document) {
+    container.querySelectorAll('.index-item a').forEach(link => {
+        // Make sure htmx processes this element
+        htmx.process(link);
+        
+        // Add direct click handler as backup
+        link.addEventListener('click', function(e) {
+            const targetSelector = link.getAttribute('hx-target');
+            const url = link.getAttribute('hx-get');
+            const pushUrl = link.getAttribute('hx-push-url');
+            
+            if (targetSelector && url) {
+                const target = document.querySelector(targetSelector);
+                if (target) {
+                    // Prevent default only if we're going to handle it
+                    e.preventDefault();
+                    
+                    // Load content
+                    loadContent(url, target).then(() => {
+                        // Update URL if needed
+                        if (pushUrl) {
+                            history.pushState(null, null, pushUrl);
+                        }
+                    });
+                }
+            }
+        });
+    });
+}
+
+// SINGLE DOMContentLoaded handler - consolidated initialization
 document.addEventListener('DOMContentLoaded', function() {
+    console.log("DOM content loaded");
     const contentArea = document.getElementById('content-area');
+    
+    // Ensure htmx is available and ready
+    if (typeof htmx === 'undefined') {
+        console.error("HTMX not loaded!");
+        // Create a fallback version
+        window.htmx = {
+            process: function() { console.warn("HTMX not available for processing"); },
+            ajax: function() { console.warn("HTMX not available for AJAX"); return Promise.reject(); }
+        };
+    }
+    
+    // Initialize navigation menu items
+    initializeNavigation();
     
     // If directly accessing a URL with a hash, honor that
     if (window.location.hash) {
+        console.log("Loading from hash:", window.location.hash);
         loadContentFromHash();
     } 
     // Otherwise load the default content
     else {
+        console.log("No hash, loading default content");
         loadContent('/webpage/indexes/index-all.html', contentArea).then(() => {
+            // Add the hash to the URL without triggering a new history entry
+            history.replaceState(null, null, '#home');
+            
             // Set appropriate active class on home navigation
             updateActiveNavItem('#home');
+            
+            // Initialize index items in the loaded content
+            initializeIndexItems();
         });
     }
 });
 
 // Handle hash changes from browser navigation
-window.addEventListener('hashchange', loadContentFromHash);
+window.addEventListener('hashchange', function() {
+    console.log("Hash changed to:", window.location.hash);
+    loadContentFromHash();
+});
 
 // Listen for HTMX events
 document.body.addEventListener('htmx:afterSwap', function(event) {
-    // Get the URL that was just navigated to
+    console.log("HTMX after swap");
+    
+    // Initialize any newly loaded index items
+    initializeIndexItems(event.detail.target);
+    
+    // Update active nav for current hash
     const currentHash = window.location.hash || '#home';
     updateActiveNavItem(currentHash);
 });
 
 document.body.addEventListener('htmx:afterRequest', function(event) {
+    console.log("HTMX after request");
     const elt = event.detail.elt;
     if (elt && elt.classList.contains('nav-item')) {
         const hash = elt.getAttribute('hx-push-url') || '';
@@ -193,6 +246,10 @@ document.body.addEventListener('htmx:afterRequest', function(event) {
 
 // Handle errors in HTMX requests
 document.body.addEventListener('htmx:responseError', function(event) {
+    console.error("HTMX response error:", event);
     const contentArea = document.getElementById('content-area');
     loadContent('/webpage/indexes/index-all.html', contentArea);
 });
+
+// Enable touch handling for mobile
+document.addEventListener('touchstart', function() {}, {passive: true});
