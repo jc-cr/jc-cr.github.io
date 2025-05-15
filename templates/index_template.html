@@ -10,16 +10,18 @@
     <header>
         <h1><a href="/">JC's Website</a></h1>
         <p>
-            <a href="/webpage/about/about.html">About</a> |
-            <a href="/webpage/works/posts.html">Works</a> |
-            <a href="/webpage/blog/posts.html">Blog</a>
+            <a href="/webpage/about/about-content.html">About</a> |
+            <a href="/webpage/indexes/index-projects.html">Projects</a> |
+            <a href="/webpage/indexes/index-papers.html">Papers</a> |
+            <a href="/webpage/indexes/index-blog.html">Blog</a> |
+            <a href="/webpage/indexes/index-haikuesque.html">Haikuesque</a>
         </p>
     </header>
     <main>
-        <h2>Latest:</h2>
-        <ul>
-            {{ latest_posts }}
-        </ul>
+        <h2>{{ title }}</h2>
+        <div class="index-container">
+            {{ posts }}
+        </div>
     </main>
 </body>
 </html>

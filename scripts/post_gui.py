@@ -6,20 +6,25 @@ from tkinter import filedialog, ttk
 from datetime import datetime
 from pathlib import Path
 
-from post_generator import PostGenerator
-from sync_db import DatabaseSyncService
+from markdown_to_html_engine import PostGenerator
 
 class PostCreatorGUI:
     def __init__(self, root):
         self.root = root
         self.root.title("Post Creator")
-        self.root.geometry("600x400")  # Reduced height since we removed Obsidian selection
+        self.root.geometry("600x500")  # Increased height for tags section
         
         # Variables to store user input
         self.file_path = tk.StringVar()
         self.post_title = tk.StringVar()
         self.post_date = tk.StringVar(value=datetime.now().strftime('%Y-%m-%d'))
         self.post_type = tk.StringVar(value="works")  # Default to "works"
+        
+        # Variables for tags
+        self.tag_projects = tk.BooleanVar(value=False)
+        self.tag_papers = tk.BooleanVar(value=False)
+        self.tag_blog = tk.BooleanVar(value=False)
+        self.tag_haikuesque = tk.BooleanVar(value=False)
         
         # Create GUI elements
         self._create_widgets()
@@ -52,9 +57,15 @@ class PostCreatorGUI:
         # Post type selection
         type_frame = ttk.Frame(details_frame)
         type_frame.pack(fill=tk.X, pady=5)
-        ttk.Label(type_frame, text="Type:").pack(side=tk.LEFT)
-        ttk.Radiobutton(type_frame, text="Works", variable=self.post_type, value="works").pack(side=tk.LEFT, padx=5)
-        ttk.Radiobutton(type_frame, text="Blog", variable=self.post_type, value="blog").pack(side=tk.LEFT, padx=5)
+        
+        # Tags selection
+        tags_frame = ttk.LabelFrame(self.root, text="Tags", padding="10")
+        tags_frame.pack(fill=tk.X, padx=10, pady=5)
+        
+        ttk.Checkbutton(tags_frame, text="Projects", variable=self.tag_projects).pack(anchor=tk.W)
+        ttk.Checkbutton(tags_frame, text="Papers", variable=self.tag_papers).pack(anchor=tk.W)
+        ttk.Checkbutton(tags_frame, text="Blog", variable=self.tag_blog).pack(anchor=tk.W)
+        ttk.Checkbutton(tags_frame, text="Haikuesque", variable=self.tag_haikuesque).pack(anchor=tk.W)
         
         # Status message
         status_frame = ttk.LabelFrame(self.root, text="Status", padding="10")
@@ -89,6 +100,19 @@ class PostCreatorGUI:
         self.status_text.see(tk.END)
         self.status_text.config(state=tk.DISABLED)
         self.root.update()
+    
+    def _get_selected_tags(self):
+        """Return a list of selected tags"""
+        tags = []
+        if self.tag_projects.get():
+            tags.append("projects")
+        if self.tag_papers.get():
+            tags.append("papers")
+        if self.tag_blog.get():
+            tags.append("blog")
+        if self.tag_haikuesque.get():
+            tags.append("haikuesque")
+        return tags
         
     def _create_post(self):
         # Clear status
@@ -121,6 +145,9 @@ class PostCreatorGUI:
         os.environ['POST_TITLE'] = self.post_title.get()
         os.environ['POST_DATE'] = self.post_date.get()
         
+        # Set tags environment variable
+        os.environ['POST_TAGS'] = ','.join(self._get_selected_tags())
+        
         # Get the file path relative to the Obsidian mount
         obsidian_dir = "/app/obsidian"  # This matches your Docker mount
         
@@ -152,12 +179,17 @@ class PostCreatorGUI:
             
             self._log_status(f"Post generated successfully in {output_dir}")
             
-            # Sync database
-            self._log_status("Syncing database...")
-            sync_service = DatabaseSyncService()
-            sync_service.sync_database()
+            # Generate indexes
+            self._log_status("Generating indexes...")
+            try:
+                # Import here to avoid circular imports
+                from index_generator import IndexGenerator
+                index_generator = IndexGenerator()
+                index_generator.generate_all_indexes()
+                self._log_status("Indexes generated successfully!")
+            except Exception as e:
+                self._log_status(f"Error generating indexes: {str(e)}")
             
-            self._log_status("Database synced successfully!")
             self._log_status("Your website has been updated with the new post.")
             
         except Exception as e:

@@ -14,16 +14,16 @@ async function loadContent(url, targetElement) {
         } else {
             console.warn(`Failed to load ${url}, status: ${response.status}`);
             // If we fail to load and it's not the index content, try to load index content as fallback
-            if (url !== '/index-content.html') {
-                return loadContent('/index-content.html', targetElement);
+            if (url !== '/webpage/indexes/index-all.html') {
+                return loadContent('/webpage/indexes/index-all.html', targetElement);
             }
             return false;
         }
     } catch (error) {
         console.error(`Error loading ${url}:`, error);
         // If there's an error and it's not the index content, try to load index content as fallback
-        if (url !== '/index-content.html') {
-            return loadContent('/index-content.html', targetElement);
+        if (url !== '/webpage/indexes/index-all.html') {
+            return loadContent('/webpage/indexes/index-all.html', targetElement);
         }
         return false;
     }
@@ -40,14 +40,21 @@ function loadContentFromHash() {
         case '#about':
             contentUrl = '/webpage/about/about-content.html';
             break;
-        case '#works':
-            contentUrl = '/webpage/works/posts-content.html';
+        case '#projects':
+            contentUrl = '/webpage/indexes/index-projects.html';
+            break;
+        case '#papers':
+            contentUrl = '/webpage/indexes/index-papers.html';
             break;
         case '#blog':
-            contentUrl = '/webpage/blog/posts-content.html';
+            contentUrl = '/webpage/indexes/index-blog.html';
             break;
+        case '#haikuesque':
+            contentUrl = '/webpage/indexes/index-haikuesque.html';
+            break;
+        case '#home':
         default: // #home or empty
-            contentUrl = '/index-content.html';
+            contentUrl = '/webpage/indexes/index-all.html';
     }
     
     // Use HTMX to load the content
@@ -59,7 +66,7 @@ function loadContentFromHash() {
         }
     }).catch(() => {
         // If HTMX fails, try our fallback method
-        loadContent('/index-content.html', contentArea);
+        loadContent('/webpage/indexes/index-all.html', contentArea);
     });
     
     // Update active navigation class
@@ -99,7 +106,7 @@ document.addEventListener('DOMContentLoaded', function() {
     } 
     // Otherwise load the default content
     else {
-        loadContent('/index-content.html', contentArea).then(() => {
+        loadContent('/webpage/indexes/index-all.html', contentArea).then(() => {
             // Set appropriate active class on home navigation
             updateActiveNavItem('#home');
         });
@@ -127,5 +134,5 @@ document.body.addEventListener('htmx:afterRequest', function(event) {
 // Handle errors in HTMX requests
 document.body.addEventListener('htmx:responseError', function(event) {
     const contentArea = document.getElementById('content-area');
-    loadContent('/index-content.html', contentArea);
+    loadContent('/webpage/indexes/index-all.html', contentArea);
 });

@@ -1,13 +1,13 @@
 # update_posts.py
 import os
 import re
+import json
 import shutil
 from pathlib import Path
 from datetime import datetime
 import markdown
 import urllib.parse
 from dotenv import load_dotenv
-from registry_updater import PostRegistry
 
 class PostGenerator:
     def __init__(self, base_dir: str = None):
@@ -15,7 +15,7 @@ class PostGenerator:
         load_dotenv()
         
         # Use provided base_dir or determine based on environment
-        self.base_dir = Path('/app')
+        self.base_dir = Path(base_dir if base_dir else '/app')
         
         # Get the actual post path from environment
         post_path_env = os.getenv('POST_PATH', '')
@@ -28,9 +28,9 @@ class PostGenerator:
             
         # Set up other paths
         self.obsidian_path = Path('/input/obsidian')
-        self.output_dir = Path('/app/webpage')
-        self.template_dir = Path('/app/templates')
-        self.registry = PostRegistry('/app/data/posts.db')
+        self.output_dir = self.base_dir / 'webpage'
+        self.template_dir = self.base_dir / 'templates'
+        self.indexes_dir = self.output_dir / 'indexes'
         
         # Initialize templates
         self.post_template = self.template_dir / 'post_template.html'
@@ -42,8 +42,17 @@ class PostGenerator:
         self.post_title = os.getenv('POST_TITLE', '').strip().strip('"\'')
         self.post_date = os.getenv('POST_DATE', '').strip().strip('"\'') or datetime.now().strftime('%Y-%m-%d')
         
+        # Get tags from environment
+        self.post_tags = os.getenv('POST_TAGS', '').strip().strip('"\'').split(',')
+        # Filter out empty strings from the tags list
+        self.post_tags = [tag for tag in self.post_tags if tag]
+        # If no tags were specified but post_type is set, use that as a default tag
+        if not self.post_tags and self.post_type:
+            self.post_tags = [self.post_type]
+        
         # Create necessary directories
         self.output_dir.mkdir(parents=True, exist_ok=True)
+        self.indexes_dir.mkdir(parents=True, exist_ok=True)
         
         # Validate environment after setup
         self._validate_environment()
@@ -140,58 +149,24 @@ class PostGenerator:
             result = result.replace(placeholder, str(value))
         return result
     
-    def _generate_index_html(self):
-        """Generate main index.html with latest posts"""
-        with open(self.index_template, 'r', encoding='utf-8') as f:
-            template = f.read()
+    def _extract_snippet(self, content, length=150):
+        """Extract a snippet from the content with the specified length"""
+        # Remove Markdown formatting and strip whitespace
+        text_only = re.sub(r'!\[\[.*?\]\]', '', content)  # Remove wikilinks
+        text_only = re.sub(r'#+\s', '', text_only)  # Remove headings
+        text_only = re.sub(r'\*\*(.*?)\*\*', r'\1', text_only)  # Remove bold
+        text_only = re.sub(r'\*(.*?)\*', r'\1', text_only)  # Remove italic
+        text_only = re.sub(r'~~(.*?)~~', r'\1', text_only)  # Remove strikethrough
+        text_only = re.sub(r'\[(.*?)\]\(.*?\)', r'\1', text_only)  # Remove links
+        text_only = re.sub(r'`(.*?)`', r'\1', text_only)  # Remove code
         
-        # Get latest posts from registry
-        latest_posts = self.registry.get_latest_posts(5)
+        # Get first 150 characters
+        snippet = ' '.join(text_only.split())  # Normalize whitespace
+        if len(snippet) > length:
+            # Try to end at a word boundary
+            snippet = snippet[:length].rsplit(' ', 1)[0] + '...'
         
-        # Generate latest posts HTML
-        posts_html = ''
-        for post in latest_posts:
-            post_url = f"/webpage/{post['type']}/{post['path']}/post.html"
-            posts_html += f'<li><a href="{post_url}">{post["title"]}</a> ({post["date"]})</li>\n'
-        
-        # Replace template variables
-        variables = {
-            'latest_posts': posts_html
-        }
-        index_html = self._replace_template_vars(template, variables)
-        
-        # Write to root directory
-        index_path = self.base_dir / 'index.html'
-        with open(index_path, 'w', encoding='utf-8') as f:
-            f.write(index_html)
-    
-    def _generate_section_html(self):
-        """Generate section pages (blog/posts.html, works/posts.html)"""
-        with open(self.section_template, 'r', encoding='utf-8') as f:
-            template = f.read()
-        
-        # Generate for each section
-        for section in ['blog', 'works']:
-            posts = self.registry.get_posts_by_type(section)
-            
-            # Generate posts HTML
-            posts_html = ''
-            for post in posts:
-                post_url = f"{post['path']}/post.html"
-                posts_html += f'<li><a href="{post_url}">{post["title"]}</a> ({post["date"]})</li>\n'
-            
-            # Replace template variables
-            variables = {
-                'posts': posts_html,
-                'section': section.title()
-            }
-            section_html = self._replace_template_vars(template, variables)
-            
-            # Write section file
-            section_dir = self.output_dir / section
-            section_dir.mkdir(exist_ok=True)
-            with open(section_dir / 'posts.html', 'w', encoding='utf-8') as f:
-                f.write(section_html)
+        return snippet
 
     def _create_post_directory(self) -> tuple[str, Path]:
         """Create directory for post based on title and date"""
@@ -205,35 +180,25 @@ class PostGenerator:
         dir_name = f"{date_str}_{slug}"
         
         # Create directory in output_dir
-        post_dir = self.output_dir / self.post_type / dir_name
+        post_dir = self.output_dir / 'posts' / dir_name
         post_dir.mkdir(parents=True, exist_ok=True)
         
         return dir_name, post_dir
 
-    def _update_registry(self, dir_name: str):
-        """Update or insert post in registry"""
-        try:
-            # Handle various date formats and normalize to YYYY-MM-DD
-            date_obj = datetime.strptime(self.post_date, '%Y-%m-%d')
-        except ValueError:
-            # Default to today if parsing fails
-            date_obj = datetime.now()
+    def _create_meta_json(self, post_dir: Path, content: str):
+        """Create meta.json file in the post directory"""
+        snippet = self._extract_snippet(content)
         
-        normalized_date = date_obj.strftime('%Y-%m-%d')
-        
-        post_data = {
-            'id': dir_name,
-            'type': self.post_type,
-            'title': self.post_title,
-            'date': normalized_date,
-            'path': dir_name,
-            'content_hash': ''  # Add empty content_hash to ensure column exists
+        meta_data = {
+            "title": self.post_title,
+            "date": self.post_date,
+            "tags": self.post_tags,
+            "snippet": snippet
         }
         
-        try:
-            self.registry.update_post(dir_name, post_data)
-        except:
-            self.registry.add_post(post_data)
+        meta_file = post_dir / "meta.json"
+        with open(meta_file, 'w', encoding='utf-8') as f:
+            json.dump(meta_data, f, indent=2)
 
     def generate(self):
         """Generate all required files"""
@@ -244,6 +209,9 @@ class PostGenerator:
             
             # Create post directory
             dir_name, post_dir = self._create_post_directory()
+            
+            # Create meta.json file
+            self._create_meta_json(post_dir, content)
             
             # Process content
             content = self._process_wikilinks(content, post_dir)
@@ -260,7 +228,7 @@ class PostGenerator:
                 'title': self.post_title,
                 'content': html_content,
                 'date': self.post_date,
-                'section': self.post_type.title()
+                'tags': ', '.join(self.post_tags)  # Join the tags with commas
             }
             
             post_html = self._replace_template_vars(template, post_vars)
@@ -269,13 +237,6 @@ class PostGenerator:
             output_file = post_dir / 'post.html'
             with open(output_file, 'w', encoding='utf-8') as f:
                 f.write(post_html)
-            
-            # Update registry
-            self._update_registry(dir_name)
-            
-            # Generate index and section pages
-            self._generate_index_html()
-            self._generate_section_html()
             
             print(f"Post generated successfully in {post_dir}")
             return str(post_dir)
