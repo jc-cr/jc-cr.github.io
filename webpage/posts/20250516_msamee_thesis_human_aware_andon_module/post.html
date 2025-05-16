@@ -1,0 +1,47 @@
+
+<article>
+    <h1>MSAMEE Thesis - Human Aware Andon Module</h1>
+    <div class="post-metadata">
+        <time datetime="2025-05-16">2025-05-16</time>
+        <span class="post-tags">
+            Tags: papers
+        </span>
+    </div>
+    <h2>Abstract</h2>
+<p>This thesis presents the design, development, and analysis of the Human Aware Andon Module (HAAM), a low-cost, energy-efficient edge machine learning system for enhancing safety in human-robot interactions in manufacturing and industrial environments.<br />
+The system integrates a Coral Dev Board Micro with an Edge TPU, a Time-of-Flight (ToF) sensor, and RGB LEDs to detect humans, estimate distances, and visually signal robot states.<br />
+A novel depth estimation algorithm is developed that aligns low-resolution ToF data with RGB camera input. <br />
+Using the aligned depth data and detection bounding boxes, a weighted cell-based distance calculation is used to provide a distance estimate for each human detection in a scene.</p>
+<p>We demonstrate the configurability of the HAAM system through integration testing with a UR5e robot in a pick-and-place scenario.<br />
+Testing showed successful speed modulation and emergency stopping with response times under 10ms, providing real-world validation of the system's capabilities as a practical safety solution. <br />
+The HAAM system offers significant advantages in cost (\$104), power efficiency (1.27W), and visual signaling capabilities compared to commercial alternatives, demonstrating the potential of edge machine learning for enhancing workplace safety through visual feedback of machine states. More so, the small form factor and low power requirements allow for the HAAM to be easily attached to a variety of robot platforms.</p>
+<h2>Paper Link</h2>
+<p><a href="https://drive.google.com/file/d/1R8UodXYUrjNsj4NXotftrRq6th2S6V_0/view?usp=sharing">Google Drive</a></p>
+<h2>Code</h2>
+<p><a href="https://github.com/jc-cr/coralmicro_in_tree_andon_system">HAAM Source Code (Github)</a></p>
+<p><a href="https://github.com/jc-cr/edge_human_detection_board">HAAM PCB Files (Github)</a></p>
+<p><a href="https://github.com/jc-cr/coralmicro_in_tree_tof_to_rgb_calibration_client">Depth Alignment and Error Analysis Data (Github)</a></p>
+<p><a href="https://docs.google.com/spreadsheets/d/1L5IXXhbUKV5k8FJz_iet51AGxxW5eKq3ml3NYGNxYjw/edit?usp=drive_link">System Comparison Spreadsheet (Google Sheets)</a></p>
+<p><a href="https://docs.google.com/spreadsheets/d/1pP3Trc8BrbXpvxsbIGGuR9Asbxqgrt9GBK5P-kHwdwY/edit?usp=sharing">Power Analysis Dataset (Google Sheets)</a></p>
+<p><a href="https://coral.ai/models/all/#detection">Pretrained SSD MobileNet V2 Models (Webpage)</a></p>
+<p><a href="https://github.com/jc-cr/andon_system_latency_testing">Latency Analysis Code and Data (Github)</a></p>
+<p><a href="https://github.com/jc-cr/andon_system_dynamic_testing">Depth Detection Accuracy Code and Data (Github)</a></p>
+<p><a href="https://github.com/jc-cr/haam_ros_pkg">HAAM ROS1 Package (Github)</a></p>
+<p><a href="https://github.com/AIConLab/ur5e_pick_place_demo">Pick-and-Place UR5e Code (Github)</a></p>
+<h2>Citation</h2>
+<pre><code class="language-bibtex">@mastersthesis{cruz2025design,
+    author = {Cruz Rivera, Juan Carlos},
+    orcid = {0009-0009-0048-8169},
+    title = {Design, Development, and Analysis of an Edge Machine Learning Andon System For Safe Human-Robot Interaction},
+    school = {University of Texas at San Antonio},
+    year = {2025},
+    month = {May},
+    type = {Master's thesis},
+    department = {Department of Mechanical Engineering},
+    address = {San Antonio, TX},
+    note = {Klesse College of Engineering and Integrated Design},
+    url = {https://drive.google.com/file/d/1R8UodXYUrjNsj4NXotftrRq6th2S6V_0/view?usp=sharing},
+    abstract = {This thesis presents the design, development, and analysis of the Human Aware Andon Module (HAAM), a low-cost, energy-efficient edge machine learning system for enhancing safety in human-robot interactions in manufacturing and industrial environments. The system integrates a Coral Dev Board Micro with an Edge TPU, a Time-of-Flight (ToF) sensor, and RGB LEDs to detect humans, estimate distances, and visually signal robot states. A novel depth estimation algorithm is developed that aligns low-resolution ToF data with RGB camera input. Using the aligned depth data and detection bounding boxes, a weighted cell-based distance calculation is used to provide a distance estimate for each human detection in a scene. We demonstrate the configurability of the HAAM system through integration testing with a UR5e robot in a pick-and-place scenario. Testing showed successful speed modulation and emergency stopping with response times under 10ms, providing real-world validation of the system's capabilities as a practical safety solution. The HAAM system offers significant advantages in cost (\$104), power efficiency (1.27W), and visual signaling capabilities compared to commercial alternatives, demonstrating the potential of edge machine learning for enhancing workplace safety through visual feedback of machine states. More so, the small form factor and low power requirements allow for the HAAM to be easily attached to a variety of robot platforms.},
+howpublished = {Available online}
+</code></pre>
+</article>
