@@ -193,7 +193,7 @@ class PostGenerator:
             content = self._process_wikilinks(content, post_dir)
             html_content = markdown.markdown(
                 content,
-                extensions=['extra', 'meta', 'fenced_code', 'nl2br', 'sane_lists']
+                extensions=['extra', 'meta', 'fenced_code', 'nl2br', 'sane_lists', 'codehilite']
             )
             
             # Generate post HTML

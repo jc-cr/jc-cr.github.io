@@ -600,3 +600,71 @@ main video {
         width: 100%;
     }
 }
+
+/* Code block styling */
+pre {
+    position: relative;
+    background-color: #f5f5f5;
+    border: 1px solid var(--border-light);
+    border-radius: 4px;
+    padding: 15px;
+    margin: 20px 0;
+    overflow-x: auto;
+    max-width: 100%;
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 0.9em;
+    line-height: 1.5;
+}
+
+pre code {
+    display: block;
+    color: var(--text-dark);
+    white-space: pre;
+    word-wrap: normal;
+    overflow-wrap: normal;
+}
+
+/* Code copy button */
+.copy-button {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    background-color: var(--color-primary);
+    color: white;
+    border: none;
+    border-radius: 4px;
+    padding: 5px 8px;
+    font-size: 0.8em;
+    cursor: pointer;
+    opacity: 0;
+    transition: opacity 0.2s ease;
+}
+
+pre:hover .copy-button {
+    opacity: 1;
+}
+
+.copy-button:hover {
+    background-color: var(--color-primary-dark);
+}
+
+.copy-button:active {
+    transform: scale(0.95);
+}
+
+/* Animation for feedback when clicked */
+@keyframes copy-feedback {
+    0% { content: "Copy"; }
+    20% { content: "Copied!"; }
+    80% { content: "Copied!"; }
+    100% { content: "Copy"; }
+}
+
+.copy-button[data-copied="true"]::after {
+    content: "Copied!";
+    animation: copy-feedback 2s forwards;
+}
+
+.copy-button:not([data-copied="true"])::after {
+    content: "Copy";
+}
