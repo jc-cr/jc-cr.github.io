@@ -105,9 +105,9 @@ class PostCreatorGUI:
         """Return a list of selected tags"""
         tags = []
         if self.tag_projects.get():
-            tags.append("projects")
+            tags.append("project")
         if self.tag_papers.get():
-            tags.append("papers")
+            tags.append("paper")
         if self.tag_blog.get():
             tags.append("blog")
         if self.tag_haikuesque.get():
