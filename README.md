@@ -7,7 +7,7 @@ Posts are generated using a combination of Markdown files and a custom static si
 ### Creating New Posts
 1. Run the post GUI with Docker Compose:
    ```bash
-   docker compose up post_gui --remove-orphans --abort-on-container-exit
+docker compose up post_gui --remove-orphans --abort-on-container-exit
    ```
 2. Select a Markdown file, enter title and date, and select appropriate tags
 3. Click "Create Post" to generate the HTML and update the indices
