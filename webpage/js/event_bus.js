@@ -36,10 +36,12 @@ async function loadContent(url, targetElement) {
     }
 }
 
-// Load content based on hash
+// Load content based on hash - simplified version
 function loadContentFromHash() {
     const hash = window.location.hash || '#home';
     const contentArea = document.getElementById('content-area');
+    
+    if (!contentArea) return;
     
     let contentUrl;
     
@@ -71,23 +73,10 @@ function loadContentFromHash() {
         }
     }
     
-    // First try HTMX
-    try {
-        htmx.ajax('GET', contentUrl, {
-            target: '#content-area',
-            swap: 'innerHTML',
-            headers: {
-                'HX-Request': 'true'
-            }
-        });
-    } catch (e) {
-        // If HTMX fails, try our fallback method
-        console.warn("HTMX failed, using fallback", e);
-        loadContent(contentUrl, contentArea);
-    }
-    
-    // Update active navigation class
-    updateActiveNavItem(hash);
+    // Load content and update navigation
+    loadContent(contentUrl, contentArea).then(() => {
+        updateActiveNavItem(hash);
+    });
 }
 
 // Update which navigation item is active
@@ -97,10 +86,8 @@ function updateActiveNavItem(hash) {
         link.classList.remove('active');
     });
     
-    // For posts, we should highlight the corresponding tag if possible
+    // For posts, we don't highlight any nav item
     if (hash.startsWith('#post/')) {
-        // We don't have an easy way to know which tag this post belongs to,
-        // so we don't highlight any nav item
         return;
     }
     
@@ -113,117 +100,91 @@ function updateActiveNavItem(hash) {
     });
 }
 
-// Function to initialize clickable navigation
+// Function to initialize clickable navigation - removed manual history management
 function initializeNavigation() {
     document.querySelectorAll('.sidebar-nav a').forEach(link => {
         // Make sure htmx processes this element
         htmx.process(link);
         
-        // Add direct click handler as backup
-        link.addEventListener('click', function(e) {
-            const targetSelector = link.getAttribute('hx-target');
-            const url = link.getAttribute('hx-get');
-            const pushUrl = link.getAttribute('hx-push-url');
-            
-            if (targetSelector && url) {
-                const target = document.querySelector(targetSelector);
-                if (target) {
-                    // Prevent default only if we're going to handle it
-                    e.preventDefault();
-                    
-                    // Load content
-                    loadContent(url, target).then(() => {
-                        // Update URL if needed
-                        if (pushUrl) {
-                            history.pushState(null, null, pushUrl);
-                        }
-                        
-                        // Update active nav item
-                        updateActiveNavItem(pushUrl);
-                    });
-                }
-            }
-        });
+        // Remove any existing click handlers to avoid conflicts
+        link.removeEventListener('click', handleNavClick);
+        
+        // Add click handler only as backup if HTMX fails
+        link.addEventListener('click', handleNavClick);
     });
 }
 
-// Function to make index items clickable
+// Simplified click handler that doesn't interfere with HTMX
+function handleNavClick(e) {
+    const link = e.currentTarget;
+    const targetSelector = link.getAttribute('hx-target');
+    const url = link.getAttribute('hx-get');
+    const pushUrl = link.getAttribute('hx-push-url');
+    
+    // Only handle if HTMX attributes are present but HTMX fails
+    if (targetSelector && url && pushUrl) {
+        // Let HTMX handle it first
+        return;
+    }
+}
+
+// Function to make index items clickable - simplified
 function initializeIndexItems(container = document) {
     container.querySelectorAll('.index-item a').forEach(link => {
         // Make sure htmx processes this element
         htmx.process(link);
         
-        // Add direct click handler as backup
-        link.addEventListener('click', function(e) {
-            const targetSelector = link.getAttribute('hx-target');
-            const url = link.getAttribute('hx-get');
-            const pushUrl = link.getAttribute('hx-push-url');
-            
-            if (targetSelector && url) {
-                const target = document.querySelector(targetSelector);
-                if (target) {
-                    // Prevent default only if we're going to handle it
-                    e.preventDefault();
-                    
-                    // Load content
-                    loadContent(url, target).then(() => {
-                        // Update URL if needed
-                        if (pushUrl) {
-                            history.pushState(null, null, pushUrl);
-                        }
-                    });
-                }
-            }
-        });
+        // Remove any existing handlers
+        link.removeEventListener('click', handleIndexClick);
+        link.addEventListener('click', handleIndexClick);
     });
 }
 
-// SINGLE DOMContentLoaded handler - consolidated initialization
+// Simplified index click handler
+function handleIndexClick(e) {
+    const link = e.currentTarget;
+    const targetSelector = link.getAttribute('hx-target');
+    const url = link.getAttribute('hx-get');
+    
+    // Only handle if HTMX attributes are present
+    if (targetSelector && url) {
+        // Let HTMX handle it
+        return;
+    }
+}
+
+// SINGLE DOMContentLoaded handler - simplified
 document.addEventListener('DOMContentLoaded', function() {
     console.log("DOM content loaded");
     const contentArea = document.getElementById('content-area');
     
-    // Ensure htmx is available and ready
+    if (!contentArea) {
+        console.error("Content area not found!");
+        return;
+    }
+    
+    // Ensure htmx is available
     if (typeof htmx === 'undefined') {
         console.error("HTMX not loaded!");
-        // Create a fallback version
-        window.htmx = {
-            process: function() { console.warn("HTMX not available for processing"); },
-            ajax: function() { console.warn("HTMX not available for AJAX"); return Promise.reject(); }
-        };
+        return;
     }
     
     // Initialize navigation menu items
     initializeNavigation();
     
-    // If directly accessing a URL with a hash, honor that
-    if (window.location.hash) {
-        console.log("Loading from hash:", window.location.hash);
-        loadContentFromHash();
-    } 
-    // Otherwise load the default content
-    else {
-        console.log("No hash, loading default content");
-        loadContent('/webpage/indexes/index-all.html', contentArea).then(() => {
-            // Add the hash to the URL without triggering a new history entry
-            history.replaceState(null, null, '#home');
-            
-            // Set appropriate active class on home navigation
-            updateActiveNavItem('#home');
-            
-            // Initialize index items in the loaded content
-            initializeIndexItems();
-        });
-    }
-});
-
-// Handle hash changes from browser navigation
-window.addEventListener('hashchange', function() {
-    console.log("Hash changed to:", window.location.hash);
+    // Load initial content based on current hash
     loadContentFromHash();
 });
 
-// Listen for HTMX events
+// Handle hash changes from browser navigation (back/forward buttons)
+window.addEventListener('hashchange', function(e) {
+    console.log("Hash changed to:", window.location.hash);
+    // Prevent default and let our handler manage it
+    e.preventDefault();
+    loadContentFromHash();
+});
+
+// Listen for HTMX events - simplified
 document.body.addEventListener('htmx:afterSwap', function(event) {
     console.log("HTMX after swap");
     
@@ -235,20 +196,31 @@ document.body.addEventListener('htmx:afterSwap', function(event) {
     updateActiveNavItem(currentHash);
 });
 
-document.body.addEventListener('htmx:afterRequest', function(event) {
-    console.log("HTMX after request");
-    const elt = event.detail.elt;
-    if (elt && elt.classList.contains('nav-item')) {
-        const hash = elt.getAttribute('hx-push-url') || '';
-        updateActiveNavItem(hash);
-    }
+// Handle HTMX navigation completion
+document.body.addEventListener('htmx:pushedIntoHistory', function(event) {
+    console.log("HTMX pushed into history:", event.detail);
+    // Update active navigation when HTMX updates the URL
+    const currentHash = window.location.hash || '#home';
+    updateActiveNavItem(currentHash);
 });
 
 // Handle errors in HTMX requests
 document.body.addEventListener('htmx:responseError', function(event) {
     console.error("HTMX response error:", event);
     const contentArea = document.getElementById('content-area');
-    loadContent('/webpage/indexes/index-all.html', contentArea);
+    if (contentArea) {
+        loadContent('/webpage/indexes/index-all.html', contentArea).then(() => {
+            // Navigate to home on error
+            window.location.hash = '#home';
+        });
+    }
+});
+
+// Handle browser back/forward buttons more reliably
+window.addEventListener('popstate', function(event) {
+    console.log("Popstate event:", event);
+    // Load content based on current URL hash
+    loadContentFromHash();
 });
 
 // Enable touch handling for mobile
