@@ -6,7 +6,8 @@ Posts are generated using a combination of Markdown files and a custom static si
 
 ### Creating New Posts
 1. Run the post GUI with Docker Compose:
-   ```bash
+
+```bash
 docker compose up post_gui --remove-orphans --abort-on-container-exit
    ```
 2. Select a Markdown file, enter title and date, and select appropriate tags
@@ -19,6 +20,7 @@ Each post is stored in `/webpage/posts/YYYYMMDD_title` with:
 
 ### Manually Updating Indices
 If you need to regenerate all index files without creating a new post:
+
 ```bash
 docker compose run --rm update_index
 ```
