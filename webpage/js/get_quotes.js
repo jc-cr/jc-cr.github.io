@@ -33,7 +33,7 @@ class QuoteDisplay {
 
             // Load the database file
             console.log('Fetching database file...');
-            const response = await fetch('/data/forbes_quotes_rust.db');
+            const response = await fetch('/data/quotes.db');
             if (!response.ok) {
                 console.error('Failed to load database:', response.status, response.statusText);
                 return false;
