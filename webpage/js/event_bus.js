@@ -17,6 +17,19 @@ async function loadContent(url, targetElement) {
             // Initialize any new index items in the loaded content
             initializeIndexItems(targetElement);
             
+            // Initialize quotes if this is home content
+            if (html.includes('quote-section')) {
+                console.log('Home content loaded, initializing quotes');
+                setTimeout(() => {
+                    if (typeof window.quoteDisplay !== 'undefined') {
+                        const quoteSection = document.getElementById('quote-section');
+                        if (quoteSection) {
+                            window.quoteDisplay.displayRandomQuote(quoteSection);
+                        }
+                    }
+                }, 100);
+            }
+            
             return true;
         } else {
             console.warn(`Failed to load ${url}, status: ${response.status}`);
@@ -190,6 +203,19 @@ document.body.addEventListener('htmx:afterSwap', function(event) {
     
     // Initialize any newly loaded index items
     initializeIndexItems(event.detail.target);
+    
+    // Initialize quotes if this is home content
+    if (event.detail.target && event.detail.target.innerHTML.includes('quote-section')) {
+        console.log('HTMX loaded home content, initializing quotes');
+        setTimeout(() => {
+            if (typeof window.quoteDisplay !== 'undefined') {
+                const quoteSection = document.getElementById('quote-section');
+                if (quoteSection) {
+                    window.quoteDisplay.displayRandomQuote(quoteSection);
+                }
+            }
+        }, 100);
+    }
     
     // Update active nav for current hash
     const currentHash = window.location.hash || '#home';

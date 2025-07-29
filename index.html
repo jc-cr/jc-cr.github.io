@@ -7,6 +7,7 @@
     <title>JC's Website</title>
     <link href="/webpage/style/main.css" rel="stylesheet"/>
     <script src="https://unpkg.com/htmx.org@1.9.10/dist/htmx.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/sql.js/1.8.0/sql-wasm.js"></script>
 </head>
 <body>
     <button id="menu-toggle" aria-label="Toggle menu">
@@ -51,9 +52,10 @@
     <!-- Main content area - will be loaded dynamically -->
     <main id="content-area"></main>
     
-    <!-- Load event bus js-->
+    <!-- js-->
     <script src="/webpage/js/event_bus.js"></script>
     <script src="/webpage/js/mobile_click.js"></script>
     <script src="/webpage/js/code_copy.js"></script>
+    <script src="/webpage/js/get_quotes.js"></script>
 </body>
 </html>

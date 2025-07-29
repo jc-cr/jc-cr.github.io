@@ -28,7 +28,8 @@ class IndexGenerator:
 </div>
 """
         
-        self.index_template = """<h2>{title}</h2>
+        # Updated template to include additional_headers
+        self.index_template = """{additional_headers}<h2>{title}</h2>
 <div class="index-container">
 {items}
 </div>
@@ -126,7 +127,7 @@ class IndexGenerator:
         # Sort posts by date, most recent first
         return sorted(posts, key=lambda p: p['date'], reverse=True)
 
-    def _generate_index_content(self, posts, title="All Posts"):
+    def _generate_index_content(self, posts, title="All Posts", additional_headers=None):
         """Generate the HTML content for an index page"""
         items_html = ""
         
@@ -149,8 +150,12 @@ class IndexGenerator:
             
             items_html += item_html
         
+        # Include additional headers if provided, otherwise empty string
+        headers = additional_headers if additional_headers else ""
+        
         # Generate complete index HTML
         return self.index_template.format(
+            additional_headers=headers,
             title=title,
             items=items_html
         )
@@ -166,8 +171,16 @@ class IndexGenerator:
             print("No posts found with meta.json data.")
             return
         
-        # Generate index for all posts
-        all_posts_html = self._generate_index_content(posts, title="Latest")
+        # Generate index for all posts with quote section
+        quote_section_html = """<!-- Quote section -->
+<div id="quote-section"></div>
+
+"""
+        all_posts_html = self._generate_index_content(
+            posts, 
+            title="Latest", 
+            additional_headers=quote_section_html
+        )
         with open(self.indexes_dir / 'index-all.html', 'w', encoding='utf-8') as f:
             f.write(all_posts_html)
         
@@ -177,7 +190,7 @@ class IndexGenerator:
             for tag in post['tags']:
                 posts_by_tag[tag].append(post)
         
-        # Generate index for each tag
+        # Generate index for each tag (without additional headers)
         for tag, tag_posts in posts_by_tag.items():
             tag_html = self._generate_index_content(tag_posts, title=f"{tag.title()} Posts")
             with open(self.indexes_dir / f'index-{tag}.html', 'w', encoding='utf-8') as f:
