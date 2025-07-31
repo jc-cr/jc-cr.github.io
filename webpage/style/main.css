@@ -708,3 +708,208 @@ pre:hover .copy-button {
         font-size: 0.85rem;
     }
 }
+
+/* Page Navigation Overlays */
+.page-nav-overlay {
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    width: 80px;
+    background: linear-gradient(to right, rgba(0, 0, 0, 0.1), transparent);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    cursor: pointer;
+    z-index: 50;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    user-select: none;
+}
+
+.page-nav-overlay.page-nav-prev {
+    left: 240px; /* Offset by sidebar width */
+    background: linear-gradient(to right, rgba(0, 0, 0, 0.05), transparent);
+}
+
+.page-nav-overlay.page-nav-next {
+    right: 0;
+    background: linear-gradient(to left, rgba(0, 0, 0, 0.05), transparent);
+}
+
+/* Show overlays on hover or when parent is hovered */
+main:hover .page-nav-overlay,
+.page-nav-overlay:hover {
+    opacity: 1;
+}
+
+/* Navigation content */
+.page-nav-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    color: var(--text-dark);
+    text-align: center;
+    padding: 10px;
+    max-width: 60px;
+}
+
+.page-nav-arrow {
+    font-size: 2rem;
+    font-weight: bold;
+    margin-bottom: 8px;
+    transition: transform 0.2s ease;
+}
+
+.page-nav-overlay:hover .page-nav-arrow {
+    transform: scale(1.2);
+}
+
+.page-nav-text {
+    font-size: 0.7rem;
+    line-height: 1.2;
+}
+
+.page-nav-label {
+    font-weight: 500;
+    opacity: 0.8;
+    margin-bottom: 4px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.page-nav-title {
+    opacity: 0.9;
+    word-break: break-word;
+    max-height: 60px;
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+}
+
+/* Mobile responsive design */
+@media (max-width: 768px) {
+    .page-nav-overlay {
+        width: 60px;
+        /* Always show on mobile since hover doesn't work well */
+        opacity: 0.7;
+    }
+    
+    .page-nav-overlay.page-nav-prev {
+        left: 0; /* No sidebar offset on mobile */
+    }
+    
+    .page-nav-overlay:active {
+        opacity: 1;
+        background: linear-gradient(to right, rgba(0, 0, 0, 0.15), transparent);
+    }
+    
+    .page-nav-overlay.page-nav-next:active {
+        background: linear-gradient(to left, rgba(0, 0, 0, 0.15), transparent);
+    }
+    
+    .page-nav-content {
+        max-width: 50px;
+        padding: 8px;
+    }
+    
+    .page-nav-arrow {
+        font-size: 1.5rem;
+        margin-bottom: 6px;
+    }
+    
+    .page-nav-text {
+        font-size: 0.6rem;
+    }
+    
+    .page-nav-title {
+        max-height: 45px;
+        -webkit-line-clamp: 2;
+    }
+}
+
+/* Very small screens */
+@media (max-width: 480px) {
+    .page-nav-overlay {
+        width: 45px;
+    }
+    
+    .page-nav-content {
+        max-width: 40px;
+        padding: 6px;
+    }
+    
+    .page-nav-arrow {
+        font-size: 1.2rem;
+        margin-bottom: 4px;
+    }
+    
+    .page-nav-text {
+        font-size: 0.55rem;
+    }
+    
+    .page-nav-title {
+        max-height: 35px;
+        -webkit-line-clamp: 2;
+    }
+}
+
+/* Keyboard navigation indicator (optional) */
+@media (min-width: 769px) {
+    .page-nav-overlay::after {
+        content: '';
+        position: absolute;
+        bottom: 20px;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 20px;
+        height: 1px;
+        background: currentColor;
+        opacity: 0.3;
+    }
+    
+    .page-nav-overlay.page-nav-prev::after {
+        content: '←';
+        font-size: 0.8rem;
+        width: auto;
+        height: auto;
+    }
+    
+    .page-nav-overlay.page-nav-next::after {
+        content: '→';
+        font-size: 0.8rem;
+        width: auto;
+        height: auto;
+    }
+}
+
+/* Accessibility improvements */
+.page-nav-overlay:focus {
+    outline: 2px solid var(--color-primary);
+    outline-offset: -2px;
+    opacity: 1;
+}
+
+/* Animation for content changes */
+@keyframes slideIn {
+    from {
+        opacity: 0;
+        transform: translateX(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+.page-nav-content {
+    animation: slideIn 0.3s ease-out;
+}
+
+/* Prevent text selection on navigation elements */
+.page-nav-overlay * {
+    user-select: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+}
