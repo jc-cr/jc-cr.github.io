@@ -787,70 +787,121 @@ main:hover .page-nav-overlay,
     -webkit-box-orient: vertical;
 }
 
-/* Mobile responsive design */
+/* Hide overlays on mobile - use bottom navigation instead */
 @media (max-width: 768px) {
     .page-nav-overlay {
-        width: 60px;
-        /* Always show on mobile since hover doesn't work well */
-        opacity: 0.7;
-    }
-    
-    .page-nav-overlay.page-nav-prev {
-        left: 0; /* No sidebar offset on mobile */
-    }
-    
-    .page-nav-overlay:active {
-        opacity: 1;
-        background: linear-gradient(to right, rgba(0, 0, 0, 0.15), transparent);
-    }
-    
-    .page-nav-overlay.page-nav-next:active {
-        background: linear-gradient(to left, rgba(0, 0, 0, 0.15), transparent);
-    }
-    
-    .page-nav-content {
-        max-width: 50px;
-        padding: 8px;
-    }
-    
-    .page-nav-arrow {
-        font-size: 1.5rem;
-        margin-bottom: 6px;
-    }
-    
-    .page-nav-text {
-        font-size: 0.6rem;
-    }
-    
-    .page-nav-title {
-        max-height: 45px;
-        -webkit-line-clamp: 2;
+        display: none;
     }
 }
 
-/* Very small screens */
+/* Mobile navigation at bottom of posts */
+.mobile-post-navigation {
+    display: none;
+    margin-top: 3rem;
+    padding: 1.5rem 0;
+    border-top: 1px solid var(--border-light);
+}
+
+@media (max-width: 768px) {
+    .mobile-post-navigation {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 1rem;
+    }
+}
+
+.mobile-nav-button {
+    flex: 1;
+    max-width: 45%;
+    padding: 1rem;
+    border: 1px solid var(--border-medium);
+    border-radius: 6px;
+    background: var(--bg-body);
+    color: var(--text-dark);
+    text-decoration: none;
+    transition: all 0.2s ease;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    min-height: 60px;
+    cursor: pointer;
+    font-family: inherit;
+    font-size: inherit;
+}
+
+.mobile-nav-button:hover,
+.mobile-nav-button:active {
+    background: var(--bg-hover);
+    transform: translateY(-1px);
+    box-shadow: 0 2px 8px var(--shadow-medium);
+}
+
+.mobile-nav-button.prev {
+    justify-content: flex-start;
+}
+
+.mobile-nav-button.next {
+    justify-content: flex-end;
+}
+
+.mobile-nav-arrow {
+    font-size: 1.2rem;
+    font-weight: bold;
+    color: var(--color-primary);
+}
+
+.mobile-nav-content {
+    flex: 1;
+    min-width: 0; /* Allow text to truncate */
+}
+
+.mobile-nav-label {
+    font-size: 0.8rem;
+    color: var(--text-lighter);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: 0.25rem;
+}
+
+.mobile-nav-title {
+    font-size: 0.9rem;
+    font-weight: 500;
+    line-height: 1.3;
+    color: var(--text-dark);
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+/* Center navigation when only one button is present */
+.mobile-post-navigation.single-nav {
+    justify-content: center;
+}
+
+.mobile-post-navigation.single-nav .mobile-nav-button {
+    max-width: 60%;
+}
+
+/* Ensure buttons are properly sized on very small screens */
 @media (max-width: 480px) {
-    .page-nav-overlay {
-        width: 45px;
+    .mobile-post-navigation {
+        padding: 1rem 0;
+        gap: 0.75rem;
     }
     
-    .page-nav-content {
-        max-width: 40px;
-        padding: 6px;
+    .mobile-nav-button {
+        padding: 0.875rem;
+        min-height: 55px;
     }
     
-    .page-nav-arrow {
-        font-size: 1.2rem;
-        margin-bottom: 4px;
+    .mobile-nav-title {
+        font-size: 0.85rem;
     }
     
-    .page-nav-text {
-        font-size: 0.55rem;
-    }
-    
-    .page-nav-title {
-        max-height: 35px;
-        -webkit-line-clamp: 2;
+    .mobile-nav-label {
+        font-size: 0.75rem;
     }
 }
 
