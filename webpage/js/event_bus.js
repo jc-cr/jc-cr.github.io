@@ -1,5 +1,5 @@
 /**
- * event-bus.js - Enhanced with proper contextual page navigation
+ * event-bus.js
  */
 
 // Navigation context tracking
@@ -200,13 +200,13 @@ function extractNavigationContext(html, url) {
     NavigationContext.setContext(context, posts);
 }
 
-// Create navigation overlays for posts
+// Create navigation for posts (bottom of content for all screen sizes)
 async function createNavigationOverlays() {
-    // Remove existing overlays and mobile navigation
-    document.querySelectorAll('.page-nav-overlay, .mobile-post-navigation').forEach(el => el.remove());
+    // Remove existing navigation
+    document.querySelectorAll('.post-navigation').forEach(el => el.remove());
     
-    const main = document.querySelector('main');
-    if (!main) return;
+    const contentArea = document.getElementById('content-area');
+    if (!contentArea) return;
     
     // Get current post path from URL
     const hash = window.location.hash;
@@ -226,75 +226,60 @@ async function createNavigationOverlays() {
     console.log('Previous post:', prevPost?.title || 'None');
     console.log('Next post:', nextPost?.title || 'None');
     
-    // Check if we're on mobile
-    const isMobile = window.innerWidth <= 768;
-    
-    if (isMobile) {
-        // Create mobile navigation at bottom of content
-        createMobileNavigation(prevPost, nextPost);
-    } else {
-        // Create desktop overlays
-        if (prevPost) {
-            const prevOverlay = createNavOverlay('prev', prevPost);
-            main.appendChild(prevOverlay);
-        }
-        
-        if (nextPost) {
-            const nextOverlay = createNavOverlay('next', nextPost);
-            main.appendChild(nextOverlay);
-        }
-    }
+    // Create bottom navigation for all screen sizes
+    createPostNavigation(prevPost, nextPost);
 }
 
-// Create mobile navigation at bottom of post content
-function createMobileNavigation(prevPost, nextPost) {
+// Create unified post navigation at bottom of content
+function createPostNavigation(prevPost, nextPost) {
     const contentArea = document.getElementById('content-area');
     if (!contentArea) return;
     
-    // Create mobile navigation container
-    const mobileNav = document.createElement('div');
-    mobileNav.className = 'mobile-post-navigation';
+    // Create navigation container
+    const nav = document.createElement('nav');
+    nav.className = 'post-navigation';
+    nav.setAttribute('aria-label', 'Post navigation');
     
     // Add class for single navigation (when only prev or next exists)
     if ((!prevPost && nextPost) || (prevPost && !nextPost)) {
-        mobileNav.classList.add('single-nav');
+        nav.classList.add('single');
     }
     
     // Create previous button
     if (prevPost) {
-        const prevButton = createMobileNavButton('prev', prevPost);
-        mobileNav.appendChild(prevButton);
+        const prevButton = createNavButton('prev', prevPost);
+        nav.appendChild(prevButton);
     }
     
     // Create next button  
     if (nextPost) {
-        const nextButton = createMobileNavButton('next', nextPost);
-        mobileNav.appendChild(nextButton);
+        const nextButton = createNavButton('next', nextPost);
+        nav.appendChild(nextButton);
     }
     
     // Append to content area
-    contentArea.appendChild(mobileNav);
+    contentArea.appendChild(nav);
 }
 
-// Create individual mobile navigation button
-function createMobileNavButton(direction, post) {
+// Create individual navigation button
+function createNavButton(direction, post) {
     const button = document.createElement('button');
-    button.className = `mobile-nav-button ${direction}`;
+    button.className = `nav-button ${direction}`;
     button.setAttribute('aria-label', `${direction === 'prev' ? 'Previous' : 'Next'} post: ${post.title}`);
     
-    const arrow = document.createElement('div');
-    arrow.className = 'mobile-nav-arrow';
-    arrow.textContent = direction === 'prev' ? '‹' : '›';
+    const arrow = document.createElement('span');
+    arrow.className = 'nav-arrow';
+    arrow.textContent = direction === 'prev' ? '←' : '→';
     
     const content = document.createElement('div');
-    content.className = 'mobile-nav-content';
+    content.className = 'nav-content';
     
     const label = document.createElement('div');
-    label.className = 'mobile-nav-label';
+    label.className = 'nav-label';
     label.textContent = direction === 'prev' ? 'Previous' : 'Next';
     
     const title = document.createElement('div');
-    title.className = 'mobile-nav-title';
+    title.className = 'nav-title';
     title.textContent = post.title;
     
     content.appendChild(label);
@@ -603,6 +588,24 @@ document.addEventListener('keydown', function(e) {
         }
     }
 });
+
+// Navigate to a post using HTMX
+function navigateToPost(post) {
+    const contentArea = document.getElementById('content-area');
+    if (!contentArea) return;
+    
+    // Use HTMX to navigate
+    htmx.ajax('GET', post.url, {
+        target: '#content-area',
+        swap: 'innerHTML'
+    });
+    
+    // Update URL
+    window.history.pushState(null, '', `#post/${post.path}`);
+    
+    // Create navigation after a short delay to allow content to load
+    setTimeout(createNavigationOverlays, 100);
+}
 
 document.addEventListener('touchstart', function() {}, {passive: true});
 
