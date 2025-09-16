@@ -30,8 +30,8 @@ const NavigationContext = {
             return 'project';
         } else if (hash === '#paper') {
             return 'paper';
-        } else if (hash === '#pennings') {
-            return 'pennings';
+        } else if (hash === '#penning') {
+            return 'penning';
         } else {
             return 'all';
         }
@@ -53,8 +53,8 @@ async loadContextPosts(context) {
         case 'paper':
             indexUrl = '/webpage/indexes/index-paper.html';
             break;
-        case 'pennings':  // Add this case
-            indexUrl = '/webpage/indexes/index-pennings.html';
+        case 'penning':  // Add this case
+            indexUrl = '/webpage/indexes/index-penning.html';
             break;
         case 'all':
         default:
@@ -105,7 +105,7 @@ async loadContextPosts(context) {
     
     // Find which context contains a specific post
 async findPostContext(postPath) {
-    const contexts = ['project', 'paper', 'pennings', 'all'];  // Replace blog/haikuesque with pennings
+    const contexts = ['project', 'paper', 'penning', 'all'];  // Replace blog/haikuesque with penning
     
     for (const context of contexts) {
         await this.loadContextPosts(context);
@@ -404,8 +404,8 @@ async function loadContentFromHash() {
             case '#paper':
                 contentUrl = '/webpage/indexes/index-paper.html';
                 break;
-            case '#pennings':  // Add this case
-                contentUrl = '/webpage/indexes/index-pennings.html';
+            case '#penning':  // Add this case
+                contentUrl = '/webpage/indexes/index-penning.html';
                 break;
             case '#home':
             default:

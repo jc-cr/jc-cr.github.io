@@ -35,15 +35,15 @@ def consolidate_tags(base_dir=None):
             tags = meta_data.get('tags', [])
             original_tags = tags.copy()
             
-            # Replace 'blog' and 'haikuesque' with 'pennings'
+            # Replace 'blog' and 'haikuesque' with 'penning'
             updated_tags = []
             has_blog_or_haiku = False
             
             for tag in tags:
-                if tag.lower() in ['blog', 'haikuesque']:
+                if tag.lower() in ['blog', 'haikuesque', 'pennings']:
                     has_blog_or_haiku = True
-                    if 'pennings' not in updated_tags:
-                        updated_tags.append('pennings')
+                    if 'penning' not in updated_tags:
+                        updated_tags.append('penning')
                 else:
                     updated_tags.append(tag)
             
@@ -75,5 +75,6 @@ if __name__ == "__main__":
     
     if args.dry_run:
         print("DRY RUN MODE - No files will be modified")
+        # You could add dry run logic here
     
     consolidate_tags(args.base_dir)

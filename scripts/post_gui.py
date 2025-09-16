@@ -12,7 +12,7 @@ class PostCreatorGUI:
     def __init__(self, root):
         self.root = root
         self.root.title("Post Creator")
-        self.root.geometry("600x500")  # Increased height for tags section
+        self.root.geometry("600x500")  # Same height since we're replacing 2 tags with 1
         
         # Variables to store user input
         self.file_path = tk.StringVar()
@@ -20,11 +20,10 @@ class PostCreatorGUI:
         self.post_date = tk.StringVar(value=datetime.now().strftime('%Y-%m-%d'))
         self.post_type = tk.StringVar(value="works")  # Default to "works"
         
-        # Variables for tags
+        # Variables for tags - updated to use "pennings" instead of blog/haikuesque
         self.tag_projects = tk.BooleanVar(value=False)
         self.tag_papers = tk.BooleanVar(value=False)
-        self.tag_blog = tk.BooleanVar(value=False)
-        self.tag_haikuesque = tk.BooleanVar(value=False)
+        self.tag_pennings = tk.BooleanVar(value=False)  # NEW: replaces blog and haikuesque
         
         # Create GUI elements
         self._create_widgets()
@@ -58,14 +57,13 @@ class PostCreatorGUI:
         type_frame = ttk.Frame(details_frame)
         type_frame.pack(fill=tk.X, pady=5)
         
-        # Tags selection
+        # Tags selection - UPDATED
         tags_frame = ttk.LabelFrame(self.root, text="Tags", padding="10")
         tags_frame.pack(fill=tk.X, padx=10, pady=5)
         
         ttk.Checkbutton(tags_frame, text="Projects", variable=self.tag_projects).pack(anchor=tk.W)
         ttk.Checkbutton(tags_frame, text="Papers", variable=self.tag_papers).pack(anchor=tk.W)
-        ttk.Checkbutton(tags_frame, text="Blog", variable=self.tag_blog).pack(anchor=tk.W)
-        ttk.Checkbutton(tags_frame, text="Haikuesque", variable=self.tag_haikuesque).pack(anchor=tk.W)
+        ttk.Checkbutton(tags_frame, text="Pennings", variable=self.tag_pennings).pack(anchor=tk.W)  # NEW
         
         # Status message
         status_frame = ttk.LabelFrame(self.root, text="Status", padding="10")
@@ -102,16 +100,14 @@ class PostCreatorGUI:
         self.root.update()
     
     def _get_selected_tags(self):
-        """Return a list of selected tags"""
+        """Return a list of selected tags - UPDATED"""
         tags = []
         if self.tag_projects.get():
             tags.append("project")
         if self.tag_papers.get():
             tags.append("paper")
-        if self.tag_blog.get():
-            tags.append("blog")
-        if self.tag_haikuesque.get():
-            tags.append("haikuesque")
+        if self.tag_pennings.get():
+            tags.append("penning")
         return tags
         
     def _create_post(self):
