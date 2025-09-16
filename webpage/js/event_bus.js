@@ -30,57 +30,52 @@ const NavigationContext = {
             return 'project';
         } else if (hash === '#paper') {
             return 'paper';
-        } else if (hash === '#blog') {
-            return 'blog';
-        } else if (hash === '#haikuesque') {
-            return 'haikuesque';
+        } else if (hash === '#pennings') {
+            return 'pennings';
         } else {
             return 'all';
         }
     },
     
     // Load posts for a specific context if not cached
-    async loadContextPosts(context) {
-        if (this.contextPosts[context]) {
-            this.setContext(context, this.contextPosts[context]);
-            return this.contextPosts[context];
+async loadContextPosts(context) {
+    if (this.contextPosts[context]) {
+        this.setContext(context, this.contextPosts[context]);
+        return this.contextPosts[context];
+    }
+    
+    // Determine the correct index URL for the context
+    let indexUrl;
+    switch (context) {
+        case 'project':
+            indexUrl = '/webpage/indexes/index-project.html';
+            break;
+        case 'paper':
+            indexUrl = '/webpage/indexes/index-paper.html';
+            break;
+        case 'pennings':  // Add this case
+            indexUrl = '/webpage/indexes/index-pennings.html';
+            break;
+        case 'all':
+        default:
+            indexUrl = '/webpage/indexes/index-all.html';
+            break;
+    }
+    
+    try {
+        const response = await fetch(indexUrl);
+        if (response.ok) {
+            const html = await response.text();
+            const posts = this.extractPostsFromHTML(html);
+            this.setContext(context, posts);
+            return posts;
         }
-        
-        // Determine the correct index URL for the context
-        let indexUrl;
-        switch (context) {
-            case 'project':
-                indexUrl = '/webpage/indexes/index-project.html';
-                break;
-            case 'paper':
-                indexUrl = '/webpage/indexes/index-paper.html';
-                break;
-            case 'blog':
-                indexUrl = '/webpage/indexes/index-blog.html';
-                break;
-            case 'haikuesque':
-                indexUrl = '/webpage/indexes/index-haikuesque.html';
-                break;
-            case 'all':
-            default:
-                indexUrl = '/webpage/indexes/index-all.html';
-                break;
-        }
-        
-        try {
-            const response = await fetch(indexUrl);
-            if (response.ok) {
-                const html = await response.text();
-                const posts = this.extractPostsFromHTML(html);
-                this.setContext(context, posts);
-                return posts;
-            }
-        } catch (error) {
-            console.error('Error loading context posts:', error);
-        }
-        
-        return [];
-    },
+    } catch (error) {
+        console.error('Error loading context posts:', error);
+    }
+    
+    return [];
+},
     
     // Extract posts from HTML content
     extractPostsFromHTML(html) {
@@ -109,19 +104,19 @@ const NavigationContext = {
     },
     
     // Find which context contains a specific post
-    async findPostContext(postPath) {
-        const contexts = ['project', 'paper', 'blog', 'haikuesque', 'all'];
-        
-        for (const context of contexts) {
-            await this.loadContextPosts(context);
-            if (this.contextPosts[context] && 
-                this.contextPosts[context].some(post => post.path === postPath)) {
-                return context;
-            }
+async findPostContext(postPath) {
+    const contexts = ['project', 'paper', 'pennings', 'all'];  // Replace blog/haikuesque with pennings
+    
+    for (const context of contexts) {
+        await this.loadContextPosts(context);
+        if (this.contextPosts[context] && 
+            this.contextPosts[context].some(post => post.path === postPath)) {
+            return context;
         }
-        
-        return 'all'; // Default fallback
-    },
+    }
+    
+    return 'all'; // Default fallback
+},
     
     getPreviousPost() {
         if (this.currentPostIndex > 0) {
@@ -409,11 +404,8 @@ async function loadContentFromHash() {
             case '#paper':
                 contentUrl = '/webpage/indexes/index-paper.html';
                 break;
-            case '#blog':
-                contentUrl = '/webpage/indexes/index-blog.html';
-                break;
-            case '#haikuesque':
-                contentUrl = '/webpage/indexes/index-haikuesque.html';
+            case '#pennings':  // Add this case
+                contentUrl = '/webpage/indexes/index-pennings.html';
                 break;
             case '#home':
             default:

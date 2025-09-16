@@ -5,6 +5,7 @@ My website. For free thanks to the generosity of Github. In return I offer you m
 Posts are generated using a combination of Markdown files and a custom static site generator that converts them to HTML.
 
 ### Creating New Posts
+
 1. Run the post GUI with Docker Compose:
 
 ```bash
