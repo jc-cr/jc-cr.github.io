@@ -53,13 +53,3 @@ docker compose up view_page --remove-orphans --abort-on-container-exit
 ```
 
 Then navigate to `http://localhost:8080`.
-
-## GitHub Pages Deployment
-The site uses a GitHub workflow to deploy to GitHub Pages. The workflow is triggered on push to the `main` branch.
-
-During the build process:
-1. Python dependencies are installed
-2. The index generator runs to create index files for all tags
-3. The site is deployed to GitHub Pages
-
-The deployment process uses the static HTML files with no server-side processing, making it fast and secure.

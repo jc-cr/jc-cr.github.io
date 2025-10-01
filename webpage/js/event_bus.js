@@ -133,6 +133,12 @@ async findPostContext(postPath) {
     }
 };
 
+
+
+let navigationCreationInProgress = false;
+let pendingNavigationCall = false;
+
+
 // Enhanced content loading with context extraction
 async function loadContent(url, targetElement) {
     try {
@@ -197,32 +203,50 @@ function extractNavigationContext(html, url) {
 
 // Create navigation for posts (bottom of content for all screen sizes)
 async function createNavigationOverlays() {
-    // Remove existing navigation
-    document.querySelectorAll('.post-navigation').forEach(el => el.remove());
+    // If already creating navigation, mark that we need another call after
+    if (navigationCreationInProgress) {
+        pendingNavigationCall = true;
+        return;
+    }
     
-    const contentArea = document.getElementById('content-area');
-    if (!contentArea) return;
+    navigationCreationInProgress = true;
+    pendingNavigationCall = false;
     
-    // Get current post path from URL
-    const hash = window.location.hash;
-    if (!hash.startsWith('#post/')) return;
-    
-    const currentPostPath = hash.substring(6);
-    
-    // Ensure we have the correct context loaded
-    await ensureCorrectContext(currentPostPath);
-    
-    NavigationContext.setCurrentPost(currentPostPath);
-    
-    const prevPost = NavigationContext.getPreviousPost();
-    const nextPost = NavigationContext.getNextPost();
-    
-    console.log('Creating navigation in context:', NavigationContext.currentContext);
-    console.log('Previous post:', prevPost?.title || 'None');
-    console.log('Next post:', nextPost?.title || 'None');
-    
-    // Create bottom navigation for all screen sizes
-    createPostNavigation(prevPost, nextPost);
+    try {
+        const contentArea = document.getElementById('content-area');
+        if (!contentArea) return;
+        
+        // Get current post path from URL
+        const hash = window.location.hash;
+        if (!hash.startsWith('#post/')) return;
+        
+        const currentPostPath = hash.substring(6);
+        
+        // Ensure we have the correct context loaded
+        await ensureCorrectContext(currentPostPath);
+        
+        NavigationContext.setCurrentPost(currentPostPath);
+        
+        const prevPost = NavigationContext.getPreviousPost();
+        const nextPost = NavigationContext.getNextPost();
+        
+        console.log('Creating navigation in context:', NavigationContext.currentContext);
+        console.log('Previous post:', prevPost?.title || 'None');
+        console.log('Next post:', nextPost?.title || 'None');
+        
+        // Remove existing navigation right before creating new one
+        document.querySelectorAll('.post-navigation').forEach(el => el.remove());
+        
+        // Create bottom navigation for all screen sizes
+        createPostNavigation(prevPost, nextPost);
+    } finally {
+        navigationCreationInProgress = false;
+        
+        // If another call came in while we were processing, run it now
+        if (pendingNavigationCall) {
+            setTimeout(createNavigationOverlays, 50);
+        }
+    }
 }
 
 // Create unified post navigation at bottom of content
