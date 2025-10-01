@@ -1,0 +1,24 @@
+
+<article>
+    <h1>Doodle-rs</h1>
+    <div class="post-metadata">
+        <time datetime="2025-10-01">2025-10-01</time>
+        <span class="post-tags">
+            Tags: project
+        </span>
+    </div>
+    <h2>Description</h2>
+<figure>
+        <img src="/webpage/posts/20251001_doodle_rs/IMG_2456.jpeg" alt="IMG_2456.jpeg" />
+    </figure>
+
+<p>Doodle-rs is a project I started while re-familiarizing myself with Rust. <br />
+Using an RPi Pico 2W with a small I2C OLED, it renders pixel drawings from a web interface in real-time.<br />
+Using networking and async tasks from the Rust <a href="https://embassy.dev/">Embassy framework</a>, the Pico connects to my local WiFi with a static IP address. <br />
+The web app connects and establishes a WebSocket connection for low-latency data transfer.<br />
+Each pixel update sends a 3-byte message (x, y, state) to the Pico, which immediately updates the OLED display via an async display task.</p>
+<p>Here's a live demo: <a href="https://youtu.be/DRKV7F2yQ_g">youtube video</a>.</p>
+<p>Not really sure how I'll continue the project from here. <br />
+There are some better UI things that could be implemented.<br />
+Or I could apply some ML stuff to it. Maybe doing a MNIST guessing game where the user draws a letter and model has to guess what letter it is. </p>
+</article>

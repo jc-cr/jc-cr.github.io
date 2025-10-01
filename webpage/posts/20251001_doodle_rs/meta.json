@@ -1,0 +1,8 @@
+{
+  "title": "Doodle-rs",
+  "date": "2025-10-01",
+  "tags": [
+    "project"
+  ],
+  "snippet": "Description Doodle-rs is a project I started while re-familiarizing myself with Rust. Using an RPi Pico 2W with a small I2C OLED, it renders pixel..."
+}
