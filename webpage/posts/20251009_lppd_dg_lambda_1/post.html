@@ -1,0 +1,67 @@
+
+<article>
+    <h1>LPPD-DG LAMBDA 1</h1>
+    <div class="post-metadata">
+        <time datetime="2025-10-09">2025-10-09</time>
+        <span class="post-tags">
+            Tags: project
+        </span>
+    </div>
+    <p>LAMDA (Look-Ask-Model-Discuss-Act) is a tool I was introduced to in  <a href="https://share.google/L6nrgLIBYISMQ1hqu">Lean Process and Product Development</a>. <br />
+I wanted to apply the LAMDA process  to the For the feature addition I'm doing to the doodle-rs. <br />
+In this first LAMDA event we are deciding how to kick off the project.<br />
+As the single developed of this project, most of the DISCUSS step is just me talking to an AI agent.</p>
+<h2>Look</h2>
+<p>Things we know:<br />
+- Current system works like diagram below: <figure><br />
+        <img src="/webpage/posts/20251009_lppd_dg_lambda_1/Pasted%20image%2020251004215606.png" alt="Pasted image 20251004215606.png" /><br />
+    </figure></p>
+<ul>
+<li>On web app we have a 480 x 480 grid that gets converted to 48 x 48 pixels for Pico rendering.</li>
+<li>Data transfer is done through web socket connection, where the message format is 3 byte (x, y, state) update for pixel changes.</li>
+<li>RPI Pico data<ul>
+<li>Dual Cortex-M33 or RISC-V Hazard3 cores clocked at up to 150MHz</li>
+<li>520 kB multi-bank high performance SRAM</li>
+</ul>
+</li>
+<li>Embassy rust is used for Pico code. Let's us do async task based program</li>
+<li>Web app is also programmed in rust with fullstack integration (frontend + backend code)</li>
+<li>MNIST will most likely be the dataset used for training a DL model since it's easy to work with, well integrated into many DL libs, and similar to expected input format from doodle-rs</li>
+<li>MNIST dataset uses 28 x 28 pixel input images <a href="https://www.tensorflow.org/datasets/catalog/mnist">https://www.tensorflow.org/datasets/catalog/mnist</a></li>
+<li>MNIST has digits 0-9</li>
+<li>In Doodle-rs a user can draw anything. (More possible classes than 0-9 (there are 2^2,304 potential things that could be drawn in this grid!))</li>
+</ul>
+<p>Things we don't know:<br />
+- current system latency<br />
+- current memory footprint for pico app</p>
+<h2>Ask</h2>
+<p>Where in the system should the ML be deployed? </p>
+<p>What is the difficulty of deploying to either platform (1-5 okay)?</p>
+<p>What DL lib should be used?</p>
+<p>Should DL also be done in Rust? What are pros/cons?</p>
+<p>What is most efficient NN type to use for this in terms of speed and power usage? (Would a spiking neural net be useful?)</p>
+<p>If we deploy on the server side, how do we guarantee the model ports to different hardware (Different CPU makes and models)?</p>
+<p>Can we down scale the 48x48 correctly without losing image consistency? Or is it better to upscale entire MNIST dataset? </p>
+<p>What metrics should we use to measure latency in this kind of system? (Network, embedded async task, etc.)</p>
+<h2>Model</h2>
+<figure>
+        <img src="/webpage/posts/20251009_lppd_dg_lambda_1/Pasted%20image%2020251005175433.png" alt="Pasted image 20251005175433.png" />
+    </figure>
+
+<h2>Discuss</h2>
+<p>So we need a way to weigh the viability of each deployment case.<br />
+But we also need to see what options are available for deploying on the Rpi Pico 2W. It may be that there are no good implementations for it which would mean we spend more time developing the correct firmware than needed.</p>
+<p>We also have no data of the current system latency or application memory footprint (mainly for pico), so that data is badly needed.</p>
+<h2>Act</h2>
+<p>Based on the discussion (with myself) this is what must be done next (in order):<br />
+- See if ML deployment is currently feasible for the pico 2w and what friction is for integrating with rust embassy code<br />
+    - Short: Yes. Theoretically minimal friction due to Rust's beautiful compiling system and use of Burn lib.<br />
+    - Long: (local note not available on website) [[20251005222130 Running ML on RPi Pico 2W]]<br />
+- Create a design matrix to quantify the 3 deployment cases<br />
+- Develop latency logging code<br />
+    - End-to-end latency (Mouse event to display flush)<br />
+    - Pixel data web socket latency (write to read time)<br />
+    - Pico render latency (data read to display flush)<br />
+- Gather latency data<br />
+- New LAMBDA event for next case</p>
+</article>
