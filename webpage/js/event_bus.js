@@ -4,7 +4,7 @@
 
 // Navigation context tracking
 const NavigationContext = {
-    currentContext: 'all', // 'all', 'project', 'paper', 'blog', 'haikuesque'
+    currentContext: 'all', // 'all', 'project', 'paper', 'penning'
     posts: [], // Array of post objects in current context
     currentPostIndex: -1,
     contextPosts: {}, // Cache posts for each context
@@ -53,7 +53,7 @@ async loadContextPosts(context) {
         case 'paper':
             indexUrl = '/webpage/indexes/index-paper.html';
             break;
-        case 'penning':  // Add this case
+        case 'penning':
             indexUrl = '/webpage/indexes/index-penning.html';
             break;
         case 'all':
@@ -105,7 +105,7 @@ async loadContextPosts(context) {
     
     // Find which context contains a specific post
 async findPostContext(postPath) {
-    const contexts = ['project', 'paper', 'penning', 'all'];  // Replace blog/haikuesque with penning
+    const contexts = ['project', 'paper', 'penning', 'all'];
     
     for (const context of contexts) {
         await this.loadContextPosts(context);
@@ -193,8 +193,7 @@ function extractNavigationContext(html, url) {
     let context = 'all';
     if (url.includes('index-project.html')) context = 'project';
     else if (url.includes('index-paper.html')) context = 'paper';
-    else if (url.includes('index-blog.html')) context = 'blog';
-    else if (url.includes('index-haikuesque.html')) context = 'haikuesque';
+    else if (url.includes('index-penning.html')) context = 'penning';
     
     // Extract post data from index items
     const posts = NavigationContext.extractPostsFromHTML(html);
@@ -428,7 +427,7 @@ async function loadContentFromHash() {
             case '#paper':
                 contentUrl = '/webpage/indexes/index-paper.html';
                 break;
-            case '#penning':  // Add this case
+            case '#penning':
                 contentUrl = '/webpage/indexes/index-penning.html';
                 break;
             case '#home':
