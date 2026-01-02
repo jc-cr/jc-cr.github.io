@@ -160,6 +160,26 @@ class IndexGenerator:
             items=items_html
         )
 
+    def _generate_search_json(self, posts):
+        """Generate search.json file for client-side search"""
+        search_data = []
+        for post in posts:
+            search_data.append({
+                'title': post['title'],
+                'snippet': post['snippet'],
+                'tags': post['tags'],
+                'date': post['date'],
+                'path': post['path'],
+                'url': post['url']
+            })
+        
+        # Write to webpage root for easy access
+        search_file = self.base_dir / 'webpage' / 'search.json'
+        with open(search_file, 'w', encoding='utf-8') as f:
+            json.dump(search_data, f, indent=2)
+        
+        print(f"Generated search.json with {len(search_data)} posts")
+
     def generate_all_indexes(self):
         """Generate all index files"""
         print("Generating indexes...")
@@ -170,6 +190,9 @@ class IndexGenerator:
         if not posts:
             print("No posts found with meta.json data.")
             return
+        
+        # Generate search.json
+        self._generate_search_json(posts)
         
         # Generate index for all posts with quote section
         quote_section_html = """<!-- Quote section -->

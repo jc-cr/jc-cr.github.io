@@ -1,0 +1,742 @@
+[
+  {
+    "title": "Argentina Travel Log",
+    "snippet": "Trip Summary In this trip I traveled around the Buenos Aires area on a Honda GLH 150cc. Below is the route I took over and a detailed travel log....",
+    "tags": [
+      "penning"
+    ],
+    "date": "2025-12-21",
+    "path": "20251221_argentina_travel_log",
+    "url": "/webpage/posts/20251221_argentina_travel_log/post.html"
+  },
+  {
+    "title": "A tree's hello",
+    "snippet": "lowered by the wind the tree's branch waves to greet me pretty green fingers",
+    "tags": [
+      "penning"
+    ],
+    "date": "2025-11-13",
+    "path": "20251113_a_trees_hello",
+    "url": "/webpage/posts/20251113_a_trees_hello/post.html"
+  },
+  {
+    "title": "Solar Power Station",
+    "snippet": "Put together this solar power station using an old solar panel and Ebike DC batteries I had in the garage. I rewired the batteries in parallel to get...",
+    "tags": [
+      "project"
+    ],
+    "date": "2025-11-08",
+    "path": "20251108_solar_power_station",
+    "url": "/webpage/posts/20251108_solar_power_station/post.html"
+  },
+  {
+    "title": "LPPD-DG LAMBDA 1",
+    "snippet": "LAMDA (Look-Ask-Model-Discuss-Act) is a tool I was introduced to in Lean Process and Product Development. I wanted to apply the LAMDA process to the...",
+    "tags": [
+      "project"
+    ],
+    "date": "2025-10-09",
+    "path": "20251009_lppd_dg_lambda_1",
+    "url": "/webpage/posts/20251009_lppd_dg_lambda_1/post.html"
+  },
+  {
+    "title": "A3 - LPPD-DG Model Selection and Deployment",
+    "snippet": "Brief For the first integrating event we explored the potential deployment and model selection parameters in our design space. This was done through...",
+    "tags": [
+      "project"
+    ],
+    "date": "2025-10-09",
+    "path": "20251009_a3_lppd_dg_model_selection_and_deployment",
+    "url": "/webpage/posts/20251009_a3_lppd_dg_model_selection_and_deployment/post.html"
+  },
+  {
+    "title": "time wasted and time lost",
+    "snippet": "the game of waiting restless mind yearns for tomorrow ...but what of today?",
+    "tags": [
+      "penning"
+    ],
+    "date": "2025-10-02",
+    "path": "20251002_time_wasted_and_time_lost",
+    "url": "/webpage/posts/20251002_time_wasted_and_time_lost/post.html"
+  },
+  {
+    "title": "writing for no one",
+    "snippet": "why write? why create? When no one reads or sees Data for the machines",
+    "tags": [
+      "penning"
+    ],
+    "date": "2025-10-02",
+    "path": "20251002_writing_for_no_one",
+    "url": "/webpage/posts/20251002_writing_for_no_one/post.html"
+  },
+  {
+    "title": "evening at home",
+    "snippet": "vivid hues - sunset gentle breeze sways the hammock the goats scream in heat",
+    "tags": [
+      "penning"
+    ],
+    "date": "2025-10-02",
+    "path": "20251002_evening_at_home",
+    "url": "/webpage/posts/20251002_evening_at_home/post.html"
+  },
+  {
+    "title": "Doodle-rs",
+    "snippet": "Description Doodle-rs is a project I started while re-familiarizing myself with Rust. Using an RPi Pico 2W with a small I2C OLED, it renders pixel...",
+    "tags": [
+      "project"
+    ],
+    "date": "2025-10-01",
+    "path": "20251001_doodle_rs",
+    "url": "/webpage/posts/20251001_doodle_rs/post.html"
+  },
+  {
+    "title": "AIPM Project Reflections",
+    "snippet": "Context & Objectives We recently completed an initial findings report for the AIPM project, a study to see if an agentic project manager could...",
+    "tags": [
+      "penning"
+    ],
+    "date": "2025-09-23",
+    "path": "20250923_aipm_project_reflections",
+    "url": "/webpage/posts/20250923_aipm_project_reflections/post.html"
+  },
+  {
+    "title": "Development of an Agentic AI System for Project Planning and Management in a Digital Collaborative Environment",
+    "snippet": "Abstract Project management and scheduling are critical challenges in construction and civil engineering, where complex demands in coordination,...",
+    "tags": [
+      "paper"
+    ],
+    "date": "2025-09-15",
+    "path": "20250915_development_of_an_agentic_ai_system_for_project_planning_and_management_in_a_digital_collaborative_environment",
+    "url": "/webpage/posts/20250915_development_of_an_agentic_ai_system_for_project_planning_and_management_in_a_digital_collaborative_environment/post.html"
+  },
+  {
+    "title": "Key West to Texas Log",
+    "snippet": "Trip Summary The first part of my trip took me from Ohio to Key West, Florida. See Ohio to Key West Travel Log. Recently I completed the last part of...",
+    "tags": [
+      "penning"
+    ],
+    "date": "2025-09-05",
+    "path": "20250905_key_west_to_texas_log",
+    "url": "/webpage/posts/20250905_key_west_to_texas_log/post.html"
+  },
+  {
+    "title": "Reflections on Failure - The Individual Contributor Trap",
+    "snippet": "I have lots of experience failing on projects. For the past few years I have managed/overseen many robotics projects through UTSA's RAS chapter; all...",
+    "tags": [
+      "penning"
+    ],
+    "date": "2025-08-30",
+    "path": "20250830_reflections_on_failure_the_individual_contributor_trap",
+    "url": "/webpage/posts/20250830_reflections_on_failure_the_individual_contributor_trap/post.html"
+  },
+  {
+    "title": "Ohio to Key West Travel Log",
+    "snippet": "Trip summary After my internship in Ohio I needed to ride my motorcycle back to Texas. Since I was close to the east coast, I figured I might as well...",
+    "tags": [
+      "penning"
+    ],
+    "date": "2025-08-28",
+    "path": "20250828_ohio_to_key_west_travel_log",
+    "url": "/webpage/posts/20250828_ohio_to_key_west_travel_log/post.html"
+  },
+  {
+    "title": "ISARC25 Design and Development of a Remote User Interface for Multi\u2011Robot On\u2011site Construction Inspection",
+    "snippet": "Abstract This paper presents the design and development of an open-source browser-based interface for coordinating a multi-robot system for on-site...",
+    "tags": [
+      "paper"
+    ],
+    "date": "2025-07-30",
+    "path": "20250730_isarc25_design_and_development_of_a_remote_user_interface_for_multirobot_onsite_construction_inspection",
+    "url": "/webpage/posts/20250730_isarc25_design_and_development_of_a_remote_user_interface_for_multirobot_onsite_construction_inspection/post.html"
+  },
+  {
+    "title": "ISARC25 Reflections",
+    "snippet": "My Presentation My presentation went well. They recorded so hopefully the videos get posted soon. Had a few questions regarding system details and...",
+    "tags": [
+      "penning"
+    ],
+    "date": "2025-07-30",
+    "path": "20250730_isarc25_reflections",
+    "url": "/webpage/posts/20250730_isarc25_reflections/post.html"
+  },
+  {
+    "title": "a language i do not understand",
+    "snippet": "Hear...don't understand. Light shines on my ignorance. Spaces I'll never fill.",
+    "tags": [
+      "penning"
+    ],
+    "date": "2025-07-28",
+    "path": "20250728_a_language_i_do_not_understand",
+    "url": "/webpage/posts/20250728_a_language_i_do_not_understand/post.html"
+  },
+  {
+    "title": "Wondering where the consistency comes from - sparse interactions in the brains biochemistry becoming less malleable overtime",
+    "snippet": "But where is the self? Weights and biases in the brain A consistent me",
+    "tags": [
+      "penning"
+    ],
+    "date": "2025-07-13",
+    "path": "20250713_wondering_where_the_consistency_comes_from_sparse_interactions_in_the_brains_biochemistry_becoming_less_malleable_overtime",
+    "url": "/webpage/posts/20250713_wondering_where_the_consistency_comes_from_sparse_interactions_in_the_brains_biochemistry_becoming_less_malleable_overtime/post.html"
+  },
+  {
+    "title": "Observed persistent self across time continuity",
+    "snippet": "Each haiku discrete. Read later I see a trend. Continuity...",
+    "tags": [
+      "penning"
+    ],
+    "date": "2025-07-13",
+    "path": "20250713_observed_persistent_self_across_time_continuity",
+    "url": "/webpage/posts/20250713_observed_persistent_self_across_time_continuity/post.html"
+  },
+  {
+    "title": "The trade-offs we make",
+    "snippet": "A world to explore A shame I have just this life And it's spent inside",
+    "tags": [
+      "penning"
+    ],
+    "date": "2025-07-13",
+    "path": "20250713_the_trade_offs_we_make",
+    "url": "/webpage/posts/20250713_the_trade_offs_we_make/post.html"
+  },
+  {
+    "title": "something on vitality",
+    "snippet": "just can't pinpoint why able to do less and less a dead tree still stands",
+    "tags": [
+      "penning"
+    ],
+    "date": "2025-07-04",
+    "path": "20250704_something_on_vitality",
+    "url": "/webpage/posts/20250704_something_on_vitality/post.html"
+  },
+  {
+    "title": "Plea to the brain",
+    "snippet": "stop thinking my brain why can't you focus? Stay here. stay here a moment",
+    "tags": [
+      "penning"
+    ],
+    "date": "2025-07-04",
+    "path": "20250704_plea_to_the_brain",
+    "url": "/webpage/posts/20250704_plea_to_the_brain/post.html"
+  },
+  {
+    "title": "an instrument",
+    "snippet": "I'd like to play the humble harmonica for these ice cold blues",
+    "tags": [
+      "penning"
+    ],
+    "date": "2025-07-03",
+    "path": "20250703_an_instrument",
+    "url": "/webpage/posts/20250703_an_instrument/post.html"
+  },
+  {
+    "title": "Next steps",
+    "snippet": "And now we've done it... given it all up. Goodbye! hi scary future.",
+    "tags": [
+      "penning"
+    ],
+    "date": "2025-07-02",
+    "path": "20250702_next_steps",
+    "url": "/webpage/posts/20250702_next_steps/post.html"
+  },
+  {
+    "title": "Inalienable rights for all people",
+    "snippet": "rights for all people: freedom and equality... will not be taken!",
+    "tags": [
+      "penning"
+    ],
+    "date": "2025-06-30",
+    "path": "20250630_inalienable_rights_for_all_people",
+    "url": "/webpage/posts/20250630_inalienable_rights_for_all_people/post.html"
+  },
+  {
+    "title": "Eveningdreams",
+    "snippet": "hours wasted in thought just dreaming of adventure ...procrastination...",
+    "tags": [
+      "penning"
+    ],
+    "date": "2025-06-30",
+    "path": "20250630_eveningdreams",
+    "url": "/webpage/posts/20250630_eveningdreams/post.html"
+  },
+  {
+    "title": "Dreams of beaches",
+    "snippet": "from my midwest stay dreaming of travels to feel warm Baja beaches",
+    "tags": [
+      "penning"
+    ],
+    "date": "2025-06-28",
+    "path": "20250628_dreams_of_beaches",
+    "url": "/webpage/posts/20250628_dreams_of_beaches/post.html"
+  },
+  {
+    "title": "part of the job",
+    "snippet": "to write of nature tell me how! i don't know her spend my days inside",
+    "tags": [
+      "penning"
+    ],
+    "date": "2025-06-25",
+    "path": "20250625_part_of_the_job",
+    "url": "/webpage/posts/20250625_part_of_the_job/post.html"
+  },
+  {
+    "title": "Hot heads",
+    "snippet": "All this talk of war Fear sold to those with no hope Just the summer heat",
+    "tags": [
+      "penning"
+    ],
+    "date": "2025-06-24",
+    "path": "20250624_hot_heads",
+    "url": "/webpage/posts/20250624_hot_heads/post.html"
+  },
+  {
+    "title": "The allure of time wasted",
+    "snippet": "Lazy summer days A nice nap to beat the heat Tomorrow - regret",
+    "tags": [
+      "penning"
+    ],
+    "date": "2025-06-22",
+    "path": "20250622_the_allure_of_time_wasted",
+    "url": "/webpage/posts/20250622_the_allure_of_time_wasted/post.html"
+  },
+  {
+    "title": "All from our perspective",
+    "snippet": "Our beautiful world. A sudden stochastic shock! She tries to kill us!",
+    "tags": [
+      "penning"
+    ],
+    "date": "2025-06-22",
+    "path": "20250622_all_from_our_perspective",
+    "url": "/webpage/posts/20250622_all_from_our_perspective/post.html"
+  },
+  {
+    "title": "A thought from watching a 10hr video of waves on a beach",
+    "snippet": "The fish of the sea will never know the pleasure beach side wave watching",
+    "tags": [
+      "penning"
+    ],
+    "date": "2025-06-18",
+    "path": "20250618_a_thought_from_watching_a_10hr_video_of_waves_on_a_beach",
+    "url": "/webpage/posts/20250618_a_thought_from_watching_a_10hr_video_of_waves_on_a_beach/post.html"
+  },
+  {
+    "title": "As I look at my watch, or my phone, or my screen",
+    "snippet": "the years of research the feats of engineering taken for granted",
+    "tags": [
+      "penning"
+    ],
+    "date": "2025-06-18",
+    "path": "20250618_as_i_look_at_my_watch_or_my_phone_or_my_screen",
+    "url": "/webpage/posts/20250618_as_i_look_at_my_watch_or_my_phone_or_my_screen/post.html"
+  },
+  {
+    "title": "What do you dream about?",
+    "snippet": "I wish I was a... Spaniard. On a voyage for... the Fountain of Youth",
+    "tags": [
+      "penning"
+    ],
+    "date": "2025-06-15",
+    "path": "20250615_what_do_you_dream_about",
+    "url": "/webpage/posts/20250615_what_do_you_dream_about/post.html"
+  },
+  {
+    "title": "On the same boat",
+    "snippet": "Walk in the city Filth and homeless all around Oh my reflection",
+    "tags": [
+      "penning"
+    ],
+    "date": "2025-06-15",
+    "path": "20250615_on_the_same_boat",
+    "url": "/webpage/posts/20250615_on_the_same_boat/post.html"
+  },
+  {
+    "title": "Doubling Doubling",
+    "snippet": "Just too much to do If only I had a clone Us two, still too much...",
+    "tags": [
+      "penning"
+    ],
+    "date": "2025-06-14",
+    "path": "20250614_doubling_doubling",
+    "url": "/webpage/posts/20250614_doubling_doubling/post.html"
+  },
+  {
+    "title": "How do you figure out what to do next?",
+    "snippet": "Shredded little pieces My allocation of time Value of desires",
+    "tags": [
+      "penning"
+    ],
+    "date": "2025-06-14",
+    "path": "20250614_how_do_you_figure_out_what_to_do_next",
+    "url": "/webpage/posts/20250614_how_do_you_figure_out_what_to_do_next/post.html"
+  },
+  {
+    "title": "Butt a distraction",
+    "snippet": "In front, task at hand To the side, a distraction Attention: bottom",
+    "tags": [
+      "penning"
+    ],
+    "date": "2025-06-14",
+    "path": "20250614_butt_a_distraction",
+    "url": "/webpage/posts/20250614_butt_a_distraction/post.html"
+  },
+  {
+    "title": "Daily burdens",
+    "snippet": "Pressure builds inside. Overburdened, machine whines. To feel is to live.",
+    "tags": [
+      "penning"
+    ],
+    "date": "2025-06-10",
+    "path": "20250610_daily_burdens",
+    "url": "/webpage/posts/20250610_daily_burdens/post.html"
+  },
+  {
+    "title": "Questionable designs",
+    "snippet": "Everyone is a... series of experiences. Penis shaped trash can.",
+    "tags": [
+      "penning"
+    ],
+    "date": "2025-06-08",
+    "path": "20250608_questionable_designs",
+    "url": "/webpage/posts/20250608_questionable_designs/post.html"
+  },
+  {
+    "title": "Miracle of the morning",
+    "snippet": "The morning alarm... yay another chance at life! Hit snooze. Back to sleep.",
+    "tags": [
+      "penning"
+    ],
+    "date": "2025-06-07",
+    "path": "20250607_miracle_of_the_morning",
+    "url": "/webpage/posts/20250607_miracle_of_the_morning/post.html"
+  },
+  {
+    "title": "Stop and it catches up",
+    "snippet": "The new becomes known. Routines start. Oh depression! Tortoise wins the race.",
+    "tags": [
+      "penning"
+    ],
+    "date": "2025-05-29",
+    "path": "20250529_stop_and_it_catches_up",
+    "url": "/webpage/posts/20250529_stop_and_it_catches_up/post.html"
+  },
+  {
+    "title": "Tranquility while we wait",
+    "snippet": "Looking at the sky Cloudy, cool day. Birds chirping. a peace close to death",
+    "tags": [
+      "penning"
+    ],
+    "date": "2025-05-25",
+    "path": "20250525_tranquility_while_we_wait",
+    "url": "/webpage/posts/20250525_tranquility_while_we_wait/post.html"
+  },
+  {
+    "title": "Sitting on the riverbank after some rain",
+    "snippet": "The river flowing Sunlight glistens like crystals Ducks carried away",
+    "tags": [
+      "penning"
+    ],
+    "date": "2025-05-24",
+    "path": "20250524_sitting_on_the_riverbank_after_some_rain",
+    "url": "/webpage/posts/20250524_sitting_on_the_riverbank_after_some_rain/post.html"
+  },
+  {
+    "title": "The repercussions of moving forward",
+    "snippet": "End of a journey Now just glimpses of what once was tender memories",
+    "tags": [
+      "penning"
+    ],
+    "date": "2025-05-24",
+    "path": "20250524_the_repercussions_of_moving_forward",
+    "url": "/webpage/posts/20250524_the_repercussions_of_moving_forward/post.html"
+  },
+  {
+    "title": "Ohio Trip Logs",
+    "snippet": "These are my logs for my trip to Ohio. The route was from San Antonio, TX to Dayton, OH. The image below is pretty much the route I took over this 6...",
+    "tags": [
+      "penning"
+    ],
+    "date": "2025-05-23",
+    "path": "20250523_ohio_trip_logs",
+    "url": "/webpage/posts/20250523_ohio_trip_logs/post.html"
+  },
+  {
+    "title": "Driving my motorcycle through a cloud of dandelion seeds",
+    "snippet": "Dandelion cloud Far ahead - they fill the air Broken apart. Sneeze!",
+    "tags": [
+      "penning"
+    ],
+    "date": "2025-05-21",
+    "path": "20250521_driving_my_motorcycle_through_a_cloud_of_dandelion_seeds",
+    "url": "/webpage/posts/20250521_driving_my_motorcycle_through_a_cloud_of_dandelion_seeds/post.html"
+  },
+  {
+    "title": "Emotions don't seem to sum evenly",
+    "snippet": "joy, bliss, happiness one mistake -- silly failure now my day is ruined",
+    "tags": [
+      "penning"
+    ],
+    "date": "2025-05-21",
+    "path": "20250521_emotions_dont_seem_to_sum_evenly",
+    "url": "/webpage/posts/20250521_emotions_dont_seem_to_sum_evenly/post.html"
+  },
+  {
+    "title": "Dollar General Everywhere",
+    "snippet": "in every small town a dollar general store inside all the same",
+    "tags": [
+      "penning"
+    ],
+    "date": "2025-05-19",
+    "path": "20250519_dollar_general_everywhere",
+    "url": "/webpage/posts/20250519_dollar_general_everywhere/post.html"
+  },
+  {
+    "title": "Colorful surprise",
+    "snippet": "Ride down the highway I see green trees forever suddenly redbuds!",
+    "tags": [
+      "penning"
+    ],
+    "date": "2025-05-18",
+    "path": "20250518_colorful_surprise",
+    "url": "/webpage/posts/20250518_colorful_surprise/post.html"
+  },
+  {
+    "title": "MSAMEE Thesis - Human Aware Andon Module",
+    "snippet": "Abstract This thesis presents the design, development, and analysis of the Human Aware Andon Module (HAAM), a low-cost, energy-efficient edge machine...",
+    "tags": [
+      "paper"
+    ],
+    "date": "2025-05-16",
+    "path": "20250516_msamee_thesis_human_aware_andon_module",
+    "url": "/webpage/posts/20250516_msamee_thesis_human_aware_andon_module/post.html"
+  },
+  {
+    "title": "Ordered Too Much Coffee",
+    "snippet": "To drink in excess More coffee than a man needs Anxiety shakes",
+    "tags": [
+      "penning"
+    ],
+    "date": "2025-05-10",
+    "path": "20250510_ordered_too_much_coffee",
+    "url": "/webpage/posts/20250510_ordered_too_much_coffee/post.html"
+  },
+  {
+    "title": "Sitting listening",
+    "snippet": "the song of the birds the doppler effect of cars systematic sounds",
+    "tags": [
+      "penning"
+    ],
+    "date": "2025-05-05",
+    "path": "20250505_sitting_listening",
+    "url": "/webpage/posts/20250505_sitting_listening/post.html"
+  },
+  {
+    "title": "Rainy Night",
+    "snippet": "The rain ends at night Dark clouds and heavy silence All the mud that follows",
+    "tags": [
+      "penning"
+    ],
+    "date": "2025-05-04",
+    "path": "20250504_rainy_night",
+    "url": "/webpage/posts/20250504_rainy_night/post.html"
+  },
+  {
+    "title": "Change to Come",
+    "snippet": "A sinking feeling Excitement, worry, and fear All soon forgotten",
+    "tags": [
+      "penning"
+    ],
+    "date": "2025-05-03",
+    "path": "20250503_change_to_come",
+    "url": "/webpage/posts/20250503_change_to_come/post.html"
+  },
+  {
+    "title": "Simplicity is hard",
+    "snippet": "Why say more? Complexity is for fools Work to say with less!",
+    "tags": [
+      "penning"
+    ],
+    "date": "2025-05-03",
+    "path": "20250503_simplicity_is_hard",
+    "url": "/webpage/posts/20250503_simplicity_is_hard/post.html"
+  },
+  {
+    "title": "Time Wasted",
+    "snippet": "fleeting experience Tired eyes, more wrinkles than before Yet nothing to show",
+    "tags": [
+      "penning"
+    ],
+    "date": "2025-05-03",
+    "path": "20250503_time_wasted",
+    "url": "/webpage/posts/20250503_time_wasted/post.html"
+  },
+  {
+    "title": "Useless haiku",
+    "snippet": "Can one write or say anything really meaningful in a simple haiku?",
+    "tags": [
+      "penning"
+    ],
+    "date": "2025-05-02",
+    "path": "20250502_useless_haiku",
+    "url": "/webpage/posts/20250502_useless_haiku/post.html"
+  },
+  {
+    "title": "Lean in DOD",
+    "snippet": "Abstract This report investigates the implementation of lean and six sigma principles within the Department of Defense (DoD) and its affiliated...",
+    "tags": [
+      "paper"
+    ],
+    "date": "2025-05-01",
+    "path": "20250501_lean_in_dod",
+    "url": "/webpage/posts/20250501_lean_in_dod/post.html"
+  },
+  {
+    "title": "Multirobot Dispatch Optimizer",
+    "snippet": "Abstract This report presents a Mixed Integer Linear Programming (MILP) approach for optimizing multi-robot inspection planning in outdoor...",
+    "tags": [
+      "paper"
+    ],
+    "date": "2025-05-01",
+    "path": "20250501_multirobot_dispatch_optimizer",
+    "url": "/webpage/posts/20250501_multirobot_dispatch_optimizer/post.html"
+  },
+  {
+    "title": "Gymnasium Mujoco Docker Setup",
+    "snippet": "No preview available for this legacy post.",
+    "tags": [
+      "project",
+      "legacy"
+    ],
+    "date": "2025-03-13",
+    "path": "20250313_gymnasium_mujoco_docker_setup",
+    "url": "/webpage/posts/20250313_gymnasium_mujoco_docker_setup/post.html"
+  },
+  {
+    "title": "Rc Car With Samd51 Thing Plus",
+    "snippet": "No preview available for this legacy post.",
+    "tags": [
+      "project",
+      "legacy"
+    ],
+    "date": "2025-02-01",
+    "path": "20250201_rc_car_with_samd51_thing_plus",
+    "url": "/webpage/posts/20250201_rc_car_with_samd51_thing_plus/post.html"
+  },
+  {
+    "title": "No Freedom Without Goals",
+    "snippet": "No preview available for this legacy post.",
+    "tags": [
+      "penning",
+      "legacy"
+    ],
+    "date": "2025-01-20",
+    "path": "20250120_no_freedom_without_goals",
+    "url": "/webpage/posts/20250120_no_freedom_without_goals/post.html"
+  },
+  {
+    "title": "Itinerary To Calendar Csv File",
+    "snippet": "No preview available for this legacy post.",
+    "tags": [
+      "project",
+      "legacy"
+    ],
+    "date": "2024-12-26",
+    "path": "20241226_itinerary_to_calendar_csv_file",
+    "url": "/webpage/posts/20241226_itinerary_to_calendar_csv_file/post.html"
+  },
+  {
+    "title": "Arxiv Daily Paper Recommender",
+    "snippet": "No preview available for this legacy post.",
+    "tags": [
+      "project",
+      "legacy"
+    ],
+    "date": "2024-12-21",
+    "path": "20241221_arxiv_daily_paper_recommender",
+    "url": "/webpage/posts/20241221_arxiv_daily_paper_recommender/post.html"
+  },
+  {
+    "title": "Cool art",
+    "snippet": "Look at this cool art I found! Here is the source: https://safebooru.donmai.us/posts/6249119?q=alu.m_%28alpcmas%29.",
+    "tags": [
+      "penning",
+      "legacy"
+    ],
+    "date": "2024-12-14",
+    "path": "20241214_cool_art",
+    "url": "/webpage/posts/20241214_cool_art/post.html"
+  },
+  {
+    "title": "Obsidian Notes To Webpage",
+    "snippet": "No preview available for this legacy post.",
+    "tags": [
+      "penning",
+      "legacy"
+    ],
+    "date": "2024-12-14",
+    "path": "20241214_obsidian_notes_to_webpage",
+    "url": "/webpage/posts/20241214_obsidian_notes_to_webpage/post.html"
+  },
+  {
+    "title": "Svm Hog Object Detection Report",
+    "snippet": "No preview available for this legacy post.",
+    "tags": [
+      "paper",
+      "legacy"
+    ],
+    "date": "2024-12-08",
+    "path": "20241208_svm_hog_object_detection_report",
+    "url": "/webpage/posts/20241208_svm_hog_object_detection_report/post.html"
+  },
+  {
+    "title": "A Gaze\u2011Controlled Robotic Framework for Remote Site Inspection",
+    "snippet": "Abstract Rapid and accurate construction inspection is essential to quality control and progress monitoring for timely project delivery. Traditional...",
+    "tags": [
+      "paper"
+    ],
+    "date": "2024-05-01",
+    "path": "20240501_a_gazecontrolled_robotic_framework_for_remote_site_inspection",
+    "url": "/webpage/posts/20240501_a_gazecontrolled_robotic_framework_for_remote_site_inspection/post.html"
+  },
+  {
+    "title": "Ssd Failure Testing An Automated Testing Solution",
+    "snippet": "No preview available for this legacy post.",
+    "tags": [
+      "project",
+      "legacy"
+    ],
+    "date": "2024-05-01",
+    "path": "20240501_ssd_failure_testing_an_automated_testing_solution",
+    "url": "/webpage/posts/20240501_ssd_failure_testing_an_automated_testing_solution/post.html"
+  },
+  {
+    "title": "General Electronic Module Tester",
+    "snippet": "No preview available for this legacy post.",
+    "tags": [
+      "project",
+      "legacy"
+    ],
+    "date": "2023-05-01",
+    "path": "20230501_general_electronic_module_tester",
+    "url": "/webpage/posts/20230501_general_electronic_module_tester/post.html"
+  },
+  {
+    "title": "Iodine Timer Based Car",
+    "snippet": "Description In this project, I helped a chemical engineering student with a car design they were working on for a competition. They designed a Iodine...",
+    "tags": [
+      "project"
+    ],
+    "date": "2022-05-01",
+    "path": "20220501_iodine_timer_based_car",
+    "url": "/webpage/posts/20220501_iodine_timer_based_car/post.html"
+  },
+  {
+    "title": "Finger Roulette",
+    "snippet": "Description For one of my electrical engineering classes I designed this \"Finger Roulette\" game. The letters of UTSA are each a capacitance sensor....",
+    "tags": [
+      "project"
+    ],
+    "date": "2020-04-01",
+    "path": "20200401_finger_roulette",
+    "url": "/webpage/posts/20200401_finger_roulette/post.html"
+  }
+]
