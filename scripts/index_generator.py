@@ -195,10 +195,14 @@ class IndexGenerator:
         self._generate_search_json(posts)
         
         # Generate index for all posts with quote section
+        # Generate index for all posts with quote section
         quote_section_html = """<!-- Quote section -->
-<div id="quote-section"></div>
+        <div id="quote-section"></div>
+        <div class="quote-disclaimer">
+            Quotes are not representative of Mr. JC's personal views. They are randomly generated from a dataset sourced from Forbes business quotes.
+        </div>
 
-"""
+        """
         all_posts_html = self._generate_index_content(
             posts, 
             title="Latest", 

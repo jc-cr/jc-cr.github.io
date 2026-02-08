@@ -1,7 +1,9 @@
 # JC's Website
+
 My website. For free thanks to the generosity of Github. In return I offer you my data.
 
 ## Post Generation
+
 Posts are generated using a combination of Markdown files and a custom static site generator that converts them to HTML.
 
 ### Creating New Posts
@@ -20,6 +22,7 @@ Each post is stored in `/webpage/posts/YYYYMMDD_title` with:
 - Any media files (images, videos) referenced in the post
 
 ### Manually Updating Indices
+
 If you need to regenerate all index files without creating a new post:
 
 ```bash
@@ -39,6 +42,7 @@ Just make sure the workflow includes submodules like:
 ```
 
 ## Environment Setup
+
 Create a `.env` file in the `.docker` directory with:
 ```
 OBSIDIAN_PATH=/path/to/your/obsidian/vault
@@ -47,6 +51,7 @@ OBSIDIAN_PATH=/path/to/your/obsidian/vault
 This tells the container where to find your Markdown files.
 
 ## Viewing the Site Locally
+
 The site can be viewed locally by running:
 ```bash
 docker compose up view_page --remove-orphans --abort-on-container-exit
