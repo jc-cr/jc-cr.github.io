@@ -1,63 +1,95 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <link rel="preload" as="image" href="/webpage/about/profile.png">
-    <meta charset="utf-8"/>
-    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-    <title>JC's Website</title>
-    <link href="/webpage/style/main.css" rel="stylesheet"/>
-    <script src="https://unpkg.com/htmx.org@1.9.10/dist/htmx.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/sql.js/1.8.0/sql-wasm.js"></script>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Juan C. Cruz Rivera</title>
+<meta name="description" content="Juan C. Cruz Rivera: equipment engineer with a background in robotics, automation, and applied AI.">
+<link rel="stylesheet" href="style.css">
 </head>
-<body>
-    <button id="menu-toggle" aria-label="Toggle menu">
-        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <line x1="3" y1="12" x2="21" y2="12"></line>
-            <line x1="3" y1="6" x2="21" y2="6"></line>
-            <line x1="3" y1="18" x2="21" y2="18"></line>
-        </svg>
-    </button>
-    <!-- Loading indicator -->
-    <div class="htmx-indicator">Loading...</div>
-    
-    <!-- Sidebar navigation -->
-    <aside class="sidebar">
-        <div class="sidebar-header">
-            <h1>JC's Website</h1>
-        </div>
-        <nav class="sidebar-nav">
-            <a class="nav-item" hx-get="/webpage/indexes/index-all.html" hx-target="#content-area" hx-push-url="#home">Home</a>
-            <a class="nav-item" hx-get="/webpage/about/about-content.html" hx-target="#content-area" hx-push-url="#about">About</a>
-            
-            <!-- Tag-based navigation -->
-            <div class="nav-section">
-                <h2 class="nav-section-title">Tags</h2>
-                <a class="nav-item" hx-get="/webpage/indexes/index-project.html" hx-target="#content-area" hx-push-url="#project">Projects</a>
-                <a class="nav-item" hx-get="/webpage/indexes/index-paper.html" hx-target="#content-area" hx-push-url="#paper">Papers</a>
-                <a class="nav-item" hx-get="/webpage/indexes/index-penning.html" hx-target="#content-area" hx-push-url="#penning">Pennings</a>
-            </div>
-        </nav>
-        
-        <!-- Footer moved to sidebar -->
-        <div class="sidebar-footer">
-            <a href="https://github.com/jc-cr" target="_blank" aria-label="GitHub Profile">
-                <svg class="github-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-                    <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
-                </svg>
-            </a>
-        </div>
-    </aside>
-    
-    <!-- Main content area - will be loaded dynamically -->
-    <main id="content-area"></main>
-    
-    <!-- js-->
+<body id="top">
 
-    <script src="https://cdn.jsdelivr.net/npm/fuse.js@7.0.0"></script>
-    <script src="/webpage/js/event_bus.js"></script>
-    <script src="/webpage/js/mobile_click.js"></script>
-    <script src="/webpage/js/code_copy.js"></script>
-    <script src="/webpage/js/get_quotes.js"></script>
-    <script src="/webpage/js/search.js"></script>
+<header>
+  <h1>Juan C. Cruz Rivera</h1>
+  <p class="center">
+    <a href="">juan.cruz.business@gmail.com</a>
+    |
+    <a href="https://github.com/jc-cr">GitHub</a>
+  </p>
+</header>
+
+<main>
+
+
+<section id="education">
+  <h2>Education</h2>
+  <p class="item"><b>MS, Advanced Manufacturing and Enterprise Engineering</b>, University of Texas at San Antonio<br>
+  <span class="sub">Aug. 2023 – Aug. 2025</span></p>
+  <p class="item"><b>BS, Electrical Engineering</b>, University of Texas at San Antonio<br>
+  <span class="sub">Aug. 2019 – May 2023</span></p>
+</section>
+
+<section id="experience">
+  <h2>Experience</h2>
+  <p class="item"><b>Equipment Engineer</b>, Texas Instruments<br>
+  <span class="sub">Dallas, TX | Feb. 2026 – Present</span></p>
+  <p class="item"><b>High Performance Computing Intern</b>, U.S. Air Force Research Laboratory<br>
+  <span class="sub">Wright-Patterson AFB, OH | Jun. 2025 – Aug. 2025</span></p>
+  <p class="item"><b>Research Assistant</b>, University of Texas at San Antonio<br>
+  <span class="sub">San Antonio, TX | Jan. 2023 – Present</span></p>
+  <p class="item"><b>Electrical Engineering Intern</b>, Plus One Robotics<br>
+  <span class="sub">San Antonio, TX | May 2023 – May 2024</span></p>
+  <p class="item"><b>Aircraft Electrician</b>, Texas Army National Guard<br>
+  <span class="sub">Austin, TX | Mar. 2018 – Aug. 2022</span></p>
+  <p class="item"><b>Manufacturing Technician</b>, Aircraft Systems and Manufacturing Inc.<br>
+  <span class="sub">Universal City, TX | May 2019 – Mar. 2020</span></p>
+</section>
+
+<section id="publications">
+  <h2>Publications</h2>
+  <ul>
+    <li><a href="https://ascelibrary.org/doi/10.1061/9780784486962.052">Development of an Agentic AI System for Project Planning and Management in a Digital Collaborative Environment</a></li>
+    <li><a href="https://drive.google.com/file/d/1bKT4exya7pxqoo-ZybjbmYhaJTk8c_dx/view">Lean in DOD</a></li>
+    <li><a href="www.afresearchlab.com">Benchmarking of Foundation Models For Mechanical Graph Understanding In A Robot Diagnostic Task</a></li>
+    <li><a href="https://www.proquest.com/openview/f6de2cb6c6017293b991a1a1ed3667dd/1?pq-origsite=gscholar&cbl=18750&diss=y">Design, Development, and Analysis of an Edge Machine Learning Andon System For Safe Human-Robot Interaction</a></li>
+    <li><a href="https://par.nsf.gov/servlets/purl/10626815">Design and Development of a Remote User Interface for Multi-Robot On-site Construction Inspection</a></li>
+    <li><a href="https://ascelibrary.org/doi/abs/10.1061/9780784486115.067">A Gaze-Controlled Robotic Framework for Remote Site Inspection</a></li>
+    <li><a href="https://ascelibrary.org/doi/abs/10.1061/9780784486115.102#con1">Gaze-enhanced and LLM-enabled System for Intuitive Human-Robot Collaboration</a></li>
+  </ul>
+</section>
+
+<section id="projects">
+  <h2>Projects</h2>
+  <ul>
+    <li><a href="https://github.com/jc-cr/doodle-rs">Doodle-rs</a></li>
+    <li><a href="https://drive.google.com/file/d/1R8UodXYUrjNsj4NXotftrRq6th2S6V_0/view">Human Aware Andon Module (HAAM)</a></li>
+    <li><a href="https://github.com/jc-cr/gymnasium_mujoco_docker">Gymnasium Mujoco Docker</a></li>
+    <li><a href="https://github.com/jc-cr/multirobot_inspection_optimizer/tree/main">Multi-Robot Inspection Path Planning with Precedence Constraints</a></li>
+    <li><a href="https://github.com/UTSARobotics/Knowledge/wiki/URC-Overview">University Rover Challenge</a></li>
+    <li><a href="https://github.com/jc-cr/SVM_HOG_Project_SH17_Dataset/tree/main">SVM + HOG Industrial Image Classifier</a></li>
+    <li><a href="https://github.com/jc-cr/example-object-tracker">Human Centroid Extraction on Edge Device</a></li>
+    <li><a href="https://gitlab.com/RoadrunnerDynamics/rr-1">Robocup Humanoid Robot</a></li>
+    <li><a href="https://github.com/UTSARobotics/R5_22-23_StateExamples">Autonomous UGV and UAV Competition</a></li>
+    <li><a href="https://github.com/jc-cr/gemt_v3">General Electronic Module Tester</a></li>
+  </ul>
+</section>
+
+
+<section id="awards">
+  <h2>Honors &amp; Awards</h2>
+  <ul>
+    <li>TRANS-IPIC UTC Outstanding Student of the Year, USDOT (Fall 2024)</li>
+    <li>Dwight David Eisenhower Transportation Fellowship (Fall 2024)</li>
+    <li>Best Electrical Engineering Project, UTSA Tech Symposium (Spring 2023)</li>
+  </ul>
+</section>
+
+
+</main>
+
+<footer>
+  <p><a href="#top">Back to top</a></p>
+</footer>
+
 </body>
 </html>
